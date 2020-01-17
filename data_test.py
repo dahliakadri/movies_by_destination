@@ -35,7 +35,9 @@ def add_country_value_to_movie_dict(file, base_movie_dict):
         title = items[2]
         country_code = items[3]
 
-        if movie_id in movie_ids and country_code != "\\N" and base_movie_dict[movie_id]['title'] == title and base_movie_dict.get(movie_id,{}).get('country_code') == None:
+        if (movie_id in movie_ids and country_code != "\\N" and
+            base_movie_dict[movie_id]['title'] == title and
+            base_movie_dict.get(movie_id,{}).get('country_code') == None):
             base_movie_dict[movie_id]['country_code'] = country_code
 
     for movie_id in list(base_movie_dict):
