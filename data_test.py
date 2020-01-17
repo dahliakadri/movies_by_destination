@@ -1,17 +1,24 @@
-movie_data_file = open("title.akas.tsv")
+def make_movie_by_title_dict(files):
 
-duplicate_movie_title_ids= []
+    movie_data_file = open(files)
 
-for line in movie_data_file:
-    line = line.rstrip()
-    data_pieces = line.split("\t")
+    movie_by_title= {}
 
-    title_id = data_pieces[0]
-    title = data_pieces[2]
-    country_code = data_pieces [3]
+    for line in movie_data_file:
+        line = line.rstrip()
+        items = line.split("\t")
+        title_id = items[0]
+        title = items[2]
+        country_code = items[3]
+        value = []
+        value.append(title)
+        value.append(country_code)
 
-    duplicate_movie_title_ids.append(title_id)
-    
-movie_title_ids = set(duplicate_movie_title_ids)
-for movie_id in movie_title_ids:
-    print(movie_id)
+        if movie_by_title.get(title_id) == None:
+            movie_by_title[title_id] = value
+    return movie_by_title
+
+make_movie_by_title_dict("title.akas.tsv")
+
+
+
