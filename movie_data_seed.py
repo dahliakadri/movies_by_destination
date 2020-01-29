@@ -1,7 +1,6 @@
 from sqlalchemy import func
 # from model import User
-from model import Movie
-from model import Country
+from model import User, Movie, Poster, Country, CountryFact, MBDRating, SavedMovie
 
 from model import connect_to_db, db
 from server import app
@@ -56,23 +55,8 @@ def add_country_value_to_movie_dict(file, movie_dict):
             movie_type == "\\N" and
             movie_dict.get(movie_id,{}).get('country_code') == None):
             movie_dict[movie_id]['country_code'] = country_code
-            #edge cases of 4 char country code data
             if movie_dict[movie_id]['country_code'] == "AN":
                 movie_dict[movie_id]['country_code'] = "AM"
-            # if movie_dict[movie_id]['country_code'] == "CSHH":
-            #     movie_dict[movie_id]['country_code'] = "CZ"
-            # if movie_dict[movie_id]['country_code'] == "XKO":
-            #     movie_dict[movie_id]['country_code'] = "CX"
-            # if movie_dict[movie_id]['country_code'] == "SUHH":
-            #     movie_dict[movie_id]['country_code'] = "SH"
-            # if movie_dict[movie_id]['country_code'] == "XSI":
-            #     movie_dict[movie_id]['country_code'] = "SX"
-            # if movie_dict[movie_id]['country_code'] == "XYU":
-            #     movie_dict[movie_id]['country_code'] = "GS"
-            # if movie_dict[movie_id]['country_code'] == "BUMM":
-            #     movie_dict[movie_id]['country_code'] = "BM"
-            # if movie_dict[movie_id]['country_code'] == "XPI":
-            #     movie_dict[movie_id]['country_code'] = "PH"
 
     #once all of the countries have been added to the dict, check to see if any
     #movies don't have countries, and remove them from the dictionary
@@ -97,8 +81,14 @@ def add_rating_to_movie_dict(file, movie_dict):
         if movie_id in movie_ids:
             movie_dict[movie_id]['avg_rating'] = avg_rating
             movie_dict[movie_id]['num_votes'] = num_votes
+    
+    #once all of the countries have been added to the dict, check to see if any
+    #movies don't have countries, and remove them from the dictionary
+    for movie_id in list(movie_dict):
+        if movie_dict.get(movie_id, {}).get('avg_rating') == None:
+            del movie_dict[movie_id]
 
-    return movie_dict 
+    return movie_dict
 
 
 def load_countries():
