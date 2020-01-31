@@ -9,7 +9,7 @@ class User(db.Model):
 
 	__tablename__ = "users"
 
-	user_id = db.Column(db.Integer(),
+	user_id = db.Column(db.Integer,
 						autoincrement=True,
 						primary_key=True,
 						nullable=False)
@@ -126,7 +126,7 @@ class CountryFact(db.Model):
 							nullable=False)
 	country_fact = db.Column(db.String(2000),
 							nullable=False)
-	country_code = db.Column(db.String(64),
+	country_code = db.Column(db.String(2),
 							db.ForeignKey('countries.country_code'),
 							nullable=False)
 
@@ -143,11 +143,11 @@ class MBDRating(db.Model):
 
 	__tablename__ = "mbd_ratings"
 
-	rating_id = db.Column(db.Integer(),
+	rating_id = db.Column(db.Integer,
 						autoincrement=True,
 						primary_key=True,
 						nullable=False)
-	score = db.Column(db.Integer(),
+	score = db.Column(db.Integer,
     				nullable=False)
 	movie_id = db.Column(db.String(50),
 						db.ForeignKey('movies.movie_id'),
@@ -171,7 +171,7 @@ class SavedMovie(db.Model):
 #internal rating, that provides a rating of movies from current users of the site
 	__tablename__ = "saved_movies"
 
-	saved_id = db.Column(db.Integer(),
+	saved_id = db.Column(db.Integer,
 						autoincrement=True,
 						primary_key=True,
 						nullable=False)

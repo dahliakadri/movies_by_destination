@@ -79,8 +79,8 @@ def add_rating_to_movie_dict(file, movie_dict):
         num_votes = items[2]
 
         if movie_id in movie_ids:
-            movie_dict[movie_id]['avg_rating'] = avg_rating
-            movie_dict[movie_id]['num_votes'] = num_votes
+            movie_dict[movie_id]['avg_rating'] = float(avg_rating)
+            movie_dict[movie_id]['num_votes'] = int(num_votes)
     
     #once all of the countries have been added to the dict, check to see if any
     #movies don't have countries, and remove them from the dictionary
