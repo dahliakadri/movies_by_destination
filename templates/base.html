@@ -1,18 +1,18 @@
 <!doctype html>
 <html>
 <head>
-  <title>Movies by Destination</title>
-</head>
-<ul>
+  <title>{% block title %}TITLE GOES HERE{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <script src="http://code.jquery.com/jquery.js"></script>
+  <ul>
     {% for message in get_flashed_messages() %}
         <li>{{ message }}</li>
         {% endfor %}
 </ul>
-
+</head>
 <body>
-
-  {% block content %}  
-  {% endblock %}
-
+  <h1>Movies by Destination</h1>
+  {% block content %}BODY CONTENT GOES HERE{% endblock %}
+  <footer>Moody Since 2020</footer>
 </body>
 </html>
