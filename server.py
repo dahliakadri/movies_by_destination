@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.secret_key = "test"
 
 # Normally, if you use an undefined variable in Jinja2, it fails
-# silently. This is horrible. Fix this so that, instead, it raises an
+#silently. This is horrible. Fix this so that, instead, it raises an
 # error.
 app.jinja_env.undefined = StrictUndefined
 
@@ -36,7 +36,6 @@ def show_movies_by_country(country_id):
 @app.route("/country/<country_id>", methods=['Post'])
 #add movies to user's watch list
 	return redirect ('/')
-
 
 @app.route("/movie_id")
 #view movie details of a particular movie

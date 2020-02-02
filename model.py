@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
+	#users from moviesbydestination site
 
 	__tablename__ = "users"
 
@@ -46,6 +47,7 @@ class User(db.Model):
 
 
 class Movie(db.Model):
+	#country id, title, rating, votes, and origin from imdb datasets
 
 	__tablename__ = "movies"
 	movie_id = db.Column(db.String(100),
@@ -79,6 +81,7 @@ class Movie(db.Model):
 
 
 class Poster(db.Model):
+	#movie posters for each particular movie from imdb
 	
 	tablename_ = "posters"
 	poster_id = db.Column(db.Integer,
@@ -100,6 +103,7 @@ class Poster(db.Model):
 
 
 class Country(db.Model):
+	#country and country codes by a country code dataset
 	__tablename__ = "countries"
 
 	country_code = db.Column(db.String(2),
@@ -119,6 +123,7 @@ class Country(db.Model):
 
 
 class CountryFact(db.Model):
+	#country facts pulled from country facts API
 	__tablename__ = "country_facts"
 
 	fact_id = db.Column(db.Integer,
@@ -140,6 +145,7 @@ class CountryFact(db.Model):
 
 
 class MBDRating(db.Model):
+	#raiting that provides a rating of movies from current users of the site by user input
 
 	__tablename__ = "mbd_ratings"
 
@@ -168,7 +174,7 @@ class MBDRating(db.Model):
 
 
 class SavedMovie(db.Model):
-#internal rating, that provides a rating of movies from current users of the site
+#saved movie by user
 	__tablename__ = "saved_movies"
 
 	saved_id = db.Column(db.Integer,
