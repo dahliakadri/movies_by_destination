@@ -22,7 +22,8 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def index():
 	"""Homepage"""
-	return render_template("Homepage.html")
+	countries_list = ["Egypt", "Ireland", "United States of America"]
+	return render_template("Homepage.html", countries=countries_list)
 
 @app.route("/country/<country_id>")
 def show_movies_by_country(country_id):
