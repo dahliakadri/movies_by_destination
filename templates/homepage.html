@@ -10,7 +10,7 @@ Start by choosing your destination country in the dropdown menu below:
   <select name="country">
   	<ul>
     {% for country in countries %}
-        <li> <option value="{{ country }}">{{ country }}</option></li>
+        <li> <option value="{{ country.name }}">{{ country.name }}</option></li>
         {% endfor %}
 </ul>
   </select>
