@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Movies by Destination{% endblock %}
+{% block content %}
+<p>Welcome to MTD - Movies by Travel Destinations.</p>
+<p>Find the perfect movie about your next travel desitination.</p>
+Start by choosing your destination country in the dropdown menu below:
+<form>
+  Choose your destination:
+  <select name="country">
+  	<ul>
+    {% for country in countries %}
+        <li> <option value="{{ country }}">{{ country }}</option></li>
+        {% endfor %}
+</ul>
+  </select>
+   <button type="submit">Search</button>
+</form>
+
+{% endblock %}
