@@ -26,14 +26,15 @@ def index():
 	countries_list = Country.query.all()
 	return render_template("homepage.html", countries=countries_list)
 
-# @app.route("/country/<country_id>")
-# def show_movies_by_country(country_id):
-
-# 	country = Country.query.get(country_id)
-
-# 	movies = Movie.query.filter_by(country_id=country_id)
-
-# 	return render_template(movies_from_country_list.html, movies=movies)
+@app.route('/country', methods=['GET'])
+def show_movies_by_country():
+	country = request.args['country']
+	#based on the country, i make a specific route for that country
+	#look it up in my database and return movies from that country to my 
+	#movies html page
+	# movies = Movie.query.filter_by(country_id=country)
+	# render_template(movies_from_country_list.html, movies=movies)
+	return f'Country is {country}'
 
 # @app.route("/country/<country_id>", methods=['Post'])
 # #add movies to user's watch list

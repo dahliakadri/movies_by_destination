@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
-	#users from moviesbydestination site
+	#users from moviesbydestination
 
 	__tablename__ = "users"
 
