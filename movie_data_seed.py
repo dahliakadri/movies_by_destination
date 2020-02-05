@@ -1,6 +1,6 @@
 from sqlalchemy import func
 # from model import User
-from model import User, Movie, Poster, Country, CountryFact, MBDRating, SavedMovie
+from model import User, Movie, Poster, Country, CountryFact, MoodyRating, SavedMovie
 
 from model import connect_to_db, db
 from server import app
@@ -102,7 +102,7 @@ def load_countries():
         country_code = items[1]
 
         country = Country(country_code=country_code,
-                                name=country_name)
+                                country_name=country_name)
 
         db.session.add(country)
     db.session.commit()

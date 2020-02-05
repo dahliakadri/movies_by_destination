@@ -32,7 +32,7 @@ class User(db.Model):
 
 	#relationships
 	country = db.relationship('Country')
-	ratings = db.relationship('MBDRating')
+	ratings = db.relationship('MoodyRating')
 	watch_list = db.relationship('SavedMovie')
 
 	def __repr__(self):
@@ -66,7 +66,7 @@ class Movie(db.Model):
 						nullable=False)
 	#relationships
 	country = db.relationship('Country')
-	mbd_ratings = db.relationship('MBDRating')
+	moody_ratings = db.relationship('MoodyRating')
 	on_watched_lists = db.relationship('SavedMovie')
 	poster = db.relationship('Poster')
 
@@ -144,10 +144,10 @@ class CountryFact(db.Model):
                    country code={self.country_code}>"""
 
 
-class MBDRating(db.Model):
+class MoodyRating(db.Model):
 	#raiting that provides a rating of movies from current users of the site by user input
 
-	__tablename__ = "mbd_ratings"
+	__tablename__ = "moody_ratings"
 
 	rating_id = db.Column(db.Integer,
 						autoincrement=True,
@@ -167,7 +167,7 @@ class MBDRating(db.Model):
 	user = db.relationship('User')
 
 	def __repr__(self):
-		return f"""<MBD Rating rating id={self.rating_id}
+		return f"""<Moody rating rating id={self.rating_id}
                    score={self.score}
                    movie id={self.movie_id}
                    user id={self.user_id}>"""
@@ -202,7 +202,7 @@ def connect_to_db(app):
     """Connect the database to our Flask app."""
 
     # Configuration to use our PstgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///moviesbydestination'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///moody'
     app.config["SQLALCHEMY_ECHO"] = False
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
