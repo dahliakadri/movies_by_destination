@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Movies by Destination{% endblock %}
+{% block title %}Welcome to Moody Movies{% endblock %}
 {% block content %}
-<p>Welcome to MTD - Movies by Travel Destinations.</p>
-<p>Find the perfect movie about your next travel desitination.</p>
+<h1>Welcome to Moody</h1>
+<p>Movies by Travel Destinations</p>
+<p>Find the perfect movie from your next travel desitination.</p>
 Start by choosing your destination country in the dropdown menu below:
-<form action="/country" method="POST">
+<form action="/moviesbycountry" method="POST">
   Choose your destination:
   <select name="country_name_data">
   	<ul>
@@ -16,5 +17,4 @@ Start by choosing your destination country in the dropdown menu below:
   </select>
    <button type="submit">Search</button> 
 </form>
-
 {% endblock %}

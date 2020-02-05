@@ -26,7 +26,7 @@ def index():
 	countries_list = Country.query.all()
 	return render_template("homepage.html", countries=countries_list)
 
-@app.route('/country', methods=['POST'])
+@app.route('/moviesbycountry', methods=['POST'])
 def show_movies_by_country():
 
 	country_name = request.form.get('country_name_data')
@@ -38,28 +38,36 @@ def show_movies_by_country():
 	#db model
 	country_movies = country.movies
 
-	for movie in country_movies:
-		print(movie)
+	#print to my server
+	for movie_log in country_movies:
+		print(movie_log.movie_id)
+		print(movie_log.title)
 
-	# print(country_id)
-	#based on the country, i make a specific route for that country
-	#look it up in my database and return movies from that country to my 
-	#movies html page
-	# movies = Movie.query.filter_by(country_id=country)
-	# render_template(movies_from_country_list.html, movies=movies)
-	return f'Country is {country.country_code}'
+	return render_template("moviesbycountry.html", movies=country_movies, country=country)
 
-# @app.route("/country/<country_id>", methods=['Post'])
-# #add movies to user's watch list
-# 	return redirect ('/')
 
-# @app.route("/movie_id")
-# #view movie details of a particular movie
-# #need to do an api call for a poster of a movie
-# 	return render_template(movie_detail.html, movie_id=movie_id, poster_id=poster_id)
+@app.route("/movie/<movie_id>")
+def show_movie_details(movie_id):
+
+	movie = Movie.query.filter(Movie.movie_id == movie_id).one()
+	print(movie)
+	#view movie details of a particular movie
+	#need to do an api call for a poster of a movie
+	return render_template("movie_details.html", display_movie=movie)
+
+
+# @app.route("/watch_list", methods=['Post'])
+# def add_movies_to_watch_list():
+	#pulls in the movies clicked in the checked box
+	#checks user_id from somewhere
+	#gets movie id
+	#adds to the database table saved movies
+	#commits it to the database
+	#once added flashes message, movie added and redirects to the users watched list 
+
 
 # @app.route("/watch_list/<user_id>")
-# #view watch list of a user
+# def view_watch_list_of_user(user_id)
 # 	return render_template(watch_list.html, movie_id=movie_id)
 
 # @app.route("/profile/<user_id>")
