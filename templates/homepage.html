@@ -5,16 +5,16 @@
 <p>Welcome to MTD - Movies by Travel Destinations.</p>
 <p>Find the perfect movie about your next travel desitination.</p>
 Start by choosing your destination country in the dropdown menu below:
-<form action="/country" method="GET">
+<form action="/country" method="POST">
   Choose your destination:
-  <select name="country">
+  <select name="country_name_data">
   	<ul>
     {% for country in countries %}
         <li> <option value="{{ country.name }}">{{ country.name }}</option></li>
         {% endfor %}
 </ul>
   </select>
-   <button type="submit">search</button> 
+   <button type="submit">Search</button> 
 </form>
 
 {% endblock %}

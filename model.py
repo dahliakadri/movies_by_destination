@@ -83,7 +83,7 @@ class Movie(db.Model):
 class Poster(db.Model):
 	#movie posters for each particular movie from imdb
 	
-	tablename_ = "posters"
+	__tablename__ = "posters"
 	poster_id = db.Column(db.Integer,
 							autoincrement=True,
 							primary_key=True,
@@ -109,7 +109,7 @@ class Country(db.Model):
 	country_code = db.Column(db.String(2),
 						primary_key=True,
 						nullable=False)
-	name = db.Column(db.String(300),
+	country_name = db.Column(db.String(300),
 						nullable=False)
 
 	#relationships
