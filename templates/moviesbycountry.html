@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Movies from {{ country.country_name }} {% endblock %}
+{% block content %}
+<h1> Movies from {{ country.country_name }}</h1>
+<p>See below a list of movies from {{ country.country_name }}.</p>
+<p>{{ country.country_name }} is [random fact about country I need to pull in from an API]</p>
+Click on the movies to get more information about them. Check the boxes to add the movies to your watch list.
+<form>
+  Which movies would you like to watch:
+  <br>
+  {% for movie in movies %}
+  <input type="checkbox" name="movie" value="{{ movie.title }}">
+  <label><a href="/movie/{{ movie.movie_id }}" target="_blank">{{ movie.title }}</a></label>
+  <br>
+  {% endfor %}
+</form>
+  </select>
+   <button type="submit">Add to watch list</button> 
+</form>
+
+{% endblock %}
