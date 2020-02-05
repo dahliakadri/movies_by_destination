@@ -128,7 +128,8 @@ class CountryFact(db.Model):
 
 	fact_id = db.Column(db.Integer,
 							primary_key=True,
-							nullable=False)
+							nullable=False,
+							autoincrement=True)
 	country_fact = db.Column(db.String(2000),
 							nullable=False)
 	country_code = db.Column(db.String(2),

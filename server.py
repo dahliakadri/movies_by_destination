@@ -32,7 +32,14 @@ def show_movies_by_country():
 	country_name = request.form.get('country_name_data')
 	print(country_name)
 
-	country = Country.query.filter(Country.country_name == country_name).first()
+	country = Country.query.filter(Country.country_name == country_name).one()
+
+	#pulls all of the movies for that country based on relationship set up in
+	#db model
+	country_movies = country.movies
+
+	for movie in country_movies:
+		print(movie)
 
 	# print(country_id)
 	#based on the country, i make a specific route for that country
