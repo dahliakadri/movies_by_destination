@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Welcome to Moody Movies{% endblock %}
+{% block title %}Welcome to Moody Movies
+{% endblock %}
 {% block content %}
 <h1>Welcome to Moody</h1>
-<p>Movies by Travel Destinations</p>
-<p>Find the perfect movie from your next travel desitination.</p>
-Start by choosing your destination country in the dropdown menu below:
+<h2>Movies by Travel Destinations</h2>
+<p1 class ="description">Find the perfect movie from your next travel desitination.</p1>
+<p2 class="prompt">Start by choosing your destination country in the dropdown menu below:</p2>
 <form action="/moviesbycountry" method="POST">
   Choose your destination:
   <select name="country_name_data">
@@ -17,4 +18,8 @@ Start by choosing your destination country in the dropdown menu below:
   </select>
    <button type="submit">Search</button> 
 </form>
+
+<button class="button">Search</button> 
+
+ <script src="/static/moody.js"></script>
 {% endblock %}

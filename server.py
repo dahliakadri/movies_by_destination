@@ -2,7 +2,7 @@
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, request, flash, session, jsonify
 # from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Movie, Country, CountryFact, MoodyRating, SavedMovie, Poster, connect_to_db, db
@@ -26,7 +26,7 @@ def index():
 	countries_list = Country.query.all()
 	return render_template("homepage.html", countries=countries_list)
 
-@app.route('/moviesbycountry', methods=['POST'])
+@app.route('/moviesbycountry/<country_name>', methods=['POST'])
 def show_movies_by_country():
 
 	country_name = request.form.get('country_name_data')
@@ -56,8 +56,14 @@ def show_movie_details(movie_id):
 	return render_template("movie_details.html", display_movie=movie)
 
 
-# @app.route("/watch_list", methods=['Post'])
-# def add_movies_to_watch_list():
+@app.route("/watch_list", methods=['POST'])
+def add_movies_to_watch_list():
+	
+	form_movie_keys = request.form.getlist("movie_keys")
+	for form_movie_key in form_movie_keys:
+		print(form_movie_key)
+
+	return f' form_movie_keys'
 	#pulls in the movies clicked in the checked box
 	#checks user_id from somewhere
 	#gets movie id
@@ -65,7 +71,9 @@ def show_movie_details(movie_id):
 	#commits it to the database
 	#once added flashes message, movie added and redirects to the users watched list 
 
-
+@app.route("/test1")
+def testing_function():
+	return jsonify({"name": "testing"})
 # @app.route("/watch_list/<user_id>")
 # def view_watch_list_of_user(user_id)
 # 	return render_template(watch_list.html, movie_id=movie_id)

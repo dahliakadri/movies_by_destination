@@ -1,1 +1,0 @@
-const countries = document.getElementById("countries").getElementsByTagName("li")
