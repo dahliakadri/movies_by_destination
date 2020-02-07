@@ -19,7 +19,17 @@
    <button type="submit">Search</button> 
 </form>
 
-<button class="button">Search</button> 
+<button class="button">Login Bottom</button> 
+
+<form action="/login" method="POST">
+  <label>Username:</label>
+  <input type="text" name="username">
+
+  <label>Password:</label>
+  <input type="text" name="password">
+
+  <input type="submit">
+</form>
 
  <script src="/static/moody.js"></script>
 {% endblock %}

@@ -4,12 +4,12 @@
   <title>{% block title %}Moody Movies{% endblock %}</title>
   <link rel="stylesheet" href="/static/css/styles.css">
   <script src="http://code.jquery.com/jquery.js"></script>
-  <ul>
+</head>
+<ul>
     {% for message in get_flashed_messages() %}
         <li>{{ message }}</li>
         {% endfor %}
 </ul>
-</head>
 <body>
   {% block content %}BODY CONTENT GOES HERE{% endblock %}
   <footer><br>Moody Since 2020</footer>

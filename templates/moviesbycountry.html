@@ -3,7 +3,7 @@
 {% block title %}Movies from {{ country.country_name }} {% endblock %}
 {% block content %}
 <h1> Movies from {{ country.country_name }}</h1>
-<p>See below a list of movies from {{ country.country_name }}.</p>
+<p>Hi {{ session['current_user'] }}, see below a list of movies from {{ country.country_name }}.</p>
 <p>{{ country.country_name }} is [random fact about country I need to pull in from an API]</p>
 Click on the movies to get more information about them. Check the boxes to add the movies to your watch list.
 <form action="/watchlist" method="POST" name="movie_list">

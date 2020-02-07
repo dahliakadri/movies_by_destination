@@ -2,7 +2,7 @@
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, redirect, request, flash, session, jsonify
+from flask import Flask, flash, render_template, redirect, request, session, jsonify
 # from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Movie, Country, CountryFact, MoodyRating, SavedMovie, Poster, connect_to_db, db
@@ -11,7 +11,7 @@ from model import User, Movie, Country, CountryFact, MoodyRating, SavedMovie, Po
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
-# app.secret_key = "test"
+app.secret_key = "test"
 
 # Normally, if you use an undefined variable in Jinja2, it fails
 #silently. This is horrible. Fix this so that, instead, it raises an
@@ -24,9 +24,10 @@ def index():
 	"""Homepage"""
 
 	countries_list = Country.query.all()
+	flash('Message Flash from index')
 	return render_template("homepage.html", countries=countries_list)
 
-@app.route('/moviesbycountry/<country_name>', methods=['POST'])
+@app.route('/moviesbycountry', methods=['POST'])
 def show_movies_by_country():
 
 	country_name = request.form.get('country_name_data')
@@ -56,24 +57,26 @@ def show_movie_details(movie_id):
 	return render_template("movie_details.html", display_movie=movie)
 
 
-@app.route("/watch_list", methods=['POST'])
+@app.route("/watchlist", methods=['POST'])
 def add_movies_to_watch_list():
 	
 	form_movie_keys = request.form.getlist("movie_keys")
-	for form_movie_key in form_movie_keys:
-		print(form_movie_key)
+	print(form_movie_keys)
+	#checks user_id from session
 
-	return f' form_movie_keys'
-	#pulls in the movies clicked in the checked box
-	#checks user_id from somewhere
-	#gets movie id
-	#adds to the database table saved movies
-	#commits it to the database
-	#once added flashes message, movie added and redirects to the users watched list 
+	#for form_movie_key in form_movie_keys:
+		#gets movie id from movie_key
+		#gets user_id from username
+		#adds to the database table saved movies
+		#commits it to the database
+	
+	#once all added flashes message, movie added and redirects to main page
+	return f'dfdfdf'
+	
 
-@app.route("/test1")
-def testing_function():
-	return jsonify({"name": "testing"})
+# @app.route("/test1")
+# def testing_function():
+# 	return jsonify({"name": "testing"})
 # @app.route("/watch_list/<user_id>")
 # def view_watch_list_of_user(user_id)
 # 	return render_template(watch_list.html, movie_id=movie_id)
@@ -90,8 +93,20 @@ def testing_function():
 # #view sign in form
 # 	return render_template(signin_form.html)
 
-# @app.route("/signin", methods=['Post'])
-# #sign a user into a session
+@app.route("/login", methods=['POST'])
+def handle_login():
+	username = request.form['username']
+	password = request.form['password']
+	#query for user in database basedon the username entered
+	if password == "456":
+		session['current_user'] = username
+		flash(f'Logged in as {username}')
+		return redirect("/")
+	else:
+		flash('Wrong password!')
+		return redirect('/')
+
+#sign a user into a session
 # 	return render_template(signin_form.html)
 
 # @app.route("/signup")
