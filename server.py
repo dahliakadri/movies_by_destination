@@ -1,21 +1,10 @@
 """Movies By Destination."""
 
 from jinja2 import StrictUndefined
-
 from flask import Flask, flash, render_template, redirect, request, session, jsonify
-# from flask_debugtoolbar import DebugToolbarExtension
-
 from model import User, Movie, Country, CountryFact, MoodyRating, SavedMovie, Poster, connect_to_db, db
-
-
 app = Flask(__name__)
-
-# Required to use Flask sessions and the debug toolbar
 app.secret_key = "test"
-
-# Normally, if you use an undefined variable in Jinja2, it fails
-#silently. This is horrible. Fix this so that, instead, it raises an
-# error.
 app.jinja_env.undefined = StrictUndefined
 
 
@@ -27,34 +16,73 @@ def index():
 	flash('Message Flash from index')
 	return render_template("homepage.html", countries=countries_list)
 
+
 @app.route('/moviesbycountry', methods=['POST'])
 def show_movies_by_country():
-
 	country_name = request.form.get('country_name_data')
-	print(country_name)
-
 	country = Country.query.filter(Country.country_name == country_name).one()
-
-	#pulls all of the movies for that country based on relationship set up in
-	#db model
+	#pulls all movies for that country based on relationship set up in db model
 	country_movies = country.movies
-
-	#print to my server
-	for movie_log in country_movies:
-		print(movie_log.movie_id)
-		print(movie_log.title)
-
+	#need to also keep this information so I can keep track of the id for later
+	#to add to watch list
 	return render_template("moviesbycountry.html", movies=country_movies, country=country)
 
 
 @app.route("/movie/<movie_id>")
 def show_movie_details(movie_id):
-
 	movie = Movie.query.filter(Movie.movie_id == movie_id).one()
-	print(movie)
-	#view movie details of a particular movie
 	#need to do an api call for a poster of a movie
 	return render_template("movie_details.html", display_movie=movie)
+
+
+@app.route("/login", methods=['POST'])
+def handle_login():
+	email = request.form.get('email')
+	password = request.form.get('password')
+	#query for user in database basedon the email entered
+	user = User.query.filter(User.email == email).one()
+	if password == user.password:
+		session['current_user'] = user.fname
+		flash(f'Welcome back {user.fname}, logged in with email {user.email}')
+		return redirect("/")
+	else:
+		flash('Wrong password!')
+		return redirect('/')
+
+
+@app.route("/signupform")
+def render_signup_form():
+	countries_list = Country.query.all()
+	return render_template("signupform.html", countries=countries_list)
+
+
+@app.route("/signup", methods=['Post'])
+def handle_signup():
+	email = request.form.get('email')
+	if User.query.filter(User.email == email).count() > 0:
+		flash(f'Account with {email} already exits, use a new email')
+		return redirect("/signupform")
+	else:
+		password = request.form.get('password')
+		fname = request.form.get('fname')
+		lname = request.form.get('lname')
+		country_name = request.form.get('country_name_data')
+		country = Country.query.filter(Country.country_name == country_name).one()
+		country_code = country.country_code
+		time_created = 1234
+
+		user_object = User(email=email,
+						password=password,
+						fname=fname,
+						lname=lname,
+						country_code=country_code,
+						time_created=time_created)
+		db.session.add(user_object)
+		db.session.commit()
+		user = User.query.filter(User.email == email).one()
+		flash(f'Thanks for signing up {user.fname}, you can begin using Moody!')
+		session['current_user'] = user.fname
+		return redirect('/')
 
 
 @app.route("/watchlist", methods=['POST'])
@@ -63,7 +91,6 @@ def add_movies_to_watch_list():
 	form_movie_keys = request.form.getlist("movie_keys")
 	print(form_movie_keys)
 	#checks user_id from session
-
 	#for form_movie_key in form_movie_keys:
 		#gets movie id from movie_key
 		#gets user_id from username
@@ -71,7 +98,7 @@ def add_movies_to_watch_list():
 		#commits it to the database
 	
 	#once all added flashes message, movie added and redirects to main page
-	return f'dfdfdf'
+	return "to do"
 	
 
 # @app.route("/test1")
@@ -88,34 +115,6 @@ def add_movies_to_watch_list():
 # @app.route("/profile/<user_id>", methods=['Post'])
 # #updates a user profile
 # 	return redirect ('/profile/<user_id>')
-
-# @app.route("/signin")
-# #view sign in form
-# 	return render_template(signin_form.html)
-
-@app.route("/login", methods=['POST'])
-def handle_login():
-	username = request.form['username']
-	password = request.form['password']
-	#query for user in database basedon the username entered
-	if password == "456":
-		session['current_user'] = username
-		flash(f'Logged in as {username}')
-		return redirect("/")
-	else:
-		flash('Wrong password!')
-		return redirect('/')
-
-#sign a user into a session
-# 	return render_template(signin_form.html)
-
-# @app.route("/signup")
-# #views a signup form
-# 	return render_template(signup_form.html)
-
-# @app.route("/signup", methods=['Post'])
-# #adds a user into the database and logs them in
-# 	return redirect ('/')
 
 # @app.route("/logout")
 # #views a logout aleart

@@ -18,18 +18,22 @@
   </select>
    <button type="submit">Search</button> 
 </form>
-
-<button class="button">Login Bottom</button> 
-
+<br>
+<p3 class="login">Enter your info below to login
 <form action="/login" method="POST">
-  <label>Username:</label>
-  <input type="text" name="username">
+  <label>Email:</label>
+  <input type="text" name="email">
 
   <label>Password:</label>
   <input type="text" name="password">
 
-  <input type="submit">
-</form>
+  <button type="submit">Login</button> 
+</form></p3>
+<br>
+<p4 class="signup">If you're not apart of Moody
+	<form action="signupform"><button class="button">Sign Up for Moody</button></form></p4>
+<br>
+<br>
 
  <script src="/static/moody.js"></script>
 {% endblock %}
