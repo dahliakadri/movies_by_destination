@@ -116,13 +116,6 @@ def load_movies(movie_dict_countries_and_ratings):
 
     i = 0
     for key, value in movie_dict_countries_and_ratings.items():
-        if value.get('avg_rating') == None:
-            movie_object = Movie(movie_id = key,
-                                title=value['title'],
-                                year_made=value['year_made'],
-                                country_code=value['country_code'])
-            db.session.add(movie_object)
-        else:
             movie_object = Movie(movie_id = key,
                                 title=value['title'],
                                 year_made=value['year_made'],

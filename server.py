@@ -43,6 +43,7 @@ def handle_login():
 	user = User.query.filter(User.email == email).one()
 	if password == user.password:
 		session['current_user'] = user.fname
+		session['user_id'] = user.user_id
 		flash(f'Welcome back {user.fname}, logged in with email {user.email}')
 		return redirect("/")
 	else:
@@ -82,23 +83,31 @@ def handle_signup():
 		user = User.query.filter(User.email == email).one()
 		flash(f'Thanks for signing up {user.fname}, you can begin using Moody!')
 		session['current_user'] = user.fname
+		session['user_id'] = user.user_id
 		return redirect('/')
 
 
 @app.route("/watchlist", methods=['POST'])
 def add_movies_to_watch_list():
-	
-	form_movie_keys = request.form.getlist("movie_keys")
-	print(form_movie_keys)
-	#checks user_id from session
-	#for form_movie_key in form_movie_keys:
-		#gets movie id from movie_key
-		#gets user_id from username
-		#adds to the database table saved movies
-		#commits it to the database
-	
+	value = session.get('user_id',"x")
+	print(value)
+	if value == "x":
+		flash(f'Please sign up to add movies to a watch list')
+		#once all added flashes message, movie added and redirects to main page
+		return redirect('/')
+	else:
+		form_movie_keys = request.form.getlist("movie_keys")
+		print(form_movie_keys)
+		user_id = session['user_id']
+		user_fname = session['current_user']
+		for movie_id in form_movie_keys:
+			saved_movie_object = SavedMovie(movie_id = movie_id,
+										user_id = user_id,)
+			db.session.add(saved_movie_object)
+			db.session.commit()
+		flash(f'Thanks {user_fname}, your movies were added to your watchlist')
 	#once all added flashes message, movie added and redirects to main page
-	return "to do"
+	return redirect('/')
 	
 
 # @app.route("/test1")
