@@ -108,14 +108,11 @@ def add_movies_to_watch_list():
 		flash(f'Thanks {user_fname}, your movies were added to your watchlist')
 	#once all added flashes message, movie added and redirects to main page
 	return redirect('/')
-	
 
-# @app.route("/test1")
-# def testing_function():
-# 	return jsonify({"name": "testing"})
-# @app.route("/watch_list/<user_id>")
-# def view_watch_list_of_user(user_id)
-# 	return render_template(watch_list.html, movie_id=movie_id)
+
+# @app.route("/watchlist/<user_id>")
+# #view watchlist of a particular user
+# 	return render_template(watchlist.html, movies=movies)
 
 # @app.route("/profile/<user_id>")
 # #view profile of a user
@@ -132,6 +129,13 @@ def add_movies_to_watch_list():
 # @app.route("/logout", methods=['Post'])
 # #logs a user out/ends session
 # 	return redirect('/')
+
+# @app.route("/test1")
+# def testing_function():
+# 	return jsonify({"name": "testing"})
+# @app.route("/watch_list/<user_id>")
+# def view_watch_list_of_user(user_id)
+# 	return render_template(watch_list.html, movie_id=movie_id)
 
 
 
