@@ -19,17 +19,19 @@ def index():
 
 @app.route('/moviesbycountry', methods=['POST'])
 def show_movies_by_country():
+	"""Show movies for a particular country user requested"""
 	country_name = request.form.get('country_name_data')
 	country = Country.query.filter(Country.country_name == country_name).one()
 	#pulls all movies for that country based on relationship set up in db model
-	country_movies = country.movies
+	# country_movies = country.movies
 	#need to also keep this information so I can keep track of the id for later
 	#to add to watch list
-	return render_template("moviesbycountry.html", movies=country_movies, country=country)
+	return render_template("moviesbycountry.html", movies=country.movies, country=country)
 
 
 @app.route("/movie/<movie_id>")
 def show_movie_details(movie_id):
+	"""Shows movie details of a particular movie the user requested"""
 	movie = Movie.query.filter(Movie.movie_id == movie_id).one()
 	#need to do an api call for a poster of a movie
 	return render_template("movie_details.html", display_movie=movie)
@@ -37,6 +39,7 @@ def show_movie_details(movie_id):
 
 @app.route("/login", methods=['POST'])
 def handle_login():
+	"""Handles the login for a user"""
 	email = request.form.get('email')
 	password = request.form.get('password')
 	#query for user in database basedon the email entered
@@ -53,12 +56,14 @@ def handle_login():
 
 @app.route("/signupform")
 def render_signup_form():
+	"""Renders a template for the user to sign up"""
 	countries_list = Country.query.all()
 	return render_template("signupform.html", countries=countries_list)
 
 
 @app.route("/signup", methods=['Post'])
 def handle_signup():
+	"""handles the sign up for a user"""
 	email = request.form.get('email')
 	if User.query.filter(User.email == email).count() > 0:
 		flash(f'Account with {email} already exits, use a new email')
@@ -70,18 +75,16 @@ def handle_signup():
 		country_name = request.form.get('country_name_data')
 		country = Country.query.filter(Country.country_name == country_name).one()
 		country_code = country.country_code
-		time_created = 1234
 
 		user_object = User(email=email,
 						password=password,
 						fname=fname,
 						lname=lname,
-						country_code=country_code,
-						time_created=time_created)
+						country_code=country_code)
 		db.session.add(user_object)
 		db.session.commit()
 		user = User.query.filter(User.email == email).one()
-		flash(f'Thanks for signing up {user.fname}, you can begin using Moody!')
+		flash(f'Thanks for signing up {user.fname}. You signed up at {user.time_created}, you can begin using Moody!')
 		session['current_user'] = user.fname
 		session['user_id'] = user.user_id
 		return redirect('/')
@@ -89,6 +92,7 @@ def handle_signup():
 
 @app.route("/watchlist", methods=['POST'])
 def add_movies_to_watch_list():
+	"""Adds movies selected by the user to a watch list"""
 	value = session.get('user_id',"x")
 	print(value)
 	if value == "x":

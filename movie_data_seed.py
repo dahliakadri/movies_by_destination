@@ -116,13 +116,13 @@ def load_movies(movie_dict_countries_and_ratings):
 
     i = 0
     for key, value in movie_dict_countries_and_ratings.items():
-            movie_object = Movie(movie_id = key,
+        movie_object = Movie(movie_id = key,
                                 title=value['title'],
                                 year_made=value['year_made'],
                                 country_code=value['country_code'],
                                 imdb_rating=value['avg_rating'],
                                 num_votes=value['num_votes'])
-            db.session.add(movie_object)
+        db.session.add(movie_object)
         if i % 5000 == 0:
             db.session.commit()
             print(f'{i} movies loaded')

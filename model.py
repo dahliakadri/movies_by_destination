@@ -15,16 +15,19 @@ class User(db.Model):
 						primary_key=True,
 						nullable=False)
 	email = db.Column(db.String(100),
-						nullable=False)
+						nullable=False,
+						unique=True)
 	password = db.Column(db.String(100),
 						nullable=False)
 	fname = db.Column(db.String(100),
 						nullable=False)
 	lname = db.Column(db.String(100),
 						nullable=False)
-	time_created = db.Column(db.Integer,
+	time_created = db.Column(db.DateTime(timezone=True),
+						server_default=db.func.now(),
 						nullable=False)
-	time_updated = db.Column(db.Integer,
+	time_updated = db.Column(db.DateTime(timezone=True),
+						onupdate=db.func.now(),
 						nullable=True)
 	country_code = db.Column(db.String(2),
 						db.ForeignKey('countries.country_code'),
