@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Sign up for Moody{% endblock %}
+{% block title %}Moody Movies Sign{% endblock %}
 {% block content %}
 <form action="/signup" method="POST">
   <label>Email:</label>
@@ -8,18 +8,24 @@
 
   <label>Password:</label>
   <input type="text" name="password">
+  
   <label>First Name:</label>
   <input type="text" name="fname">
+  
   <label>Last Name:</label>
   <input type="text" name="lname">
+  
   <label>Which country do you most connect with?</label>
-   <select name="country_name_data">
+  <select name="country_name_data">
   	<ul>
     {% for country in countries %}
-        <li> <option value="{{ country.country_name }}">{{ country.country_name }}</option></li>
-        {% endfor %}
-</ul>
-  </select>
+    	<li> <option value="{{ country.country_name }}">{{ country.country_name }}
+    	</option>
+    	</li>
+    	{% endfor %}
+    </ul>
+	</select>
+  
   <button type="submit">Sign Up</button> 
 </form>
 {% endblock %}

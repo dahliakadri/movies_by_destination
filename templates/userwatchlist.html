@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
+
+{% block title %}Moody Movie Watch List{% endblock %}
 {% block content %}
 
-  <h2>Movies from { movie.country } </h2>
+  <h2>Movie watch list of {{ user.fname }} </h2>
 
   <ul>
     {% for movie in movies %}
       <li>
-        <a href="/movies/{{ movie.movie_id }}">
+        <a href="/movie/{{ movie.movie_id }}">
           {{ movie.title }}
         </a>
       </li>
-    {% endfor %}
+      {% endfor %}
   </ul>
 
 {% endblock %}

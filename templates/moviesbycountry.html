@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
-{% block title %}Movies from {{ country.country_name }} {% endblock %}
+{% block title %}{{ country.country_name }} Moody Movies{% endblock %}
+
 {% block content %}
 <h1> Movies from {{ country.country_name }}</h1>
 <p>See below a list of movies from {{ country.country_name }}.</p>
@@ -17,5 +18,4 @@ Click on the movies to get more information about them. Check the boxes to add t
   </select>
    <button type="submit">Add to watch list</button> 
 </form>
-
 {% endblock %}

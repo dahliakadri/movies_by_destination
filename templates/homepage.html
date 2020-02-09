@@ -1,39 +1,59 @@
 {% extends 'base.html' %}
 
-{% block title %}Welcome to Moody Movies
-{% endblock %}
+{% block title %}Moody Movies{% endblock %}
+
 {% block content %}
 <h1>Welcome to Moody</h1>
 <h2>Movies by Travel Destinations</h2>
-<p1 class ="description">Find the perfect movie from your next travel desitination.</p1>
-<p2 class="prompt">Start by choosing your destination country in the dropdown menu below:</p2>
+
+<p1 class ="description">Find the perfect movie from your next travel desitination.
+</p1>
+
+<br>
+<p2 class="prompt">Start by choosing your destination country in the dropdown menu below:
 <form action="/moviesbycountry" method="POST">
-  Choose your destination:
-  <select name="country_name_data">
+	Choose your destination:
+	<select name="country_name_data">
   	<ul>
-    {% for country in countries %}
-        <li> <option value="{{ country.country_name }}">{{ country.country_name }}</option></li>
+  		{% for country in countries %}
+  		<li> <option value="{{ country.country_name }}">{{ country.country_name }}</option></li>
         {% endfor %}
-</ul>
+    </ul>
   </select>
    <button type="submit">Search</button> 
 </form>
-<br>
-<p3 class="login">Enter your info below to login
-<form action="/login" method="POST">
-  <label>Email:</label>
-  <input type="text" name="email">
-
-  <label>Password:</label>
-  <input type="text" name="password">
-
-  <button type="submit">Login</button> 
-</form></p3>
-<br>
-<p4 class="signup">If you're not a part of Moody
-	<form action="signupform"><button class="button">Sign Up for Moody</button></form></p4>
-<br>
+</p2>
 <br>
 
+{% if user_id %}
+	<p4 class="logout">Log out of Moody
+		<form action="/logout">
+			<button class="button">Logout</button>
+		</form>
+	</p4>
+	<p5 class="user_watchlist">View Your Watch List.
+		<form action="/watchlist/{{ user_id }}">
+			<button class="button">Watch List</button>
+		</form>
+	</p5>
+
+{% else %}
+	<p3 class="login">Login to Moody
+		<form action="/login" method="POST">
+  			<label>Email:</label>
+  			<input type="text" name="email">
+  			<label>Password:</label>
+  			<input type="text" name="password">
+  			<button type="submit">Login</button> 
+  		</form>
+  	</p3>
+
+	<br>
+	<p5 class="signup">If you're not a part of Moody Sign Up.
+		<form action="/signupform">
+			<button class="button">Sign Up for Moody</button>
+		</form>
+	</p5>
+{% endif %}
  <script src="/static/moody.js"></script>
 {% endblock %}

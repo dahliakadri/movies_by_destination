@@ -6,7 +6,7 @@
   <script src="http://code.jquery.com/jquery.js"></script>
 </head>
     {% for message in get_flashed_messages() %}
-        {{ message }}
+        <li>{{ message }}</li>
         {% endfor %}
 <body>
   {% block content %}BODY CONTENT GOES HERE{% endblock %}
