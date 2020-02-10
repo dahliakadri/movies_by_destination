@@ -8,6 +8,10 @@ app.secret_key = "test"
 app.jinja_env.undefined = StrictUndefined
 
 
+@app.route('/react123')
+def react123():
+	return render_template("index.html")
+	
 @app.route('/')
 def index():
 	"""Homepage"""
