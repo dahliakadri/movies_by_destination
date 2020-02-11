@@ -1,5 +1,84 @@
 'use strict';
 
+const products = [
+    {
+        id: "1",
+        name: "Pencil",
+        price: 1,
+        description: "Perfect for those who can't remember things! 5/5 Highly recommend."
+    },
+    {
+        id: "2",
+        name: "Housing",
+        price: 0,
+        description: "Housing provided for out-of-state students or those who can't commute"
+    },
+    {
+        id: "3",
+        name: "Computer Rental",
+        price: 300,
+        description: "Don't have a computer? No problem!"
+    },
+    {
+        id: "4",
+        name: "Coffee",
+        price: 2,
+        description: "Wake up!"
+    },
+    {
+        id: "5",
+        name: "Snacks",
+        price: 0,
+        description: "Free snacks!"
+    },
+    {
+        id: "6",
+        name: "Rubber Duckies",
+        price: 3.50,
+        description: "To help you solve your hardest coding problems."
+    },
+    {
+        id: "7",
+        name: "Fidget Spinner",
+        price: 21.99,
+        description: "Because we like to pretend we're in high school."
+    },
+    {
+        id: "8",
+        name: "Sticker Set",
+        price: 14.99,
+        description: "To prove to other devs you know a lot."
+    }
+]
+
+const todosData = [
+    {
+        id: 1,
+        text: "Take out the trash",
+        completed: true
+    },
+    {
+        id: 2,
+        text: "Grocery shopping",
+        completed: false
+    },
+    {
+        id: 3,
+        text: "Clean gecko tank",
+        completed: false
+    },
+    {
+        id: 4,
+        text: "Mow lawn",
+        completed: true
+    },
+    {
+        id: 5,
+        text: "Catch up on Arrested Development",
+        completed: false
+    }
+]
+
 function MyNewApp () {
 	return (
 		<div>
@@ -27,8 +106,14 @@ function Header() {
 }
 
 function MainContent() {
+	const productComponents = products.map(item => <Product key={item.id} product={item}/>)
+	const todoComponents = todosData.map(item => <ToDo key={item.id} todo={item} />)
 	return(
 		<div className="main">
+			<div className="product">
+				{productComponents}
+			</div>
+
 			<div className="Joke">
 				<Joke
 					joke={{question: "Question: Knock Knock?", punchline: "who is there?"}} 
@@ -68,10 +153,8 @@ function MainContent() {
             	/>
 			</div>
 			
-			<div className="todo-list">
-				<ToDoItem />
-				<ToDoItem />
-				<ToDoItem />
+			<div className="todolist">
+				return {todoComponents} 
 			</div>
 		</div>
 	)
@@ -86,10 +169,12 @@ function Footer() {
 		)
 }
 
-function ToDoItem() {
+function ToDo(props) {
 	return (
-			<div className="todo-item"><input type="checkbox" />
-			<p>Place 1</p></div>
+			<div className="todo-item">
+				<input type="checkbox" checked={props.todo.completed}/>
+				<p>{props.todo.text}</p>
+			</div>
 	)
 }
 
@@ -113,9 +198,19 @@ function Joke(props) {
 		} else {
 			return(
 			<div className="joke">
-			<p>Joke:{props.joke.punchline}</p>
+			<p style={{color:"red"}}>Joke:{props.joke.punchline}</p>
 			</div>)
 		}
+}
+
+
+function Product(props) {
+		return(
+			<div className="product">
+				<h2>{props.product.name}</h2>
+				<p>{props.product.price.toLocaleString("en-US", { style: "currency", currency: "USD" })}
+				-- {props.product.description}</p>
+			</div>)
 }
 
 ReactDOM.render(<MyNewApp />, document.getElementById("root"))
