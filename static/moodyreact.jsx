@@ -91,7 +91,7 @@ function MyNewApp () {
 function Header() {
 	const firstName = "Dahlia"
 	const lastName = "Kadri"
-	const date = new Date()
+	const date = new Da
 	const styles = {
 		color: "#FF8C00",
 		backgroundColor: "#FF2D00",
@@ -107,7 +107,7 @@ function Header() {
 
 function MainContent() {
 	const productComponents = products.map(item => <Product key={item.id} product={item}/>)
-	const todoComponents = todosData.map(item => <ToDo key={item.id} todo={item} />)
+    const todoComponents = todosData.map(item => <ToDo key={item.id} todo={item}/>)
 	return(
 		<div className="main">
 			<div className="product">
@@ -167,15 +167,6 @@ function Footer() {
 			<h3>Moody since 2020.</h3>
 		</footer>
 		)
-}
-
-function ToDo(props) {
-	return (
-			<div className="todo-item">
-				<input type="checkbox" checked={props.todo.completed}/>
-				<p>{props.todo.text}</p>
-			</div>
-	)
 }
 
 function ContactCard(props) {

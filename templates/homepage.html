@@ -3,7 +3,7 @@
 {% block title %}Moody Movies{% endblock %}
 
 {% block content %}
-<div id="like_button_container"></div>
+<div id="root"></div>
 <h1>Welcome to Moody</h1>
 <h2>Movies by Travel Destinations</h2>
 
@@ -12,17 +12,17 @@
 
 <br>
 <p2 class="prompt">Start by choosing your destination country in the dropdown menu below:
-<form action="/moviesbycountry" method="POST">
-	Choose your destination:
-	<select name="country_name_data">
-  	<ul>
-  		{% for country in countries %}
-  		<li> <option value="{{ country.country_name }}">{{ country.country_name }}</option></li>
-        {% endfor %}
-    </ul>
-  </select>
-   <button type="submit">Search</button> 
-</form>
+	<form action="/moviesbycountry" method="POST">
+		Choose your destination:
+		<select name="country_name_data">
+		<ul>
+			{% for country in countries %}
+			<li> <option value="{{ country.country_name }}">{{ country.country_name }}</option></li>
+			{% endfor %}
+		</ul>
+		</select>
+   		<button type="submit">Search</button> 
+	</form>
 </p2>
 <br>
 
@@ -60,5 +60,5 @@
 {% endblock %}
 
 {% block scripts %}
-  <script type="text/jsx" src="/static/moody.js"></script>
+  <script type="text/jsx" src="/static/moodyforreal.jsx"></script>
 {% endblock %}

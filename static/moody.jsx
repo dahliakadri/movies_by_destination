@@ -32,3 +32,12 @@ function Product(props) {
         -- {props.product.description}</p>
       </div>)
 }
+
+function ToDo(props) {
+  return (
+      <div className="todo-item">
+        <input type="checkbox" checked={props.todo.completed}/>
+        <p>{props.todo.test}</p>
+      </div>
+  )
+}
