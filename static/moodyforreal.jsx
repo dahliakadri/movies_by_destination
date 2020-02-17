@@ -7,12 +7,62 @@
 // 		</div>)
 // }
 
+// import React from "react"
+
+// class App extends React.Component {
+//     constructor() {
+//         super()
+//         this.state = {
+//             count: 0
+//         }
+//         this.handleClick = this.handleClick.bind(this)
+//     }
+    
+//     handleClick() {
+//         this.setState(prevState => {
+//             return {
+//                 count: prevState.count + 1
+//             }
+//         })
+//     }
+    
+//     render() {
+//         return (
+//             <div>
+//                 <h1>{this.state.count}</h1>
+//                 <button onClick={this.handleClick}>Change!</button>
+//             </div>
+//         )
+//     }
+// }
+const todosData = [
+    {
+        id: 1,
+        text: "USA",
+        completed: true
+    },
+    {
+        id: 2,
+        text: "Egypt",
+        completed: false
+    },
+    {
+        id: 3,
+        text: "Ireland",
+        completed: false
+    }
+]
+
 class MoodyApp extends React.Component {
 	constructor(){
 		super()
 		this.state = {
-			answer: "No"
+			todos: todosData
 		}
+		this.handleChange = this.handleChange.bind(this)
+	}
+	handleChange(id) {
+		console.log("changed", id)
 	}
 	render() {
 		return (
