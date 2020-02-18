@@ -223,6 +223,235 @@
 //         )
 //     }
 // }
+// import React, {Component} from "react"
+
+/**
+ * Challenge: Wire up the partially-finished travel form so that it works!
+ * Remember to use the concept of controlled forms
+ * https://reactjs.org/docs/forms.html
+ * 
+ * All information should be populating the text below the form in real-time
+ * as you're filling it out
+ * 
+ * This exercise is adapted from the V School curriculum on vanilla JS forms:
+ * https://coursework.vschool.io/travel-form/
+ * 
+ * All of our challenges and learning resources are open for the public
+ * to play around with and learn from at https://coursework.vschool.io
+ */
+
+// class App extends Component {
+//     constructor() {
+//         super()
+//         this.state = {
+//             firstName: "",
+//             lastName: "",
+//             age: "",
+//             gender: "",
+//             destination: "",
+//             isVegan: false,
+//             isKosher: false,
+//             isLactoseFree: false
+//         }
+//         this.handleChange = this.handleChange.bind(this)
+//     }
+    
+//     handleChange(event) {
+//         const {name, value, type, checked} = event.target
+//         type === "checkbox" ? 
+//             this.setState({
+//                 [name]: checked
+//             })
+//         :
+//         this.setState({
+//             [name]: value
+//         }) 
+//     }
+    
+//     render() {
+//         return (
+//             <main>
+//                 <form>
+//                     <input 
+//                         name="firstName" 
+//                         value={this.state.firstName} 
+//                         onChange={this.handleChange} 
+//                         placeholder="First Name" 
+//                     />
+//                     <br />
+                    
+//                     <input 
+//                         name="lastName" 
+//                         value={this.state.lastName}
+//                         onChange={this.handleChange} 
+//                         placeholder="Last Name" 
+//                     />
+//                     <br />
+                    
+//                     <input 
+//                         name="age" 
+//                         value={this.state.age}
+//                         onChange={this.handleChange} 
+//                         placeholder="Age" 
+//                     />
+//                     <br />
+                    
+//                     <label>
+//                         <input 
+//                             type="radio" 
+//                             name="gender"
+//                             value="male"
+//                             checked={this.state.gender === "male"}
+//                             onChange={this.handleChange}
+//                         /> Male
+//                     </label>
+                    
+//                     <br />
+                    
+//                     <label>
+//                         <input 
+//                             type="radio" 
+//                             name="gender"
+//                             value="female"
+//                             checked={this.state.gender === "female"}
+//                             onChange={this.handleChange}
+//                         /> Female
+//                     </label>
+                    
+//                     <br />
+                    
+//                     <select 
+//                         value={this.state.destination} 
+//                         name="destination" 
+//                         onChange={this.handleChange}
+//                     >
+//                         <option value="">-- Please Choose a destination --</option>
+//                         <option value="germany">Germany</option>
+//                         <option value="norway">Norway</option>
+//                         <option value="north pole">North Pole</option>
+//                         <option value="south pole">South Pole</option>
+//                     </select>
+                    
+//                     <br />
+                    
+//                     <label>
+//                         <input 
+//                             type="checkbox"
+//                             name="isVegan"
+//                             onChange={this.handleChange}
+//                             checked={this.state.isVegan}
+//                         /> Vegan?
+//                     </label>
+//                     <br />
+                    
+//                     <label>
+//                         <input 
+//                             type="checkbox"
+//                             name="isKosher"
+//                             onChange={this.handleChange}
+//                             checked={this.state.isKosher}
+//                         /> Kosher?
+//                     </label>
+//                     <br />
+                    
+//                     <label>
+//                         <input 
+//                             type="checkbox"
+//                             name="isLactoseFree"
+//                             onChange={this.handleChange}
+//                             checked={this.state.isLactoseFree}
+//                         /> Lactose Free?
+//                     </label>
+//                     <br />
+                    
+//                     <button>Submit</button>
+//                 </form>
+//                 <hr />
+//                 <h2>Entered information:</h2>
+//                 <p>Your name: {this.state.firstName} {this.state.lastName}</p>
+//                 <p>Your age: {this.state.age}</p>
+//                 <p>Your gender: {this.state.gender}</p>
+//                 <p>Your destination: {this.state.destination}</p>
+//                 <p>Your dietary restrictions:</p>
+                
+//                 <p>Vegan: {this.state.isVegan ? "Yes" : "No"}</p>
+//                 <p>Kosher: {this.state.isKosher ? "Yes" : "No"}</p>
+//                 <p>Lactose Free: {this.state.isLactoseFree ? "Yes" : "No"}</p>
+                
+//             </main>
+//         )
+//     }
+// }
+// class MemeGenerator extends Component {
+//     constructor() {
+//         super()
+//         this.state = {
+//             topText: "",
+//             bottomText: "",
+//             randomImg: "http://i.imgflip.com/1bij.jpg",
+//             allMemeImgs: []
+//         }
+//         this.handleChange = this.handleChange.bind(this)
+//         this.handleSubmit = this.handleSubmit.bind(this)
+//     }
+    
+//     componentDidMount() {
+//         fetch("https://api.imgflip.com/get_memes")
+//             .then(response => response.json())
+//             .then(response => {
+//                 const {memes} = response.data
+//                 this.setState({ allMemeImgs: memes })
+//             })
+//     }
+    
+//     handleChange(event) {
+//         const {name, value} = event.target
+//         this.setState({ [name]: value })
+//     }
+    
+//     handleSubmit(event) {
+//         event.preventDefault()
+//         const randNum = Math.floor(Math.random() * this.state.allMemeImgs.length)
+//         const randMemeImg = this.state.allMemeImgs[randNum].url
+//         this.setState({ randomImg: randMemeImg })
+//     }
+    
+//     render() {
+//         return (
+//             <div>
+//                 <form className="meme-form" onSubmit={this.handleSubmit}>
+//                     <input 
+//                         type="text"
+//                         name="topText"
+//                         placeholder="Top Text"
+//                         value={this.state.topText}
+//                         onChange={this.handleChange}
+//                     /> 
+//                     <input 
+//                         type="text"
+//                         name="bottomText"
+//                         placeholder="Bottom Text"
+//                         value={this.state.bottomText}
+//                         onChange={this.handleChange}
+//                     /> 
+                
+//                     <button>Gen</button>
+//                 </form>
+//                 <div className="meme">
+//                     <img src={this.state.randomImg} alt="" />
+//                     <h2 className="top">{this.state.topText}</h2>
+//                     <h2 className="bottom">{this.state.bottomText}</h2>
+//                 </div>
+//             </div>
+//         )
+//     }
+// }
+
+// https://medium.freecodecamp.org/every-time-you-build-a-to-do-list-app-a-puppy-dies-505b54637a5d
+
+// https://medium.freecodecamp.org/want-to-build-something-fun-heres-a-list-of-sample-web-app-ideas-b991bce0ed9a
+
+// https://medium.freecodecamp.org/summer-is-over-you-should-be-coding-heres-yet-another-list-of-exciting-ideas-to-build-a95d7704d36d
 
 const todosData = [
     {
