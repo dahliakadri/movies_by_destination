@@ -8,8 +8,8 @@ app.secret_key = "test"
 app.jinja_env.undefined = StrictUndefined
 
 
-@app.route('/react123')
-def react123():
+@app.route('/react')
+def react():
 	return render_template("index.html")
 
 @app.route("/countries.json")
@@ -19,15 +19,44 @@ def get_countries_json():
     countries_list = []
 
     for c in countries:
-        countries_list.append({"country_code": c.country_code, "country_name": c.country_name})
-
+        countries_list.append({"country_code": c.country_code,
+        						"country_name": c.country_name})
 
     return jsonify({"countries": countries_list})
+
+@app.route('/reactmoviesbycountry/<country_name>.json')
+def show_movies_by_country_react(country_name):
+	"""Show movies for a particular country user requested"""
+	country = Country.query.filter(Country.country_name == country_name).one()
+	#from country can find all of the movies associated with it from country.movies
+	movies_by_country_list = []
+	movies=country.movies
+	for m in movies:
+		movies_by_country_list.append({"movie_id": m.movie_id, "movie_title": m.title, "imdb_rating": m.imdb_rating, "votes": m.num_votes, "country_code": m.country_code})
+	# if 'current_user' in session:
+	# 	user_first_name = session['current_user']
+	# 	flash(f'Logged in as {user_first_name}.')
+	return jsonify({"movies": movies_by_country_list})
+
+
+
+@app.route('/reactlogincheck.json')
+def logincheck():
+	"""Homepage"""
+	# if 'user_id' in session:
+	# 	user_id = session['user_id']
+	# 	user_first_name = session['current_user']
+	# 	flash(f'Logged in as {user_first_name}.')
+	# else:
+	user_id = False
+	user_first_name = False
+
+	return jsonify({"user_id" : user_id, "user_fname": user_first_name})
+
 	
 @app.route('/')
 def index():
 	"""Homepage"""
-
 	countries_list = Country.query.all()
 	if 'user_id' in session:
 		user_id = session['user_id']
