@@ -223,22 +223,6 @@
 //         )
 //     }
 // }
-// import React, {Component} from "react"
-
-/**
- * Challenge: Wire up the partially-finished travel form so that it works!
- * Remember to use the concept of controlled forms
- * https://reactjs.org/docs/forms.html
- * 
- * All information should be populating the text below the form in real-time
- * as you're filling it out
- * 
- * This exercise is adapted from the V School curriculum on vanilla JS forms:
- * https://coursework.vschool.io/travel-form/
- * 
- * All of our challenges and learning resources are open for the public
- * to play around with and learn from at https://coursework.vschool.io
- */
 
 // class App extends Component {
 //     constructor() {
@@ -320,17 +304,16 @@
                     
 //                     <br />
                     
-//                     <select 
-//                         value={this.state.destination} 
-//                         name="destination" 
-//                         onChange={this.handleChange}
-//                     >
-//                         <option value="">-- Please Choose a destination --</option>
-//                         <option value="germany">Germany</option>
-//                         <option value="norway">Norway</option>
-//                         <option value="north pole">North Pole</option>
-//                         <option value="south pole">South Pole</option>
-//                     </select>
+                    // <select 
+                    //     value={this.state.destination} 
+                    //     name="destination" 
+                    //     onChange={this.handleChange}>
+                    //     <option value="">-- Please Choose a destination --</option>
+                    //     <option value="germany">Germany</option>
+                    //     <option value="norway">Norway</option>
+                    //     <option value="north pole">North Pole</option>
+                    //     <option value="south pole">South Pole</option>
+                    // </select>
                     
 //                     <br />
                     
@@ -381,22 +364,19 @@
 //             </main>
 //         )
 //     }
-// }
-// class MemeGenerator extends Component {
+// // }
+// class App extends React.Component {
 //     constructor() {
 //         super()
 //         this.state = {
-//             topText: "",
-//             bottomText: "",
-//             randomImg: "http://i.imgflip.com/1bij.jpg",
-//             allMemeImgs: []
+//             allcountries: []
 //         }
 //         this.handleChange = this.handleChange.bind(this)
 //         this.handleSubmit = this.handleSubmit.bind(this)
 //     }
     
 //     componentDidMount() {
-//         fetch("https://api.imgflip.com/get_memes")
+//         fetch("/")
 //             .then(response => response.json())
 //             .then(response => {
 //                 const {memes} = response.data
@@ -453,86 +433,345 @@
 
 // https://medium.freecodecamp.org/summer-is-over-you-should-be-coding-heres-yet-another-list-of-exciting-ideas-to-build-a95d7704d36d
 
+// const todosData = [
+//     {
+//         id: 1,
+//         text: "USA",
+//         completed: true
+//     },
+//     {
+//         id: 2,
+//         text: "Egypt",
+//         completed: false
+//     },
+//     {
+//         id: 3,
+//         text: "Ireland",
+//         completed: false
+//     }
+// ]
+
+// class MoodyApp extends React.Component {
+// 	constructor(){
+// 		super()
+// 		this.state = {
+// 			todos: todosData
+// 		}
+// 		this.handleChange = this.handleChange.bind(this)
+// 	}
+
+// 	handleChange(id) {
+// 		console.log("changed", id)
+// 	}
+// 	render() {
+// 		return (
+// 			<div>
+// 				<h1>Is state important to know? {this.state.answer}</h1>
+// 				<Header username="vschool"/>
+// 				<MainContent answer={this.state.answer}/>
+// 				<Footer />
+// 			</div>)
+// 	}
+// }
+
+// class Header extends React.Component{
+// 	render() {
+// 		const headertest = "test123 header"
+// 	return(
+// 		<div><h1 className="welcomemessage">Welcome {this.props.username}, to Moody! This is a test {headertest}</h1>
+// 		<h2 className="slogan">Movies by Travel Destinations</h2>
+// 		Find the perfect movie from your next travel desitination.
+// 		<br></br>
+// 		Start by choosing your destination country in the dropdown menu below:</div>)
+// 	}
+// }
+
+// class MainContent extends React.Component{
+// 	render() {
+// 		const maintest = "test 123 main"
+// 		return(
+// 			<h3> This is a test: {maintest} and {this.props.answer}.</h3>)
+// 	}
+// }
+
+// class Footer extends React.Component{
+// 	render(){
+// 		const footertest = "test123 footer"
+// 		return (
+// 			<div>Moody Since 2020 another test: {footertest}</div>)
+// 	}
+// }
+
+// function TodoItem(props) {
+//     return (
+//         <div className="todo-item">
+//             <input 
+//                 type="checkbox" 
+//                 checked={props.item.completed} 
+//                 onChange={() => props.handleChange(props.item.id)}
+//             />
+//             <p>{props.item.text}</p>
+//         </div>
+//     )
+// }
+
+// ReactDOM.render(<MoodyApp />, document.getElementById("root"))
+
+
+class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {allcountries: [],
+                  loading: false,
+                  destination: ""}
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentDidMount() {
+    this.setState({loading : true})
+    fetch("/cards.json")
+            .then(response => response.json())
+            .then(response => {
+                const {countries} = response.countries
+                this.setState({ loading: false,
+                                allcountries: countries})
+            })
+  }
+
+  handleSubmit(event) {
+        event.preventDefault()
+        const {name, value} = event.target
+        this.setState({ [name]: value })
+      }
+
+  render() {
+    const text = this.state.loading ? "loading..." : "loaded"
+
+    return (
+      <div>
+        {text}
+        Choose your destination:
+        <form className="country-form" onSubmit={this.handleSubmit}>
+          <select value={this.state.selectcountry}
+                  name="destination"
+                  onChange={this.handleChange}>
+                  <option value="">-- Please Choose a destination --</option>
+                  <option value="germany">Germany</option>
+                  <option value="norway">Norway</option>
+                  <option value="north pole">North Pole</option>
+                  <option value="south pole">South Pole</option>
+                  </select>
+      </div>
+    );
+  }
+}
+
+'use strict';
+
+const products = [
+    {
+        id: "1",
+        name: "Pencil",
+        price: 1,
+        description: "Perfect for those who can't remember things! 5/5 Highly recommend."
+    },
+    {
+        id: "2",
+        name: "Housing",
+        price: 0,
+        description: "Housing provided for out-of-state students or those who can't commute"
+    },
+    {
+        id: "3",
+        name: "Computer Rental",
+        price: 300,
+        description: "Don't have a computer? No problem!"
+    },
+    {
+        id: "4",
+        name: "Coffee",
+        price: 2,
+        description: "Wake up!"
+    },
+    {
+        id: "5",
+        name: "Snacks",
+        price: 0,
+        description: "Free snacks!"
+    },
+    {
+        id: "6",
+        name: "Rubber Duckies",
+        price: 3.50,
+        description: "To help you solve your hardest coding problems."
+    },
+    {
+        id: "7",
+        name: "Fidget Spinner",
+        price: 21.99,
+        description: "Because we like to pretend we're in high school."
+    },
+    {
+        id: "8",
+        name: "Sticker Set",
+        price: 14.99,
+        description: "To prove to other devs you know a lot."
+    }
+]
+
 const todosData = [
     {
         id: 1,
-        text: "USA",
+        text: "Take out the trash",
         completed: true
     },
     {
         id: 2,
-        text: "Egypt",
+        text: "Grocery shopping",
         completed: false
     },
     {
         id: 3,
-        text: "Ireland",
+        text: "Clean gecko tank",
+        completed: false
+    },
+    {
+        id: 4,
+        text: "Mow lawn",
+        completed: true
+    },
+    {
+        id: 5,
+        text: "Catch up on Arrested Development",
         completed: false
     }
 ]
 
-class MoodyApp extends React.Component {
-	constructor(){
-		super()
-		this.state = {
-			todos: todosData
-		}
-		this.handleChange = this.handleChange.bind(this)
-	}
-
-	handleChange(id) {
-		console.log("changed", id)
-	}
-	render() {
-		return (
-			<div>
-				<h1>Is state important to know? {this.state.answer}</h1>
-				<Header username="vschool"/>
-				<MainContent answer={this.state.answer}/>
-				<Footer />
-			</div>)
-	}
-}
-
-class Header extends React.Component{
-	render() {
-		const headertest = "test123 header"
-	return(
-		<div><h1 className="welcomemessage">Welcome {this.props.username}, to Moody! This is a test {headertest}</h1>
-		<h2 className="slogan">Movies by Travel Destinations</h2>
-		Find the perfect movie from your next travel desitination.
-		<br></br>
-		Start by choosing your destination country in the dropdown menu below:</div>)
-	}
-}
-
-class MainContent extends React.Component{
-	render() {
-		const maintest = "test 123 main"
-		return(
-			<h3> This is a test: {maintest} and {this.props.answer}.</h3>)
-	}
-}
-
-class Footer extends React.Component{
-	render(){
-		const footertest = "test123 footer"
-		return (
-			<div>Moody Since 2020 another test: {footertest}</div>)
-	}
-}
-
-function TodoItem(props) {
+function MyNewApp () {
     return (
-        <div className="todo-item">
-            <input 
-                type="checkbox" 
-                checked={props.item.completed} 
-                onChange={() => props.handleChange(props.item.id)}
-            />
-            <p>{props.item.text}</p>
+        <div>
+            <Header />
+            <MainContent />
+            <Footer />
+        </div>)
+}
+
+function Header() {
+    const firstName = "Dahlia"
+    const lastName = "Kadri"
+    const date = new Da
+    const styles = {
+        color: "#FF8C00",
+        backgroundColor: "#FF2D00",
+        fontSize: "35px"
+    }
+    return(
+        <header className="navbar">
+        <h1>Welcome to Moody, it is about {`${date.getHours()} o'clock`}- This is the header</h1>
+        <h2 style={styles}>Goodnight</h2>
+        </header>
+    )
+}
+
+function MainContent() {
+    const productComponents = products.map(item => <Product key={item.id} product={item}/>)
+    const todoComponents = todosData.map(item => <ToDo key={item.id} todo={item}/>)
+    return(
+        <div className="main">
+            <div className="product">
+                {productComponents}
+            </div>
+
+            <div className="Joke">
+                <Joke
+                    joke={{question: "Question: Knock Knock?", punchline: "who is there?"}} 
+                />
+                <Joke 
+                    joke={{question: "Question: Hahaha?", punchline: "Hehehe"}} 
+                />
+                <Joke
+                    joke={{punchline: "No questions here hehe"}} 
+                 />
+                <Joke 
+                    joke={{question: "Question: Ugh Another Q", punchline: "No more plz"}} 
+                />
+                <Joke 
+                    joke={{punchline: "Another punchline only"}} 
+                />
+            </div>
+            <div className="contacts">
+                <ContactCard 
+                    contact={{name: "Mr. Whiskerson", imgUrl: "http://placekitten.com/300/200",
+                    phone: "(212) 555-1234",email:"mr.whiskaz@catnap.meow"}}
+                />
+            
+                <ContactCard 
+                    contact={{name:"Fluffykins", imgUrl:"http://placekitten.com/400/200",
+                    phone:"(212) 555-2345", email:"fluff@me.com"}}
+                />
+            
+                <ContactCard 
+                    contact={{name:"Destroyer", imgUrl:"http://placekitten.com/400/300",
+                    phone:"(212) 555-3456", email:"ofworlds@yahoo.com"}}
+                />
+            
+                <ContactCard 
+                    contact={{name:"Felix", imgUrl:"http://placekitten.com/200/100",
+                    phone:"(212) 555-1234", email:"mr.whiskaz@catnap.meow"}}
+                />
+            </div>
+            
+            <div className="todolist">
+                return {todoComponents} 
+            </div>
         </div>
     )
 }
 
-ReactDOM.render(<MoodyApp />, document.getElementById("root"))
+
+function Footer() {
+    return (
+        <footer>
+            <h3>Moody since 2020.</h3>
+        </footer>
+        )
+}
+
+function ContactCard(props) {
+    return(
+    <div className="contacts">
+                <img src={props.contact.imgUrl}/>
+                <h3>{props.contact.name}</h3>
+                <p>Phone: {props.contact.phone}</p>
+                <p>Email: {props.contact.email}</p>
+            </div>)
+}
+
+function Joke(props) {
+    if (props.joke.question) {
+        return(
+            <div className="joke">
+                <p>{props.joke.question}</p>
+                <p>Joke:{props.joke.punchline}</p>
+            </div>)
+        } else {
+            return(
+            <div className="joke">
+            <p style={{color:"red"}}>Joke:{props.joke.punchline}</p>
+            </div>)
+        }
+}
+
+
+function Product(props) {
+        return(
+            <div className="product">
+                <h2>{props.product.name}</h2>
+                <p>{props.product.price.toLocaleString("en-US", { style: "currency", currency: "USD" })}
+                -- {props.product.description}</p>
+            </div>)
+}
+
+ReactDOM.render(<MyNewApp />, document.getElementById("root"))
+
+ReactDOM.render(<App />, document.getElementById('container'));

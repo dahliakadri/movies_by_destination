@@ -11,6 +11,18 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/react123')
 def react123():
 	return render_template("index.html")
+
+@app.route("/countries.json")
+def get_countries_json():
+    """Return a JSON response with all countries in DB."""
+    countries = Country.query.all()
+    countries_list = []
+
+    for c in countries:
+        countries_list.append({"country_code": c.country_code, "country_name": c.country_name})
+
+
+    return jsonify({"countries": countries_list})
 	
 @app.route('/')
 def index():
