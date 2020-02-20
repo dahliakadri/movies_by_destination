@@ -25,8 +25,9 @@ class Header extends React.Component{
             })
     }
 
-  render() {
-        const logInNote = this.state.userId ? this.state.userFname + ", you're logged into Moody!": "You're not logged into Moody."
+    render() {
+        const logInNote = this.state.userId ? <div><button className="logout">Log out</button>{this.state.userFname}, you're logged into Moody!</div>
+        : <div>You're not logged into Moody yet! <button className="login">Log In</button> or <button className="signup">Sign Up</button></div>
     return(
         <div>
             <h1 className="title">Moody Movies by Travel Destinations</h1>
@@ -148,7 +149,7 @@ class MoviesByCountry extends React.Component{
     const movieComponents = this.state.allmovies.map(item => <Movie key={item.movie_id} movie={item} />)
         return(
             <div>
-                <h3> This is MoviesByCountry component country: {this.props.country}.</h3>
+                <h3> Movies from {this.props.country}.</h3>
 
                 <div className="movies">
                 {movieComponents}
@@ -158,15 +159,16 @@ class MoviesByCountry extends React.Component{
     }
 }
 
-function Movie(props) {
-        return(
-            <div className="movie">
-                <h2>Title: {props.movie.movie_title}</h2>
-                <p>Rating: {props.movie.imdb_rating}</p>
-                <p>Votes: {props.movie.votes}</p>
-                <p>Country Code: {props.movie.country_code}</p>
-            </div>)
-}
+function Movie(props){
+    return(
+      <div className="movie">
+        <a className="movie-link">{props.movie.movie_title}</a>
+        <p>Rating: {props.movie.imdb_rating}</p>
+        <p>Votes: {props.movie.votes}</p>
+        <p>Country Code: {props.movie.country_code}</p>
+        </div>
+        )
+      }
 
 
 ReactDOM.render(<MoodyApp />, document.getElementById('root'));
