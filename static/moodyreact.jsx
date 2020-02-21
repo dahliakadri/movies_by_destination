@@ -237,13 +237,12 @@ class MoviesByCountry extends React.Component{
 
   componentDidMount(props) {
     console.log(this.props.country)
-    fetch(`/reactmoviesbycountry/${this.props.country}.json`)
-            .then(response => response.json())
-            .then(response => {
-                const {movies} = response
-                console.log(movies)
-                this.setState({ allmovies: movies})
-                })
+    $.get("/movies", {country: this.props.country})
+      .then(response => {
+        const {movies} = response
+        console.log(movies)
+        this.setState({ allmovies: movies})
+        })
 
   }
 

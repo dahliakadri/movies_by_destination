@@ -24,6 +24,23 @@ def get_countries_json():
 
     return jsonify({"countries": countries_list})
 
+
+@app.route('/movies')
+def show_movies_by_country_test():
+	"""Show movies for a particular country user requested"""
+	print(request)
+	country_name = request.args["country"]
+	country = Country.query.filter(Country.country_name == country_name).one()
+	#from country can find all of the movies associated with it from country.movies
+	movies_by_country_list = []
+	movies=country.movies
+	for m in movies:
+		movies_by_country_list.append({"movie_id": m.movie_id, "movie_title": m.title, "imdb_rating": m.imdb_rating, "votes": m.num_votes, "country_code": m.country_code})
+	# if 'current_user' in session:
+	# 	user_first_name = session['current_user']
+	# 	flash(f'Logged in as {user_first_name}.')
+	return jsonify({"movies": movies_by_country_list})
+
 @app.route('/reactmoviesbycountry/<country_name>.json')
 def show_movies_by_country_react(country_name):
 	"""Show movies for a particular country user requested"""
