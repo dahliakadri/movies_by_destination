@@ -275,7 +275,7 @@ class MoviesByCountry extends React.Component{
 
 
   render() {
-    const movieComponents = this.state.allmovies.map(item => <Movie key={item.movie_id} movie={item} />)
+    const movieComponents = this.state.allmovies.map(item => <Movie key={item.movie_id} movie={item} country={this.props.country} />)
     const movieDetailComponents = this.state.allmovies.map(item => <MovieDetails key={item.movie_id} movie={item} />)
         return(
             <div>
@@ -315,7 +315,8 @@ class Movie extends React.Component{
       <div className="moviedetails">
         <li>Rating: {this.props.movie.imdb_rating}</li>
         <li>Votes: {this.props.movie.votes}</li>
-        <li>Country Code: {this.props.movie.country_code}</li>
+        <li>Country: {this.props.country}</li>
+        <br />
         </div> : <br />
     return(
       <div>
