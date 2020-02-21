@@ -227,14 +227,15 @@ class CountrySearch extends React.Component {
   }
 }
 
+
+
 class MoviesByCountry extends React.Component{
     constructor() {
         super()
         this.state = {allmovies: []}
-        this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount(props) {
     console.log(this.props.country)
     fetch(`/reactmoviesbycountry/${this.props.country}.json`)
             .then(response => response.json())
@@ -274,7 +275,7 @@ class MoviesByCountry extends React.Component{
 
 
   render() {
-    const movieTitleComponents = this.state.allmovies.map(item => <MovieTitle key={item.movie_id} movie={item} />)
+    const movieComponents = this.state.allmovies.map(item => <Movie key={item.movie_id} movie={item} />)
     const movieDetailComponents = this.state.allmovies.map(item => <MovieDetails key={item.movie_id} movie={item} />)
         return(
             <div>
@@ -283,7 +284,7 @@ class MoviesByCountry extends React.Component{
                 <form className="movies" >
                 Add movies would you like to watch:
                 <br />
-                {movieTitleComponents}
+                {movieComponents}
                 <br />
                 <button type="submit">Add to watch list</button> 
                 </form>
@@ -299,20 +300,40 @@ class MoviesByCountry extends React.Component{
 
 // to add to my watchlist i need to set a state when "onchange"/"on checked". and then on submit i send over everything in the state. 
 
-function MovieTitle(props){
+class Movie extends React.Component{
+  constructor() {
+    super()
+    this.state = {moviedetails: false}
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick(){
+    this.setState({moviedetails: !this.state.moviedetails})
+  }
+  render(){
+    const movieDetails = this.state.moviedetails ?
+      <div className="moviedetails">
+        <li>Rating: {this.props.movie.imdb_rating}</li>
+        <li>Votes: {this.props.movie.votes}</li>
+        <li>Country Code: {this.props.movie.country_code}</li>
+        </div> : <br />
     return(
+      <div>
       <div className="movie-link">
         <input type="checkbox"
                 name="movie_keys"
-                value={props.movie.movie_title}
+                value={this.props.movie.movie_title}
                 />
         <label>
-          <a href="/" target="_blank">{props.movie.movie_title}</a>
+          <a onClick={this.handleClick} target="_blank">{this.props.movie.movie_title}</a>
           </label>
           <br />
       </div>
+      {movieDetails}
+      </div>
         )
       }
+  }
 
 function MovieDetails(props){
     return(
