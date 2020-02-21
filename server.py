@@ -39,6 +39,67 @@ def show_movies_by_country_react(country_name):
 	return jsonify({"movies": movies_by_country_list})
 
 
+@app.route("/watchlistreact", methods=['POST'])
+def add_movies_to_watch_list_react():
+	"""Adds movies selected by the user to a watch list"""
+	form_movie_keys = request.form.getlist("movie_keys")
+	print(form_movie_keys)
+	user_id = 123
+	for movie_id in form_movie_keys:
+		saved_movie_object = SavedMovie(movie_id = movie_id,
+										user_id = user_id,)
+		db.session.add(saved_movie_object)
+		db.session.commit()
+		#once all added flashes message, movie added and redirects to main page
+		return redirect('/')
+	# else:
+	# 	form_movie_keys = request.form.getlist("movie_keys")
+	# 	print(form_movie_keys)
+	# 	user_id = session['user_id']
+	# 	user_fname = session['current_user']
+	# 	for movie_id in form_movie_keys:
+	# 		saved_movie_object = SavedMovie(movie_id = movie_id,
+	# 									user_id = user_id,)
+	# 		db.session.add(saved_movie_object)
+	# 		db.session.commit()
+	# 	flash(f'Thanks {user_fname}, your movies were added to your watchlist')
+	# #once all added flashes message, movie added and redirects to main page
+
+
+
+@app.route("/reactsignup", methods=['Post'])
+def handle_react_signup():
+	"""handles the sign up for a user"""
+	if 'current_user' in session:
+		user_fname = session['current_user']
+		flash(f'You are already logged in as {user_fname}.')
+		return redirect('/')
+	email = request.form.get('email')
+	if User.query.filter(User.email == email).count() > 0:
+		flash(f'Account with {email} already exits, use a new email')
+		return redirect("/signupform")
+	else:
+		password = request.form.get('password')
+		fname = request.form.get('fname')
+		lname = request.form.get('lname')
+		country_name = request.form.get('country_name_data')
+		country = Country.query.filter(Country.country_name == country_name).one()
+		country_code = country.country_code
+
+		user_object = User(email=email,
+						password=password,
+						fname=fname,
+						lname=lname,
+						country_code=country_code)
+		db.session.add(user_object)
+		db.session.commit()
+		user = User.query.filter(User.email == email).one()
+		flash(f"""Thanks for signing up {user.fname}.
+			You signed up at {user.time_created}, you can begin using Moody!""")
+		session['current_user'] = user.fname
+		session['user_id'] = user.user_id
+		session['user_email'] = user.email
+		return redirect('/')
 
 @app.route('/reactlogincheck.json')
 def logincheck():
@@ -52,6 +113,11 @@ def logincheck():
 	user_first_name = False
 
 	return jsonify({"user_id" : user_id, "user_fname": user_first_name})
+
+
+
+
+
 
 	
 @app.route('/')
