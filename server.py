@@ -25,7 +25,7 @@ def get_countries_json():
     return jsonify({"countries": countries_list})
 
 
-@app.route('/movies')
+@app.route('/movies', methods=['GET'])
 def show_movies_by_country_test():
 	"""Show movies for a particular country user requested"""
 	print(request)
@@ -41,34 +41,36 @@ def show_movies_by_country_test():
 	# 	flash(f'Logged in as {user_first_name}.')
 	return jsonify({"movies": movies_by_country_list})
 
-@app.route('/reactmoviesbycountry/<country_name>.json')
-def show_movies_by_country_react(country_name):
-	"""Show movies for a particular country user requested"""
-	country = Country.query.filter(Country.country_name == country_name).one()
-	#from country can find all of the movies associated with it from country.movies
-	movies_by_country_list = []
-	movies=country.movies
-	for m in movies:
-		movies_by_country_list.append({"movie_id": m.movie_id, "movie_title": m.title, "imdb_rating": m.imdb_rating, "votes": m.num_votes, "country_code": m.country_code})
-	# if 'current_user' in session:
-	# 	user_first_name = session['current_user']
-	# 	flash(f'Logged in as {user_first_name}.')
-	return jsonify({"movies": movies_by_country_list})
+# @app.route('/reactmoviesbycountry/<country_name>.json')
+# def show_movies_by_country_react(country_name):
+# 	"""Show movies for a particular country user requested"""
+# 	country = Country.query.filter(Country.country_name == country_name).one()
+# 	#from country can find all of the movies associated with it from country.movies
+# 	movies_by_country_list = []
+# 	movies=country.movies
+# 	for m in movies:
+# 		movies_by_country_list.append({"movie_id": m.movie_id, "movie_title": m.title, "imdb_rating": m.imdb_rating, "votes": m.num_votes, "country_code": m.country_code})
+# 	# if 'current_user' in session:
+# 	# 	user_first_name = session['current_user']
+# 	# 	flash(f'Logged in as {user_first_name}.')
+# 	return jsonify({"movies": movies_by_country_list})
 
 
 @app.route("/watchlistreact", methods=['POST'])
 def add_movies_to_watch_list_react():
 	"""Adds movies selected by the user to a watch list"""
+	print(request)
 	form_movie_keys = request.form.getlist("movie_keys")
 	print(form_movie_keys)
-	user_id = 123
-	for movie_id in form_movie_keys:
-		saved_movie_object = SavedMovie(movie_id = movie_id,
-										user_id = user_id,)
-		db.session.add(saved_movie_object)
-		db.session.commit()
+	# user_id = 1
+	# for movie_id in form_movie_keys:
+	# 	saved_movie_object = SavedMovie(movie_id = movie_id,
+	# 									user_id = user_id,)
+	# 	db.session.add(saved_movie_object)
+	# 	db.session.commit()
+	return jsonify({"Successs": "400"})
 		#once all added flashes message, movie added and redirects to main page
-		return redirect('/')
+	# return 	# in react you return json and jsx decides what to do 
 	# else:
 	# 	form_movie_keys = request.form.getlist("movie_keys")
 	# 	print(form_movie_keys)

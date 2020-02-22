@@ -232,15 +232,16 @@ class CountrySearch extends React.Component {
 class MoviesByCountry extends React.Component{
     constructor() {
         super()
-        this.state = {allmovies: []}
+        this.state = {allmovies: [], checkedMovies: {}}
+
+        // this.handleSubmit = this.handleSubmit.bind(this)
+        // this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount(props) {
-    console.log(this.props.country)
     $.get("/movies", {country: this.props.country})
       .then(response => {
         const {movies} = response
-        console.log(movies)
         this.setState({ allmovies: movies})
         })
 
@@ -248,11 +249,9 @@ class MoviesByCountry extends React.Component{
 
   componentDidUpdate(prevProps, prevState){
     if(prevProps.country !== this.props.country){
-      fetch(`/reactmoviesbycountry/${this.props.country}.json`)
-            .then(response => response.json())
+      $.get("/movies", {country: this.props.country})
             .then(response => {
                 const {movies} = response
-                console.log(movies)
                 this.setState({ allmovies: movies})
                 })
       }
@@ -261,26 +260,46 @@ class MoviesByCountry extends React.Component{
   // handleSubmit(event) {
   //   event.preventDefault()
   //   $.post("/watchlistreact", {
-  //     }
-  //   }
-  //   ).then(response => {
+  //     }).then(response => {
   //     console.log("movies added to watch list", response)
   //   }).catch(error => {
   //     console.log("movies watch list error", error)
   //   })
+  // }
+
+  // handleChange(movie_id) {
+  //   console.log("testing", event)
+
 
   // }
 
-
-
   render() {
-    const movieComponents = this.state.allmovies.map(item => <Movie key={item.movie_id} movie={item} country={this.props.country} />)
+    const movieComponents = this.state.allmovies.map(item => 
+      <Movie 
+        key={item.movie_id}
+        movie={item} 
+        country={this.props.country} 
+        checkedMovies = { this.state.checkedMovies }
+        onSelected={(() => {
+          let new_movs = Object.assign({}, this.state.checkedMovies)
+          new_movs[item.movie_id] = true
+          this.setState({checkedMovies: new_movs})
+        })} 
+        onUnselected={(() =>{
+          let new_movs = Object.assign({}, this.state.checkedMovies)
+          delete new_movs[item.movie_id]
+          this.setState({checkedMovies: new_movs})
+
+        }
+          )}
+      />
+    )
     const movieDetailComponents = this.state.allmovies.map(item => <MovieDetails key={item.movie_id} movie={item} />)
         return(
             <div>
                 <h3> Movies from {this.props.country}:</h3>
                 <div className="movies">
-                <form className="movies" >
+                <form className="movies">
                 Add movies would you like to watch:
                 <br />
                 {movieComponents}
@@ -293,11 +312,7 @@ class MoviesByCountry extends React.Component{
     }
 }
 
-// set state of a false boolean and in 
-// render function put movie details and only render if 
-// the that state is true. and have on click set that state to true so it shows up.
-
-// to add to my watchlist i need to set a state when "onchange"/"on checked". and then on submit i send over everything in the state. 
+// to add to my watchlist i need to set a state when "on checked". and then on submit i send over everything in the state. 
 
 class Movie extends React.Component{
   constructor() {
@@ -322,8 +337,10 @@ class Movie extends React.Component{
       <div className="movie-link">
         <input type="checkbox"
                 name="movie_keys"
-                value={this.props.movie.movie_title}
-                />
+                checked={!!this.props.checkedMovies[this.props.movie.movie_id]}
+                value={this.props.movie.movie_id}
+                onChange={ (event) => !event.target.checked ? this.props.onUnselected() : this.props.onSelected() }
+        />
         <label>
           <a onClick={this.handleClick} target="_blank">{this.props.movie.movie_title}</a>
           </label>
@@ -338,6 +355,7 @@ class Movie extends React.Component{
 function MovieDetails(props){
     return(
       <div className="moviedetails">
+        <li>Title: {props.movie.movie_title}</li>
         <li>Rating: {props.movie.imdb_rating}</li>
         <li>Votes: {props.movie.votes}</li>
         <li>Country Code: {props.movie.country_code}</li>
