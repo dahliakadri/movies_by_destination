@@ -1,7 +1,7 @@
 """Movies By Destination."""
 
 from jinja2 import StrictUndefined
-from flask import Flask, flash, render_template, redirect, request, session, jsonify
+from flask import Flask, flash, render_template, redirect, request, session, jsonify, json
 from model import User, Movie, Country, CountryFact, MoodyRating, SavedMovie, Poster, connect_to_db, db
 app = Flask(__name__)
 app.secret_key = "test"
@@ -28,14 +28,17 @@ def get_countries_json():
 @app.route('/movies', methods=['GET'])
 def show_movies_by_country_test():
 	"""Show movies for a particular country user requested"""
-	print(request)
 	country_name = request.args["country"]
 	country = Country.query.filter(Country.country_name == country_name).one()
 	#from country can find all of the movies associated with it from country.movies
 	movies_by_country_list = []
 	movies=country.movies
 	for m in movies:
-		movies_by_country_list.append({"movie_id": m.movie_id, "movie_title": m.title, "imdb_rating": m.imdb_rating, "votes": m.num_votes, "country_code": m.country_code})
+		movies_by_country_list.append({"movie_id": m.movie_id,
+										"movie_title": m.title,
+										"imdb_rating": m.imdb_rating,
+										"votes": m.num_votes,
+										"country_code": m.country_code})
 	# if 'current_user' in session:
 	# 	user_first_name = session['current_user']
 	# 	flash(f'Logged in as {user_first_name}.')
@@ -59,16 +62,64 @@ def show_movies_by_country_test():
 @app.route("/watchlistreact", methods=['POST'])
 def add_movies_to_watch_list_react():
 	"""Adds movies selected by the user to a watch list"""
-	print(request)
-	form_movie_keys = request.form.getlist("movie_keys")
-	print(form_movie_keys)
-	# user_id = 1
-	# for movie_id in form_movie_keys:
-	# 	saved_movie_object = SavedMovie(movie_id = movie_id,
-	# 									user_id = user_id,)
-	# 	db.session.add(saved_movie_object)
-	# 	db.session.commit()
-	return jsonify({"Successs": "400"})
+
+	data = request.json
+	print(data)
+	#if user in session it commits the watchlist to the SavedMovies table
+	#and then quiers the data base for the users up to date SavedMovies
+	#would then like to render the watch list instead of the dropdown menue
+	user_id_l = 1
+	for movie_id_l in data['movieIds']:
+		movie = SavedMovie.query.filter(SavedMovie.user_id == 1 , SavedMovie.movie_id == movie_id_l).first()
+		print(movie)
+		if movie == None:
+			saved_movie_object = SavedMovie(movie_id = movie_id_l,
+										user_id = user_id_l,)
+			db.session.add(saved_movie_object)
+			db.session.commit()
+			print(movie_id_l, "added")
+		else: 
+			print(movie_id_l, "not added")
+			continue
+	return ("Tadaaa")
+
+@app.route('/watchlist/user', methods=['GET'])
+def show_movies_watch_list_by_user():
+	user_id = request.args["userId"]
+	user = User.query.filter(User.user_id == user_id).one()
+	saved_movies = user.watch_list
+	print(saved_movies)
+	user_saved_full_movie_data_list = []
+	for movie in saved_movies:
+		user_saved_full_movie_data_list.append(Movie.query.filter(Movie.movie_id == movie.movie_id).one())
+	user_movie_list = []
+	for m in user_saved_full_movie_data_list:
+		user_movie_list.append({"movie_id": m.movie_id,
+								"movie_title": m.title,
+								"imdb_rating": m.imdb_rating,
+								"votes": m.num_votes,
+								"country_code": m.country_code})
+	print(user_movie_list)
+	return jsonify({"movies": user_movie_list})
+
+@app.route("/watchlist/update", methods=['POST'])
+def update_movies_to_watch_list_react():
+	"""Adds movies selected by the user to a watch list"""
+
+	data = request.json
+	print(data)
+	#if user in session it commits the watchlist to the SavedMovies table
+	#and then quiers the data base for the users up to date SavedMovies
+	#would then like to render the watch list instead of the dropdown menue
+	user_id = 1
+	for movie_id in data['movieIds']:
+		saved_movie_object = SavedMovie(movie_id = movie_id,
+										user_id = user_id,)
+		db.session.delete(saved_movie_object)
+		db.session.commit()
+	return ("Tadaaa")
+
+
 		#once all added flashes message, movie added and redirects to main page
 	# return 	# in react you return json and jsx decides what to do 
 	# else:
@@ -83,7 +134,6 @@ def add_movies_to_watch_list_react():
 	# 		db.session.commit()
 	# 	flash(f'Thanks {user_fname}, your movies were added to your watchlist')
 	# #once all added flashes message, movie added and redirects to main page
-
 
 
 @app.route("/reactsignup", methods=['Post'])

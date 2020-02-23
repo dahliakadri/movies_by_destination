@@ -2,7 +2,7 @@ class MoodyApp extends React.Component{
   constructor() {
     super();
 
-    this.state = { currentPage: 0, pages: [<HomePage />, <AboutPage />, <SignUp />] }
+    this.state = { currentPage: 0, pages: [<HomePage />, <AboutPage />, <SignUp />, <Watchlist />] }
   }
   render() {
     return (
@@ -12,6 +12,7 @@ class MoodyApp extends React.Component{
             <button onClick={() => this.setState({currentPage: 0})}> Homepage </button>
             <button onClick={() => this.setState({currentPage: 1})}> About </button>
             <button onClick={() => this.setState({currentPage: 2})}> SignUp </button>
+            <button onClick={() => this.setState({currentPage: 3})}> Watchlist </button>
           </div>
           <div>
           {this.state.pages[this.state.currentPage]}
@@ -234,8 +235,7 @@ class MoviesByCountry extends React.Component{
         super()
         this.state = {allmovies: [], checkedMovies: {}}
 
-        // this.handleSubmit = this.handleSubmit.bind(this)
-        // this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount(props) {
@@ -257,21 +257,20 @@ class MoviesByCountry extends React.Component{
       }
   }
 
-  // handleSubmit(event) {
-  //   event.preventDefault()
-  //   $.post("/watchlistreact", {
-  //     }).then(response => {
-  //     console.log("movies added to watch list", response)
-  //   }).catch(error => {
-  //     console.log("movies watch list error", error)
-  //   })
-  // }
-
-  // handleChange(movie_id) {
-  //   console.log("testing", event)
-
-
-  // }
+  handleSubmit(event) {
+    event.preventDefault()
+    const watchListMovies = Object.keys(this.state.checkedMovies)
+    const watchDictMovies = {"movieIds": watchListMovies}
+    const response = fetch('/watchlistreact', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(watchDictMovies) // body data type must match "Content-Type" header
+    })
+    // return await response.json(); // parses JSON response into native JavaScript objects
+    }
+  
 
   render() {
     const movieComponents = this.state.allmovies.map(item => 
@@ -282,7 +281,7 @@ class MoviesByCountry extends React.Component{
         checkedMovies = { this.state.checkedMovies }
         onSelected={(() => {
           let new_movs = Object.assign({}, this.state.checkedMovies)
-          new_movs[item.movie_id] = true
+          new_movs[item.movie_id] = item.movie_id
           this.setState({checkedMovies: new_movs})
         })} 
         onUnselected={(() =>{
@@ -294,12 +293,11 @@ class MoviesByCountry extends React.Component{
           )}
       />
     )
-    const movieDetailComponents = this.state.allmovies.map(item => <MovieDetails key={item.movie_id} movie={item} />)
         return(
             <div>
                 <h3> Movies from {this.props.country}:</h3>
                 <div className="movies">
-                <form className="movies">
+                <form className="movies" onSubmit={this.handleSubmit}>
                 Add movies would you like to watch:
                 <br />
                 {movieComponents}
@@ -311,8 +309,6 @@ class MoviesByCountry extends React.Component{
             )
     }
 }
-
-// to add to my watchlist i need to set a state when "on checked". and then on submit i send over everything in the state. 
 
 class Movie extends React.Component{
   constructor() {
@@ -352,16 +348,80 @@ class Movie extends React.Component{
       }
   }
 
-function MovieDetails(props){
-    return(
-      <div className="moviedetails">
-        <li>Title: {props.movie.movie_title}</li>
-        <li>Rating: {props.movie.imdb_rating}</li>
-        <li>Votes: {props.movie.votes}</li>
-        <li>Country Code: {props.movie.country_code}</li>
+
+class Watchlist extends React.Component{
+  constructor() {
+    super()
+    this.state = {watchmovies: [], checkedMovies: {}}
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    const watchUpdateMovies = Object.keys(this.state.checkedMovies)
+    const watchUpdatetObject = {"movieIds": watchUpdateMovies}
+    const response = fetch('/watchlist/update', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(watchUpdateMovies) // body data type must match "Content-Type" header
+    })
+    // return await response.json(); // parses JSON response into native JavaScript objects
+    }
+
+  componentDidMount(props) {
+    $.get("/watchlist/user", {userId:1})
+      .then(response => {
+        const {movies} = response
+        console.log(movies)
+        this.setState({ watchmovies: movies})
+        })
+
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(prevProps.checkedMovies !== this.props.checkedMovies){
+      $.get("/watchlist/user", {userId: 1})
+            .then(response => {
+                const {movies} = response
+                this.setState({ watchmovies: movies})
+                })
+      }
+  }
+
+  render() {
+    const movieWatchComponents = this.state.watchmovies.map(item => 
+      <Movie 
+        key={item.movie_id}
+        movie={item} 
+        country={this.props.country} 
+        checkedMovies = { this.state.checkedMovies }
+        onSelected={(() => {
+          let new_movs = Object.assign({}, this.state.checkedMovies)
+          new_movs[item.movie_id] = item.movie_id
+          this.setState({checkedMovies: new_movs})
+        })} 
+        onUnselected={(() =>{
+          let new_movs = Object.assign({}, this.state.checkedMovies)
+          delete new_movs[item.movie_id]
+          this.setState({checkedMovies: new_movs})
+        })}
+      />)
+      return (
+        <div>
+          <h3> Your movie watch list:</h3>
+          <div className="movies">
+          <form className="movies" onSubmit={this.handleSubmit}>
+            Check to remove movies from your list:
+            <br />
+            {movieWatchComponents}
+            <br />
+            <button type="submit">Remove from watch list</button> 
+          </form>
+          </div>
         </div>
         )
-      }
-
+  }
+}
 
 ReactDOM.render(<MoodyApp />, document.getElementById('root'));
