@@ -14,15 +14,24 @@ def react():
 
 @app.route("/countries.json")
 def get_countries_json():
+    """Return a JSON response with all countries in DB with movies."""
+    countries = Country.query.all()
+    countries_list = []
+    for c in countries:
+    	if c.movies:
+    		countries_list.append({"country_code": c.country_code,
+    								"country_name": c.country_name})
+
+    return jsonify({"countries": countries_list})
+
+@app.route("/countriesreg.json")
+def get_countries_all_json():
     """Return a JSON response with all countries in DB."""
     countries = Country.query.all()
     countries_list = []
     for c in countries:
-    	if len(c.movies) == 0:
-    		continue
-    	else:
-    		countries_list.append({"country_code": c.country_code,
-    							"country_name": c.country_name})
+    	countries_list.append({"country_code": c.country_code,
+    								"country_name": c.country_name})
 
     return jsonify({"countries": countries_list})
 

@@ -70,7 +70,11 @@ class SignUp extends React.Component{
     this.state = {email: "",
                   password: "",
                   password_confirmation: "",
-                  registrationErrors: ""}
+                  first_name:"",
+                  last_name:"",
+                  country:"",
+                  registrationErrors: "",
+                  allcountries: []}
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
@@ -98,35 +102,75 @@ class SignUp extends React.Component{
     //   console.log("registration error", error)
     // })
     event.preventDefault()
-      }
+  }
+
+  componentDidMount() {
+    fetch("/countriesreg.json")
+            .then(response => response.json())
+            .then(response => {
+                const {countries} = response
+                this.setState({ allcountries: countries})
+            })
+  }
 
   render() {
+    const countryOptions = this.state.allcountries.map((item) => <option key={item.country_code} value={item.country_name}>{item.country_name}</option>)
     return (
+
       <div>
-      <form onSubmit={this.handleSubmit}>
+        <br />
+        Registration
+        <br />
+        <form onSubmit={this.handleSubmit}>
         <input type="email"
                 name="email"
                 placeholder="Email"
                 value={this.state.email}
                 onChange={this.handleChange} required />
-        <input type="password"
+                <label>Email</label>
+                <br />
+        <input type="text"
+                name="first_name"
+                placeholder="First Name"
+                value={this.state.first_name}
+                onChange={this.handleChange} required />
+                <label>First Name</label>
+                <br />
+        <input type="text"
+                name="last_name"
+                placeholder="Last Name"
+                value={this.state.last_name}
+                onChange={this.handleChange} required />
+                <label>Last Name</label>
+                <br />
+        <select value={this.state.country}
+                name="country"
+                onChange={this.handleChange}>
+              <option value="">-- Please Choose Country --</option>
+              {countryOptions}
+          </select>
+          <label>Which country do you most connect with?</label>
+          <br />
+          <input type="password"
                 name="password"
                 placeholder="Password"
                 value={this.state.password}
                 onChange={this.handleChange} required />
-        <input type="password"
+                <label>Password</label>
+                <br />
+          <input type="password"
                 name="password_confirmation"
                 placeholder="Password confirmation"
                 value={this.state.password_confirmation}
                 onChange={this.handleChange} required />
-        <button type="submit">Regiser</button>
-      </form>
+                <label>Re-enter your password to confirm</label>
+          <br />
+          <button type="submit">Regiser</button>
+        </form>
       </div>
-    )
+      )
   }
-
 }
-
 
 class UserSession extends React.Component {
   constructor(){
@@ -135,7 +179,6 @@ class UserSession extends React.Component {
                         userFname: false}
       // this.login = this.login.bind(this)
       // this.logout = this.logout.bind(this)
-
     }
 
     componentDidMount() {
@@ -200,7 +243,7 @@ class CountrySearch extends React.Component {
       }
 
   render() {
-    const text = this.state.loading ? "Moody Movies Loading..." : "Welcome to Moody Movies"
+    const text = this.state.loading ? "Searching Countries with Movies..." : "Movies Loaded. Welcome to Moody Movies"
     
     const countryOptions = this.state.allcountries.map((item) =>
         <option key={item.country_code} value={item.country_name}>{item.country_name}</option>)
