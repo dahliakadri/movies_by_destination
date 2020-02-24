@@ -352,7 +352,8 @@ class Movie extends React.Component{
 class Watchlist extends React.Component{
   constructor() {
     super()
-    this.state = {watchmovies: [], checkedMovies: {}}
+    this.state = {watchmovies: [], checkedMovies: {}, remove: true}
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleSubmit(event) {
@@ -367,6 +368,7 @@ class Watchlist extends React.Component{
       body: JSON.stringify(watchUpdateMovies) // body data type must match "Content-Type" header
     })
     // return await response.json(); // parses JSON response into native JavaScript objects
+    this.setState ({remove: false})
     }
 
   componentDidMount(props) {
@@ -380,12 +382,14 @@ class Watchlist extends React.Component{
   }
 
   componentDidUpdate(prevProps, prevState){
-    if(prevProps.checkedMovies !== this.props.checkedMovies){
+    if(this.state.remove == false){
       $.get("/watchlist/user", {userId: 1})
             .then(response => {
                 const {movies} = response
+                console.log(movies)
                 this.setState({ watchmovies: movies})
                 })
+      this.setState({remove: true})
       }
   }
 
@@ -409,7 +413,7 @@ class Watchlist extends React.Component{
       />)
       return (
         <div>
-          <h3> Your movie watch list:</h3>
+          <h3> Your movies watch list:</h3>
           <div className="movies">
           <form className="movies" onSubmit={this.handleSubmit}>
             Check to remove movies from your list:

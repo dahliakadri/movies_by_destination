@@ -107,16 +107,16 @@ def update_movies_to_watch_list_react():
 	"""Adds movies selected by the user to a watch list"""
 
 	data = request.json
-	print(data)
+	print("that data is", data)
 	#if user in session it commits the watchlist to the SavedMovies table
 	#and then quiers the data base for the users up to date SavedMovies
 	#would then like to render the watch list instead of the dropdown menue
 	user_id = 1
-	for movie_id in data['movieIds']:
-		saved_movie_object = SavedMovie(movie_id = movie_id,
-										user_id = user_id,)
-		db.session.delete(saved_movie_object)
+	for movie_id in data:
+		saved_movie  = SavedMovie.query.filter(SavedMovie.user_id == 1 , SavedMovie.movie_id == movie_id).first()
+		db.session.delete(saved_movie)
 		db.session.commit()
+		print("deleted")
 	return ("Tadaaa")
 
 
