@@ -69,7 +69,6 @@ class SignUp extends React.Component{
     super(props)
     this.state = {email: "",
                   password: "",
-                  password_confirmation: "",
                   first_name:"",
                   last_name:"",
                   country:"",
@@ -88,19 +87,26 @@ class SignUp extends React.Component{
   }
 
   handleSubmit(event) {
-    // $.post("/reactsignup", {
-    //   user: {
-    //     email: this.state.email
-    //     password: this.state.password
-    //     password_confirmation: this.state.password_confirmation
-    //   }
-    // },
-    // { withCredentials: true}
-    // ).then(response => {
-    //   console.log("registration response", response)
-    // }).catch(error => {
-    //   console.log("registration error", error)
-    // })
+    const userInfo = {
+        email: this.state.email,
+        password: this.state.password,
+        first_name: this.state.first_name,
+        last_name: this.state.last_name,
+        country: this.state.country,
+      }
+    fetch("/reactsignup", {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userInfo) // body data type must match "Content-Type" header
+    })
+    .then(response => {
+      console.log("registration response", response)
+    }).catch(error => {
+      console.log("registration error", error)
+    })
+    console.log("form submitted")
     event.preventDefault()
   }
 
@@ -158,13 +164,6 @@ class SignUp extends React.Component{
                 onChange={this.handleChange} required />
                 <label>Password</label>
                 <br />
-          <input type="password"
-                name="password_confirmation"
-                placeholder="Password confirmation"
-                value={this.state.password_confirmation}
-                onChange={this.handleChange} required />
-                <label>Re-enter your password to confirm</label>
-          <br />
           <button type="submit">Regiser</button>
         </form>
       </div>

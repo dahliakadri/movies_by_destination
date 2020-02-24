@@ -56,21 +56,6 @@ def show_movies_by_country_test():
 	# 	flash(f'Logged in as {user_first_name}.')
 	return jsonify({"movies": movies_by_country_list})
 
-# @app.route('/reactmoviesbycountry/<country_name>.json')
-# def show_movies_by_country_react(country_name):
-# 	"""Show movies for a particular country user requested"""
-# 	country = Country.query.filter(Country.country_name == country_name).one()
-# 	#from country can find all of the movies associated with it from country.movies
-# 	movies_by_country_list = []
-# 	movies=country.movies
-# 	for m in movies:
-# 		movies_by_country_list.append({"movie_id": m.movie_id, "movie_title": m.title, "imdb_rating": m.imdb_rating, "votes": m.num_votes, "country_code": m.country_code})
-# 	# if 'current_user' in session:
-# 	# 	user_first_name = session['current_user']
-# 	# 	flash(f'Logged in as {user_first_name}.')
-# 	return jsonify({"movies": movies_by_country_list})
-
-
 @app.route("/watchlistreact", methods=['POST'])
 def add_movies_to_watch_list_react():
 	"""Adds movies selected by the user to a watch list"""
@@ -152,22 +137,25 @@ def update_movies_to_watch_list_react():
 	# #once all added flashes message, movie added and redirects to main page
 
 
-@app.route("/reactsignup", methods=['Post'])
+@app.route("/reactsignup", methods=['POST'])
 def handle_react_signup():
 	"""handles the sign up for a user"""
-	if 'current_user' in session:
-		user_fname = session['current_user']
-		flash(f'You are already logged in as {user_fname}.')
-		return redirect('/')
-	email = request.form.get('email')
+	data=request.json
+	print("this data is", data)
+
+	# if 'current_user' in session:
+	# 	user_fname = session['current_user']
+	# 	flash(f'You are already logged in as {user_fname}.')
+	# 	return redirect('/')
+	email = data['email']
 	if User.query.filter(User.email == email).count() > 0:
 		flash(f'Account with {email} already exits, use a new email')
-		return redirect("/signupform")
+		return "not sucessful"
 	else:
-		password = request.form.get('password')
-		fname = request.form.get('fname')
-		lname = request.form.get('lname')
-		country_name = request.form.get('country_name_data')
+		password = data['password']
+		fname = data['first_name']
+		lname = data['last_name']
+		country_name = data['country']
 		country = Country.query.filter(Country.country_name == country_name).one()
 		country_code = country.country_code
 
@@ -178,13 +166,15 @@ def handle_react_signup():
 						country_code=country_code)
 		db.session.add(user_object)
 		db.session.commit()
+		print("user added")
 		user = User.query.filter(User.email == email).one()
+		print(user)
 		flash(f"""Thanks for signing up {user.fname}.
 			You signed up at {user.time_created}, you can begin using Moody!""")
 		session['current_user'] = user.fname
 		session['user_id'] = user.user_id
 		session['user_email'] = user.email
-		return redirect('/')
+	return "tada"
 
 @app.route('/reactlogincheck.json')
 def logincheck():
