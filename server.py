@@ -83,6 +83,8 @@ def add_movies_to_watch_list_react():
 			continue
 	return ("Tadaaa")
 
+
+
 @app.route('/watchlist/user', methods=['GET'])
 def show_movies_watch_list_by_user():
 	user_id = request.args["userId"]
@@ -94,11 +96,13 @@ def show_movies_watch_list_by_user():
 		user_saved_full_movie_data_list.append(Movie.query.filter(Movie.movie_id == movie.movie_id).one())
 	user_movie_list = []
 	for m in user_saved_full_movie_data_list:
+		country_object = m.country 
 		user_movie_list.append({"movie_id": m.movie_id,
 								"movie_title": m.title,
 								"imdb_rating": m.imdb_rating,
 								"votes": m.num_votes,
-								"country_code": m.country_code})
+								"country_code": m.country_code,
+								"country_name": country_object.country_name})
 	print(user_movie_list)
 	return jsonify({"movies": user_movie_list})
 

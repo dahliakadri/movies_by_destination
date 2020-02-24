@@ -398,7 +398,7 @@ class Watchlist extends React.Component{
       <Movie 
         key={item.movie_id}
         movie={item} 
-        country={this.props.country} 
+        country={item.country_name} 
         checkedMovies = { this.state.checkedMovies }
         onSelected={(() => {
           let new_movs = Object.assign({}, this.state.checkedMovies)
