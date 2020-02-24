@@ -17,10 +17,12 @@ def get_countries_json():
     """Return a JSON response with all countries in DB."""
     countries = Country.query.all()
     countries_list = []
-
     for c in countries:
-        countries_list.append({"country_code": c.country_code,
-        						"country_name": c.country_name})
+    	if len(c.movies) == 0:
+    		continue
+    	else:
+    		countries_list.append({"country_code": c.country_code,
+    							"country_name": c.country_name})
 
     return jsonify({"countries": countries_list})
 
@@ -32,9 +34,10 @@ def show_movies_by_country_test():
 	country = Country.query.filter(Country.country_name == country_name).one()
 	#from country can find all of the movies associated with it from country.movies
 	movies_by_country_list = []
-	movies=country.movies
+	movies=country.movies_by_num_rating
 	for m in movies:
-		movies_by_country_list.append({"movie_id": m.movie_id,
+		if len(movies_by_country_list) < 100:
+			movies_by_country_list.append({"movie_id": m.movie_id,
 										"movie_title": m.title,
 										"imdb_rating": m.imdb_rating,
 										"votes": m.num_votes,

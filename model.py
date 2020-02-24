@@ -119,6 +119,7 @@ class Country(db.Model):
 	facts = db.relationship('CountryFact')
 	users = db.relationship('User')
 	movies = db.relationship('Movie')
+	movies_by_num_rating = db.relationship('Movie', order_by="desc(Movie.num_votes)")
 
 	def __repr__(self):
 		return f"""<Country code={self.country_code}
