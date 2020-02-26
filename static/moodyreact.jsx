@@ -242,7 +242,7 @@ class CountrySearch extends React.Component {
       }
 
   render() {
-    const text = this.state.loading ? "Searching Countries with Movies..." : "Movies Loaded. Welcome to Moody Movies"
+    const text = this.state.loading ? "Loading Countries with Movies..." : "Movies Loaded. Welcome to Moody Movies"
     
     const countryOptions = this.state.allcountries.map((item) =>
         <option key={item.country_code} value={item.country_name}>{item.country_name}</option>)

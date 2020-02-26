@@ -7,6 +7,9 @@ app = Flask(__name__)
 app.secret_key = "test"
 app.jinja_env.undefined = StrictUndefined
 
+def eagerly_load_countries():
+	"""eagerly load countries that actually have movies"""
+	return None
 
 @app.route('/react')
 def react():
@@ -38,7 +41,7 @@ def get_countries_all_json():
 
 @app.route('/movies', methods=['GET'])
 def show_movies_by_country_test():
-	"""Show movies for a particular country user requested"""
+	"""Show movies for a particular country the user requested"""
 	country_name = request.args["country"]
 	country = Country.query.filter(Country.country_name == country_name).one()
 	#from country can find all of the movies associated with it from country.movies
@@ -58,7 +61,7 @@ def show_movies_by_country_test():
 
 @app.route("/watchlistreact", methods=['POST'])
 def add_movies_to_watch_list_react():
-	"""Adds movies selected by the user to a watch list"""
+	"""Adds movies selected by the user to the saved movie table"""
 
 	data = request.json
 	print(data)
@@ -84,6 +87,7 @@ def add_movies_to_watch_list_react():
 
 @app.route('/watchlist/user', methods=['GET'])
 def show_movies_watch_list_by_user():
+	"""returns a json of list of movies with details that the user has saved"""
 	user_id = request.args["userId"]
 	user = User.query.filter(User.user_id == user_id).one()
 	saved_movies = user.watch_list
@@ -105,7 +109,8 @@ def show_movies_watch_list_by_user():
 
 @app.route("/watchlist/update", methods=['POST'])
 def update_movies_to_watch_list_react():
-	"""Adds movies selected by the user to a watch list"""
+	"""Removes movies selected by the user to be removed from their watch list
+	by deleting it from the saved movie database"""
 
 	data = request.json
 	print("that data is", data)
@@ -150,6 +155,7 @@ def handle_react_signup():
 	email = data['email']
 	if User.query.filter(User.email == email).count() > 0:
 		flash(f'Account with {email} already exits, use a new email')
+		print("user not added")
 		return "not sucessful"
 	else:
 		password = data['password']
@@ -178,7 +184,7 @@ def handle_react_signup():
 
 @app.route('/reactlogincheck.json')
 def logincheck():
-	"""Homepage"""
+	"""Handles the login of a user"""
 	# if 'user_id' in session:
 	# 	user_id = session['user_id']
 	# 	user_first_name = session['current_user']
@@ -193,7 +199,7 @@ def logincheck():
 
 
 
-
+#below here is the jinja template routes
 	
 @app.route('/')
 def index():
@@ -369,7 +375,6 @@ if __name__ == "__main__":
     app.jinja_env.auto_reload = app.debug
 
     connect_to_db(app)
-
     # Use the DebugToolbar
     # DebugToolbarExtension(app)
 

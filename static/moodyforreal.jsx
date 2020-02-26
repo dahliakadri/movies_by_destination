@@ -37,6 +37,53 @@
 //     }
 // }
 
+<div><br />
+      Complete Registration. <br />
+      <form onSubmit={this.handleSubmit}>
+        <input type="email"
+                name="email"
+                placeholder="Email"
+                value={this.state.email}
+                onChange={this.handleChange} required />
+                <label>Email</label>
+                <br />
+                <br />
+         <input type="text"
+                name="first_name"
+                placeholder="First Name"
+                value={this.state.first_name}
+                onChange={this.handleChange} required />
+                <label>First Name</label>
+                <br />
+                <br />
+         <input type="text"
+                name="last_name"
+                placeholder="Last Name"
+                value={this.state.last_name}
+                onChange={this.handleChange} required />
+                <label>Last Name</label>
+                <br />
+                <br />
+        <input type="password"
+                name="password"
+                placeholder="Password"
+                value={this.state.password}
+                onChange={this.handleChange} required />
+                <label>Password</label>
+                <br />
+        <button type="submit">Regiser</button>
+      </form>
+      <div/>
+
+		<select value={this.state.country}
+				name="country"
+				onChange={this.handleChange}>
+				<option value="">-- Please Choose Country --</option>
+				{countryOptions}
+			</select>
+                <label>Which country do you most connect with?</label>
+                <br />
+
 // function TodoItem(props) {
 //     return (
 //         <div className="todo-item">
