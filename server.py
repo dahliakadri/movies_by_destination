@@ -156,7 +156,7 @@ def handle_react_signup():
 	if User.query.filter(User.email == email).count() > 0:
 		flash(f'Account with {email} already exits, use a new email')
 		print("user not added")
-		return "not sucessful"
+		return jsonify({"loginstatus": False})
 	else:
 		password = data['password']
 		fname = data['first_name']
@@ -175,12 +175,14 @@ def handle_react_signup():
 		print("user added")
 		user = User.query.filter(User.email == email).one()
 		print(user)
-		flash(f"""Thanks for signing up {user.fname}.
-			You signed up at {user.time_created}, you can begin using Moody!""")
 		session['current_user'] = user.fname
 		session['user_id'] = user.user_id
 		session['user_email'] = user.email
-	return "tada"
+		user_info = []
+		user_info.append({"current_user": user.fname,
+							"user_id": user.user_id, 
+							"user_email":user.email})
+	return jsonify({"sessioninfo": user_info, "loginstatus": True})
 
 @app.route('/reactlogincheck.json')
 def logincheck():

@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
 
-  <!-- We'll load React dependencies on all pages for this app. -->
-  <link rel="stylesheet" href="/static/css/styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" crossorigin></script>
-  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-  <script
-    src="https://code.jquery.com/jquery-3.4.1.js"
-    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-    crossorigin="anonymous"></script>
+    <!-- Loads React dependencies on all pages for this app. -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script 
+      crossorigin
+      src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+
+    <script 
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"></script>
+
+    <script 
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"></script>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/universal-cookie@3/umd/universalCookie.min.js"></script>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react-cookie@3/umd/reactCookie.min.js"></script>
+    
+    <script 
+      crossorigin 
+      src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+
 </head>
 <body>
 
-  <!-- Include the page's content with this block. -->
+  <!-- Includes the page's content with this block. -->
   {% block body %}
   {% endblock %}
 
-  <!-- Include any page-specific Javascript using this block. -->
+  <!-- Includes any page-specific Javascript using this block. -->
   {% block js %}
   {% endblock %}
 </body>
