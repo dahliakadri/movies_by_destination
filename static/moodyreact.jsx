@@ -1,28 +1,38 @@
 class App extends React.Component{
-   constructor(props) {
-    super(props)
-    this.state = {loginstatus: false,
-                  user_id = "none",
-                  user_fname = "none",
-                  user_email = "none"}
-  }
-render() {
-  const logbuttons = this.state.loginstatus ? <button onClick={() => this.setState({loginstatus: false})}> Logout </button> : <div><button onClick={() => this.setState({currentPage: 3})}> SignUp </button>
-  <button onClick={() => console.log("testing!"))}> SignIn </button></div>
 
+  constructor(props) {
+    super(props)
+    this.state = { currentMainPage: 0,
+                  loginStatus: false,
+                  userId: "none",
+                  userFname: "none",
+                  userEmail: "none",
+                  pages: [<div>Welcome to Moody Movies. Sign in or Sign Up</div>, <SignUp callBackFromParent={this.myCallback}/>]}
+  }
+
+  myCallback = (dataFromChild) => {
+        console.log("from child = ", dataFromChild)
+        this.setState({ loginStatus: dataFromChild.loginstatus,
+                        userId: dataFromChild.sessioninfo[0].user_id,
+                        userFname: dataFromChild.sessioninfo[0].current_user,
+                        userEmail: dataFromChild.sessioninfo[0].user_email })
+      }
+
+  render() {
+  const logbuttons = this.state.loginStatus ? <MoodyApp userId ={this.state.userId} userFname ={this.state.userFname} email ={this.state.userEmail} /> : <div> <button onClick={() => this.setState({currentMainPage: 1})}> SignUp </button> <button onClick={() => console.log("testing!")}> SignIn </button></div>
   return (
     <div>
     { logbuttons }
-    <MoodyApp loginstatus={this.state.loginstatus}
-              userid = {this.state.user_id}
-              userfname = {this.state.user_fname}
-              email = {this.state.user_email}/> 
+    <div>
+    {this.state.pages[this.state.currentMainPage]}
+    </div>
     </div>
     )
   }
 
 }
 
+<button onClick={() => this.setState({loginstatus: false})}> Logout </button>
 class MoodyApp extends React.Component{
   constructor(props) {
     super(props)
@@ -38,7 +48,7 @@ class MoodyApp extends React.Component{
 
 
   render() {
-    const logbuttons = this.state.loginstatus ? <button onClick={() => this.setState({currentPage: 0})}> Logout </button> : <div><button onClick={() => this.setState({currentPage: 3})}> SignUp </button>
+    const log2buttons = this.state.loginstatus ? <button onClick={() => this.setState({currentPage: 0})}> Logout </button> : <div><button onClick={() => this.setState({currentPage: 3})}> SignUp </button>
     <button onClick={() => this.setState({currentPage: 4})}> SignIn </button></div>
 
     return (
@@ -50,7 +60,7 @@ class MoodyApp extends React.Component{
             <button onClick={() => this.setState({currentPage: 2})}> Watchlist </button>
           </div>
           <div>
-          { logbuttons }
+          { log2buttons }
           </div>
           <div>
           {this.state.pages[this.state.currentPage]}
@@ -120,7 +130,6 @@ class SignUp extends React.Component{
     this.setState({
       [event.target.name] : event.target.value
     })
-    console.log("handle change", event)
 
   }
 
@@ -141,7 +150,7 @@ class SignUp extends React.Component{
     })
     .then(response => { return response.json()
     }).then((data) => {
-      console.log('my data is', data, data.loginstatus) })
+      this.props.callBackFromParent(data) })
     event.preventDefault()
   }
 
@@ -522,4 +531,4 @@ class Watchlist extends React.Component{
   }
 }
 
-ReactDOM.render(<MoodyApp />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('root'))
