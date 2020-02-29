@@ -36,7 +36,11 @@
 //         )    
 //     }
 // }
-
+loginStatus={this.loginStatus}
+                                    userId={this.userId} 
+                                    userFname={this.userFname}
+                                    userEmail={this.userEmail}
+                                    
 <div><br />
       Complete Registration. <br />
       <form onSubmit={this.handleSubmit}>

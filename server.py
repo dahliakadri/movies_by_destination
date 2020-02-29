@@ -68,19 +68,20 @@ def add_movies_to_watch_list_react():
 	#if user in session it commits the watchlist to the SavedMovies table
 	#and then quiers the data base for the users up to date SavedMovies
 	#would then like to render the watch list instead of the dropdown menue
-	user_id_l = 1
-	for movie_id_l in data['movieIds']:
-		movie = SavedMovie.query.filter(SavedMovie.user_id == 1 , SavedMovie.movie_id == movie_id_l).first()
-		print(movie)
-		if movie == None:
-			saved_movie_object = SavedMovie(movie_id = movie_id_l,
-										user_id = user_id_l,)
-			db.session.add(saved_movie_object)
-			db.session.commit()
-			print(movie_id_l, "added")
-		else: 
-			print(movie_id_l, "not added")
-			continue
+	if 'current_user' in session:
+		user_id_l = session['user_id']
+		for movie_id_l in data['movieIds']:
+			movie = SavedMovie.query.filter(SavedMovie.user_id == user_id_l , SavedMovie.movie_id == movie_id_l).first()
+			print(movie)
+			if movie == None:
+				saved_movie_object = SavedMovie(movie_id = movie_id_l,
+											user_id = user_id_l,)
+				db.session.add(saved_movie_object)
+				db.session.commit()
+				print(movie_id_l, user_id_l, "added")
+			else: 
+				print(movie_id_l, user_id_l, "not added")
+				continue
 	return ("Tadaaa")
 
 
@@ -184,21 +185,28 @@ def handle_react_signup():
 							"user_email":user.email})
 	return jsonify({"sessioninfo": user_info, "loginstatus": True})
 
-@app.route('/reactlogincheck.json')
-def logincheck():
+@app.route('/reactlogin', methods=['POST'])
+def react_login():
 	"""Handles the login of a user"""
-	# if 'user_id' in session:
-	# 	user_id = session['user_id']
-	# 	user_first_name = session['current_user']
-	# 	flash(f'Logged in as {user_first_name}.')
-	# else:
-	user_id = False
-	user_first_name = False
-
-	return jsonify({"user_id" : user_id, "user_fname": user_first_name})
-
-
-
+	data = request.json
+	print("this data is,", data)
+	email = data['email']
+	password = data['password']
+	if User.query.filter(User.email == email).count() < 1:
+		return jsonify({"loginstatus": False, "emailstatus": False})
+	else:
+		user = User.query.filter(User.email == email).one()
+		if password == user.password:
+			session['current_user'] = user.fname
+			session['user_id'] = user.user_id
+			session['user_email'] = user.email
+			user_info = []
+			user_info.append({"current_user": user.fname,
+							"user_id": user.user_id, 
+							"user_email":user.email})
+			return jsonify({"sessioninfo": user_info, "loginstatus": True})
+		else:
+			return jsonify({"loginstatus": False, "emailstatus": True})
 
 
 #below here is the jinja template routes
@@ -258,7 +266,7 @@ def render_signup_form():
 	return render_template("signupform.html", countries=countries_list)
 
 
-@app.route("/signup", methods=['Post'])
+@app.route("/signup", methods=['POST'])
 def handle_signup():
 	"""handles the sign up for a user"""
 	if 'current_user' in session:

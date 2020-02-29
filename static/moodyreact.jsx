@@ -1,66 +1,77 @@
-class App extends React.Component{
-
-  constructor(props) {
-    super(props)
-    this.state = { currentMainPage: 0,
-                  loginStatus: false,
-                  userId: "none",
-                  userFname: "none",
-                  userEmail: "none",
-                  pages: [<div>Welcome to Moody Movies. Sign in or Sign Up</div>, <SignUp callBackFromParent={this.myCallback}/>]}
-  }
-
-  myCallback = (dataFromChild) => {
-        console.log("from child = ", dataFromChild)
-        this.setState({ loginStatus: dataFromChild.loginstatus,
-                        userId: dataFromChild.sessioninfo[0].user_id,
-                        userFname: dataFromChild.sessioninfo[0].current_user,
-                        userEmail: dataFromChild.sessioninfo[0].user_email })
-      }
-
-  render() {
-  const logbuttons = this.state.loginStatus ? <MoodyApp userId ={this.state.userId} userFname ={this.state.userFname} email ={this.state.userEmail} /> : <div> <button onClick={() => this.setState({currentMainPage: 1})}> SignUp </button> <button onClick={() => console.log("testing!")}> SignIn </button></div>
-  return (
-    <div>
-    { logbuttons }
-    <div>
-    {this.state.pages[this.state.currentMainPage]}
-    </div>
-    </div>
-    )
-  }
-
-}
-
-<button onClick={() => this.setState({loginstatus: false})}> Logout </button>
 class MoodyApp extends React.Component{
   constructor(props) {
     super(props)
     this.state = { currentPage: 0,
-                    pages: [<HomePage />,
+                    loginStatus: false,
+                    userId: null,
+                    userFname: null,
+                    userEmail: null,
+                    pages : [<HomePage />,
                             <AboutPage />,
-                            <Watchlist />,
-                            <SignUp />,
-                            <LogIn />],
-                    loginstatus: this.props.loginstatus}
+                            <Watchlist  />,
+                            <SignUp moodyAppCallback = {this.myCallbackSignUp} />,
+                            <SignIn moodyAppCallback = {this.myCallbackSignIn} />
+                            ]
+                  }
+    this.myCallbackSignUp = this.myCallbackSignUp.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
+    this.myCallbackSignIn = this.myCallbackSignIn.bind(this)
   }
 
+  myCallbackSignUp = (dataFromSignUp) => {
+        console.log("from child = ", dataFromSignUp)
+        this.setState({ loginStatus: dataFromSignUp.loginstatus})
+        if (dataFromSignUp.loginstatus== false){
+          alert("User email already exists. Sign in or sign up with a new email.")
+          this.setState({currentPage: 0})
+        }
+        else{
+          this.setState({ userId: dataFromSignUp.sessioninfo[0].user_id,
+                        userFname: dataFromSignUp.sessioninfo[0].current_user,
+                        userEmail: dataFromSignUp.sessioninfo[0].user_email,
+                        currentPage: 0 })
+        }
+        console.log(this.state.userId)
+  }
 
+  handleLogout(){
+    console.log("logged out")
+    this.setState({currentPage: 0,
+                  loginStatus: false})
+  }
+
+  myCallbackSignIn = (dataFromSignIn) => {
+        console.log("from child = ", dataFromSignIn)
+        this.setState({ loginStatus: dataFromSignIn.loginstatus})
+        if (dataFromSignIn.loginstatus == false){
+          alert("User email or password incorrect, try again or sign up.")
+          this.setState({currentPage: 0})
+        }
+        else{
+          this.setState({ userId: dataFromSignIn.sessioninfo[0].user_id,
+                        userFname: dataFromSignIn.sessioninfo[0].current_user,
+                        userEmail: dataFromSignIn.sessioninfo[0].user_email,
+                        currentPage: 0 })
+        }
+        console.log(this.state.userId)
+  }
 
   render() {
-    const log2buttons = this.state.loginstatus ? <button onClick={() => this.setState({currentPage: 0})}> Logout </button> : <div><button onClick={() => this.setState({currentPage: 3})}> SignUp </button>
-    <button onClick={() => this.setState({currentPage: 4})}> SignIn </button></div>
+    const logbuttons = this.state.loginStatus ? <button onClick={this.handleLogout}> Logout </button> : <div><button onClick={() => this.setState({currentPage: 3})}> Sign Up </button>
+    <button onClick={() => this.setState({currentPage: 4})}> Sign In </button></div>
+    const userStatus = this.state.loginStatus ? <div>Welcome, {this.state.userFname}, logged in with {this.state.userEmail}.</div> : <div>Not logged in</div>
 
     return (
         <div>
           <Header />
           <div>
-            <button onClick={() => this.setState({currentPage: 0})}> Homepage </button>
-            <button onClick={() => this.setState({currentPage: 1})}> About </button>
-            <button onClick={() => this.setState({currentPage: 2})}> Watchlist </button>
+          { userStatus}
+          { logbuttons }
           </div>
           <div>
-          { log2buttons }
+            <button onClick={() => this.setState({currentPage: 0})}> Home </button>
+            <button onClick={() => this.setState({currentPage: 1})}> About </button>
+            <button onClick={() => this.setState({currentPage: 2})}> Watchlist </button>
           </div>
           <div>
           {this.state.pages[this.state.currentPage]}
@@ -102,11 +113,21 @@ class AboutPage extends React.Component {
 }
 
 class HomePage extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {loginStatus: this.props.loginStatus,
+                  userId : this.props.userId,
+                  userFname: this.props.userFname,
+                  userEmail: this.props.userEmail}
+  }
     render() {
         return (
             <div>
-                <UserSession />
-                <CountrySearch />
+            {this.state.userId}
+                <CountrySearch loginStatus={this.state.loginStatus}
+                                userId={this.state.userId} 
+                                userFname={this.state.userFname}
+                                userEmail={this.state.userEmail}/>
             </div>)
     }
 }
@@ -150,7 +171,7 @@ class SignUp extends React.Component{
     })
     .then(response => { return response.json()
     }).then((data) => {
-      this.props.callBackFromParent(data) })
+      this.props.moodyAppCallback(data) })
     event.preventDefault()
   }
 
@@ -215,64 +236,110 @@ class SignUp extends React.Component{
   }
 }
 
-class LogIn extends React.Component{
+class SignIn extends React.Component{
+  constructor(props) {
+    super(props)
+    this.state = {email: "",
+                  password: ""}
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(event){
+    this.setState({
+      [event.target.name] : event.target.value
+    })
+
+  }
+
+  handleSubmit(event) {
+    const userInfo = {
+        email: this.state.email,
+        password: this.state.password,
+      }
+    fetch("/reactlogin", {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userInfo) // body data type must match "Content-Type" header
+    })
+    .then(response => { return response.json()
+    }).then((data) => {
+      this.props.moodyAppCallback(data) })
+    event.preventDefault()
+  }
+
+
   render() {
-        return (
-            <div>
-                <h3> Test Login</h3>
-            </div>)
+    return (
+      <div>
+        <br />
+        Sign In
+        <br />
+        <form onSubmit={this.handleSubmit}>
+        <input type="email"
+                name="email"
+                placeholder="Email"
+                value={this.state.email}
+                onChange={this.handleChange} required />
+                <label>Email</label>
+                <br />
+          <input type="password"
+                name="password"
+                placeholder="Password"
+                value={this.state.password}
+                onChange={this.handleChange} required />
+                <label>Password</label>
+                <br />
+          <button type="submit">Sign In</button>
+        </form>
+      </div>
+      )
   }
 }
 
-class LogOut extends React.Component{
-  render() {
-        return (
-            <div>
-                <h3> Test Logout</h3>
-            </div>)
-  }
-}
 
-class UserSession extends React.Component {
-  constructor(){
-        super()
-        this.state = {userId : false,
-                        userFname: false}
-      // this.login = this.login.bind(this)
-      // this.logout = this.logout.bind(this)
-    }
+// class UserSession extends React.Component {
+//   constructor(){
+//         super()
+//         this.state = {userId : false,
+//                         userFname: false}
+//       // this.login = this.login.bind(this)
+//       // this.logout = this.logout.bind(this)
+//     }
 
-    componentDidMount() {
-        fetch("/reactlogincheck.json")
-            .then(response => response.json())
-            .then(response => {
-                this.setState({userId: response.user_id, userFname: response.user_fname})
-            })
-    }
+//     componentDidMount() {
+//         fetch("/reactlogincheck.json")
+//             .then(response => response.json())
+//             .then(response => {
+//                 this.setState({userId: response.user_id, userFname: response.user_fname})
+//             })
+//     }
 
-    // login () {
+//     // login () {
 
-    // }
+//     // }
 
-    // logout () {
+//     // logout () {
 
-    // }
+//     // }
 
-    render() {
-        const logInNote = this.state.userId ? <div><button className="logout" onClick={this.logout}>Log out</button>{this.state.userFname}, you're logged into Moody!</div>
-        : <div>You're not logged into Moody yet! <button className="login" onClick={this.login}>Log In</button> or <button className="signup">Sign Up</button></div>
-        return (
-            <div>
-                <h3 className="login-header-message">{logInNote}</h3>
-{/*                <UserLogIn />
-                <UserLogOut />*/}
-            </div>)
-    }
-}
+//     render() {
+//         const logInNote = this.state.userId ? <div><button className="logout" onClick={this.logout}>Log out</button>{this.state.userFname}, you're logged into Moody!</div>
+//         : <div>You're not logged into Moody yet! <button className="login" onClick={this.login}>Log In</button> or <button className="signup">Sign Up</button></div>
+//         return (
+//             <div>
+//                 <h3 className="login-header-message">{logInNote}</h3>
+// {/*                <UserLogIn />
+//                 <UserLogOut />*/}
+//             </div>)
+//     }
+// }
 
 class CountrySearch extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {allcountries: [],
                   loading: false,
                   destination: false,
@@ -283,14 +350,22 @@ class CountrySearch extends React.Component {
 
   componentDidMount() {
     this.setState({loading : true})
+    this.mounted = true
     fetch("/countries.json")
             .then(response => response.json())
             .then(response => {
+              if(this.mounted){
                 const {countries} = response
                 this.setState({ loading: false,
                                 allcountries: countries})
+                }
             })
   }
+
+componentWillUnmount(){
+  this.mounted = false
+}
+
 
   handleChange(event){
     const {name, value} = event.target
@@ -304,17 +379,16 @@ class CountrySearch extends React.Component {
       }
 
   render() {
-    const text = this.state.loading ? "Loading Countries with Movies..." : "Movies Loaded. Welcome to Moody Movies"
-    
+    const countryLoadStatus = this.state.loading ? "Loading Destinations..." : "Destinations Loaded. Find your movies"
     const countryOptions = this.state.allcountries.map((item) =>
         <option key={item.country_code} value={item.country_name}>{item.country_name}</option>)
     
-    const movies = this.state.submitcountry ? <MoviesByCountry country={this.state.submitcountry} /> : <p> Pick a Movie</p>
+    const movies = this.state.submitcountry ? <MoviesByCountry country={this.state.submitcountry}/> : <p>Pick a Destination Above</p>
 
     return (
       <div>
-        {text}
-        <br />
+        {countryLoadStatus}
+        {this.state.userId}
         <br />
         Choose your destination:
          <form className="country-form" onSubmit={this.handleSubmit}>
@@ -335,9 +409,10 @@ class CountrySearch extends React.Component {
 
 
 class MoviesByCountry extends React.Component{
-    constructor() {
-        super()
-        this.state = {allmovies: [], checkedMovies: {}}
+    constructor(props) {
+        super(props)
+        this.state = {allmovies: [],
+                      checkedMovies: {}}
 
         this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -363,17 +438,28 @@ class MoviesByCountry extends React.Component{
 
   handleSubmit(event) {
     event.preventDefault()
-    const watchListMovies = Object.keys(this.state.checkedMovies)
-    const watchDictMovies = {"movieIds": watchListMovies}
-    const response = fetch('/watchlistreact', {
+      const watchListMovies = Object.keys(this.state.checkedMovies)
+      const watchDictMovies = {"movieIds": watchListMovies}
+      const response = fetch('/watchlistreact', {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(watchDictMovies) // body data type must match "Content-Type" header
     })
-    // return await response.json(); // parses JSON response into native JavaScript objects
-    }
+    console.log("movies added")
+  }
+    // const watchListMovies = Object.keys(this.state.checkedMovies)
+    // const watchDictMovies = {"movieIds": watchListMovies}
+    // const response = fetch('/watchlistreact', {
+    //   method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(watchDictMovies) // body data type must match "Content-Type" header
+    // })
+    // // return await response.json(); // parses JSON response into native JavaScript objects
+    // }
   
 
   render() {
@@ -399,6 +485,7 @@ class MoviesByCountry extends React.Component{
     )
         return(
             <div>
+            {this.state.userId}
                 <h3> Movies from {this.props.country}:</h3>
                 <div className="movies">
                 <form className="movies" onSubmit={this.handleSubmit}>
@@ -453,9 +540,11 @@ class Movie extends React.Component{
   }
 
 class Watchlist extends React.Component{
-  constructor() {
-    super()
-    this.state = {watchmovies: [], checkedMovies: {}, remove: true}
+  constructor(props) {
+    super(props)
+    this.state = {watchmovies: [],
+                  checkedMovies: {},
+                  remove: true}
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -475,7 +564,7 @@ class Watchlist extends React.Component{
     }
 
   componentDidMount(props) {
-    $.get("/watchlist/user", {userId:1})
+    $.get("/watchlist/user", {userId: this.state.userId})
       .then(response => {
         const {movies} = response
         console.log(movies)
@@ -486,7 +575,7 @@ class Watchlist extends React.Component{
 
   componentDidUpdate(prevProps, prevState){
     if(this.state.remove == false){
-      $.get("/watchlist/user", {userId: 1})
+      $.get("/watchlist/user", {userId: this.state.userId})
             .then(response => {
                 const {movies} = response
                 console.log(movies)
@@ -531,4 +620,4 @@ class Watchlist extends React.Component{
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<MoodyApp />, document.getElementById('root'))
