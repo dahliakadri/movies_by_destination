@@ -35,9 +35,14 @@ class MoodyApp extends React.Component{
   }
 
   handleLogout(){
-    console.log("logged out")
+    fetch("/reactlogout")
+    .then(response => { 
+      return response.json()
+    })
+    .then((data) => {
     this.setState({currentPage: 0,
-                  loginStatus: false})
+                  loginStatus: data.loginstatus})
+  })
   }
 
   myCallbackSignIn = (dataFromSignIn) => {
@@ -60,7 +65,7 @@ class MoodyApp extends React.Component{
     const logbuttons = this.state.loginStatus ? <button onClick={this.handleLogout}> Logout </button> : <div><button onClick={() => this.setState({currentPage: 3})}> Sign Up </button>
     <button onClick={() => this.setState({currentPage: 4})}> Sign In </button></div>
     const userStatus = this.state.loginStatus ? <div>Welcome, {this.state.userFname}, logged in with {this.state.userEmail}.</div> : <div>Not logged in</div>
-
+    const watchListButton = this.state.loginStatus ? <button onClick={() => this.setState({currentPage: 2})}> Watchlist </button>: <div></div>
     return (
         <div>
           <Header />
@@ -71,7 +76,7 @@ class MoodyApp extends React.Component{
           <div>
             <button onClick={() => this.setState({currentPage: 0})}> Home </button>
             <button onClick={() => this.setState({currentPage: 1})}> About </button>
-            <button onClick={() => this.setState({currentPage: 2})}> Watchlist </button>
+            {watchListButton}
           </div>
           <div>
           {this.state.pages[this.state.currentPage]}
@@ -299,44 +304,6 @@ class SignIn extends React.Component{
   }
 }
 
-
-// class UserSession extends React.Component {
-//   constructor(){
-//         super()
-//         this.state = {userId : false,
-//                         userFname: false}
-//       // this.login = this.login.bind(this)
-//       // this.logout = this.logout.bind(this)
-//     }
-
-//     componentDidMount() {
-//         fetch("/reactlogincheck.json")
-//             .then(response => response.json())
-//             .then(response => {
-//                 this.setState({userId: response.user_id, userFname: response.user_fname})
-//             })
-//     }
-
-//     // login () {
-
-//     // }
-
-//     // logout () {
-
-//     // }
-
-//     render() {
-//         const logInNote = this.state.userId ? <div><button className="logout" onClick={this.logout}>Log out</button>{this.state.userFname}, you're logged into Moody!</div>
-//         : <div>You're not logged into Moody yet! <button className="login" onClick={this.login}>Log In</button> or <button className="signup">Sign Up</button></div>
-//         return (
-//             <div>
-//                 <h3 className="login-header-message">{logInNote}</h3>
-// {/*                <UserLogIn />
-//                 <UserLogOut />*/}
-//             </div>)
-//     }
-// }
-
 class CountrySearch extends React.Component {
   constructor(props) {
     super(props)
@@ -449,18 +416,6 @@ class MoviesByCountry extends React.Component{
     })
     console.log("movies added")
   }
-    // const watchListMovies = Object.keys(this.state.checkedMovies)
-    // const watchDictMovies = {"movieIds": watchListMovies}
-    // const response = fetch('/watchlistreact', {
-    //   method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(watchDictMovies) // body data type must match "Content-Type" header
-    // })
-    // // return await response.json(); // parses JSON response into native JavaScript objects
-    // }
-  
 
   render() {
     const movieComponents = this.state.allmovies.map(item => 
@@ -564,7 +519,7 @@ class Watchlist extends React.Component{
     }
 
   componentDidMount(props) {
-    $.get("/watchlist/user", {userId: this.state.userId})
+    $.get("/watchlist/user", {test: "test"})
       .then(response => {
         const {movies} = response
         console.log(movies)
@@ -575,7 +530,7 @@ class Watchlist extends React.Component{
 
   componentDidUpdate(prevProps, prevState){
     if(this.state.remove == false){
-      $.get("/watchlist/user", {userId: this.state.userId})
+      $.get("/watchlist/user", {test: "test"})
             .then(response => {
                 const {movies} = response
                 console.log(movies)
@@ -608,11 +563,11 @@ class Watchlist extends React.Component{
           <h3> Your movies watch list:</h3>
           <div className="movies">
           <form className="movies" onSubmit={this.handleSubmit}>
-            Check to remove movies from your list:
+            Check to remove movies from your list and submit at the bottom:
             <br />
             {movieWatchComponents}
             <br />
-            <button type="submit">Remove from watch list</button> 
+             <button type="submit">Remove from watch list</button>
           </form>
           </div>
         </div>

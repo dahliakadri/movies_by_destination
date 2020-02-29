@@ -69,18 +69,18 @@ def add_movies_to_watch_list_react():
 	#and then quiers the data base for the users up to date SavedMovies
 	#would then like to render the watch list instead of the dropdown menue
 	if 'current_user' in session:
-		user_id_l = session['user_id']
+		user_id_session = session['user_id']
 		for movie_id_l in data['movieIds']:
-			movie = SavedMovie.query.filter(SavedMovie.user_id == user_id_l , SavedMovie.movie_id == movie_id_l).first()
+			movie = SavedMovie.query.filter(SavedMovie.user_id == user_id_session , SavedMovie.movie_id == movie_id_l).first()
 			print(movie)
 			if movie == None:
 				saved_movie_object = SavedMovie(movie_id = movie_id_l,
-											user_id = user_id_l,)
+											user_id = user_id_session,)
 				db.session.add(saved_movie_object)
 				db.session.commit()
-				print(movie_id_l, user_id_l, "added")
+				print(movie_id_l, user_id_session, "added")
 			else: 
-				print(movie_id_l, user_id_l, "not added")
+				print(movie_id_l, user_id_session, "not added")
 				continue
 	return ("Tadaaa")
 
@@ -89,24 +89,28 @@ def add_movies_to_watch_list_react():
 @app.route('/watchlist/user', methods=['GET'])
 def show_movies_watch_list_by_user():
 	"""returns a json of list of movies with details that the user has saved"""
-	user_id = request.args["userId"]
-	user = User.query.filter(User.user_id == user_id).one()
-	saved_movies = user.watch_list
-	print(saved_movies)
-	user_saved_full_movie_data_list = []
-	for movie in saved_movies:
-		user_saved_full_movie_data_list.append(Movie.query.filter(Movie.movie_id == movie.movie_id).one())
-	user_movie_list = []
-	for m in user_saved_full_movie_data_list:
-		country_object = m.country 
-		user_movie_list.append({"movie_id": m.movie_id,
-								"movie_title": m.title,
-								"imdb_rating": m.imdb_rating,
-								"votes": m.num_votes,
-								"country_code": m.country_code,
-								"country_name": country_object.country_name})
-	print(user_movie_list)
-	return jsonify({"movies": user_movie_list})
+	if 'current_user' in session:
+		user_id_session = session["user_id"]
+		user = User.query.filter(User.user_id == user_id_session).one()
+		saved_movies = user.watch_list
+		print(saved_movies)
+		user_saved_full_movie_data_list = []
+		for movie in saved_movies:
+			user_saved_full_movie_data_list.append(Movie.query.filter(Movie.movie_id == movie.movie_id).one())
+		user_movie_list = []
+		for m in user_saved_full_movie_data_list:
+			country_object = m.country 
+			user_movie_list.append({"movie_id": m.movie_id,
+									"movie_title": m.title,
+									"imdb_rating": m.imdb_rating,
+									"votes": m.num_votes,
+									"country_code": m.country_code,
+									"country_name": country_object.country_name})
+		print(user_movie_list)
+		return jsonify({"movies": user_movie_list})
+	else:
+		print("no user in session")
+		return jsonify({"movies": []})
 
 @app.route("/watchlist/update", methods=['POST'])
 def update_movies_to_watch_list_react():
@@ -118,29 +122,17 @@ def update_movies_to_watch_list_react():
 	#if user in session it commits the watchlist to the SavedMovies table
 	#and then quiers the data base for the users up to date SavedMovies
 	#would then like to render the watch list instead of the dropdown menue
-	user_id = 1
-	for movie_id in data:
-		saved_movie  = SavedMovie.query.filter(SavedMovie.user_id == 1 , SavedMovie.movie_id == movie_id).first()
-		db.session.delete(saved_movie)
-		db.session.commit()
-		print("deleted")
-	return ("Tadaaa")
-
-
-		#once all added flashes message, movie added and redirects to main page
-	# return 	# in react you return json and jsx decides what to do 
-	# else:
-	# 	form_movie_keys = request.form.getlist("movie_keys")
-	# 	print(form_movie_keys)
-	# 	user_id = session['user_id']
-	# 	user_fname = session['current_user']
-	# 	for movie_id in form_movie_keys:
-	# 		saved_movie_object = SavedMovie(movie_id = movie_id,
-	# 									user_id = user_id,)
-	# 		db.session.add(saved_movie_object)
-	# 		db.session.commit()
-	# 	flash(f'Thanks {user_fname}, your movies were added to your watchlist')
-	# #once all added flashes message, movie added and redirects to main page
+	if 'current_user' in session:
+		user_id_session = session["user_id"]
+		for movie_id in data:
+			saved_movie  = SavedMovie.query.filter(SavedMovie.user_id == user_id_session , SavedMovie.movie_id == movie_id).first()
+			db.session.delete(saved_movie)
+			db.session.commit()
+			print("deleted")
+		return ("Tadaaa")
+	else:
+		print("no user")
+		return ("nada")
 
 
 @app.route("/reactsignup", methods=['POST'])
@@ -207,6 +199,17 @@ def react_login():
 			return jsonify({"sessioninfo": user_info, "loginstatus": True})
 		else:
 			return jsonify({"loginstatus": False, "emailstatus": True})
+
+@app.route("/reactlogout")
+def react_logout():
+	"""Logs a user out"""
+	if 'current_user' in session:
+		username = session['current_user']
+		email = session['user_email']
+		session.pop('current_user',None)
+		session.pop('user_id',None)
+		session.pop('user_email', None)
+		return ({"loginstatus": False})
 
 
 #below here is the jinja template routes
