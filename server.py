@@ -37,20 +37,15 @@ def show_movies_by_country_test():
 										"imdb_rating": m.imdb_rating,
 										"votes": m.num_votes,
 										"country_code": m.country_code})
-	# if 'current_user' in session:
-	# 	user_first_name = session['current_user']
-	# 	flash(f'Logged in as {user_first_name}.')
 	return jsonify({"movies": movies_by_country_list})
 
+
+#ToDo: after movies added render the watch list instead of the dropdown menu and
+#return list of movies added and not added 
 @app.route("/watchlistreact", methods=['POST'])
 def add_movies_to_watch_list_react():
 	"""Adds movies selected by the user to the saved movie table"""
-
 	data = request.json
-	print(data)
-	#if user in session it commits the watchlist to the SavedMovies table
-	#and then quiers the data base for the users up to date SavedMovies
-	#would then like to render the watch list instead of the dropdown menue
 	if 'current_user' in session:
 		user_id_session = session['user_id']
 		for movie_id_l in data['movieIds']:
@@ -65,7 +60,7 @@ def add_movies_to_watch_list_react():
 			else: 
 				print(movie_id_l, user_id_session, "not added")
 				continue
-	return ("Tadaaa")
+	return ({"movie_status": "Movies added!"})
 
 
 
@@ -101,10 +96,6 @@ def update_movies_to_watch_list_react():
 	by deleting it from the saved movie database"""
 
 	data = request.json
-	print("that data is", data)
-	#if user in session it commits the watchlist to the SavedMovies table
-	#and then quiers the data base for the users up to date SavedMovies
-	#would then like to render the watch list instead of the dropdown menue
 	if 'current_user' in session:
 		user_id_session = session["user_id"]
 		for movie_id in data:
@@ -112,23 +103,18 @@ def update_movies_to_watch_list_react():
 			db.session.delete(saved_movie)
 			db.session.commit()
 			print("deleted")
-		return ("Tadaaa")
+		return ("Todo")
 	else:
 		print("no user")
-		return ("nada")
+		return ("Todo")
 
 
 @app.route("/reactsignup", methods=['POST'])
 def handle_react_signup():
-	"""handles the sign up for a user"""
+	"""Handles the sign up for a user"""
 	data=request.json
-	print("this data is", data)
-
-	# if 'current_user' in session:
-	# 	user_fname = session['current_user']
-	# 	flash(f'You are already logged in as {user_fname}.')
-	# 	return redirect('/')
 	email = data['email']
+
 	if User.query.filter(User.email == email).count() > 0:
 		flash(f'Account with {email} already exits, use a new email')
 		print("user not added")
@@ -195,11 +181,13 @@ def react_logout():
 		return ({"loginstatus": False})
 
 
-#below here is the jinja template routes
+
+
+#Below here are the jinja template routes#
 	
 @app.route('/')
 def index():
-	"""Homepage"""
+	"""Homepage renders a list of countries for users to choose"""
 	countries_list = Country.query.all()
 	if 'user_id' in session:
 		user_id = session['user_id']
@@ -208,37 +196,6 @@ def index():
 	else:
 		user_id = None
 	return render_template("homepage.html", countries=countries_list, user_id=user_id)
-
-@app.route("/login", methods=['POST'])
-def handle_login():
-	"""Handles the login for a user"""
-	email = request.form.get('email')
-	password = request.form.get('password')
-	#query for user in database basedon the email entered
-	user = User.query.filter(User.email == email).one()
-	if password == user.password:
-		session['current_user'] = user.fname
-		session['user_id'] = user.user_id
-		session['user_email'] = user.email
-		flash(f'Logged in with email {user.email}.')
-		return redirect("/")
-	else:
-		flash('Wrong username or password. Try again.')
-		return redirect('/')
-
-@app.route("/logout")
-def logout():
-	"""Logs a user out"""
-	if 'current_user' in session:
-		username = session['current_user']
-		email = session['user_email']
-		session.pop('current_user',None)
-		session.pop('user_id',None)
-		session.pop('user_email', None)
-		flash(f'Thanks {username}, {email} is logged out')
-	else:
-		flash(f"You can't log out if not logged in.")
-	return redirect("/")
 
 
 @app.route("/signupform")
@@ -285,6 +242,37 @@ def handle_signup():
 		session['user_id'] = user.user_id
 		session['user_email'] = user.email
 		return redirect('/')
+
+@app.route("/login", methods=['POST'])
+def handle_login():
+	"""Handles the login for a user"""
+	email = request.form.get('email')
+	password = request.form.get('password')
+	#query for user in database basedon the email entered
+	user = User.query.filter(User.email == email).one()
+	if password == user.password:
+		session['current_user'] = user.fname
+		session['user_id'] = user.user_id
+		session['user_email'] = user.email
+		flash(f'Logged in with email {user.email}.')
+		return redirect("/")
+	else:
+		flash('Wrong username or password. Try again.')
+		return redirect('/')
+
+@app.route("/logout")
+def logout():
+	"""Logs a user out"""
+	if 'current_user' in session:
+		username = session['current_user']
+		email = session['user_email']
+		session.pop('current_user',None)
+		session.pop('user_id',None)
+		session.pop('user_email', None)
+		flash(f'Thanks {username}, {email} is logged out')
+	else:
+		flash(f"You can't log out if not logged in.")
+	return redirect("/")
 
 
 @app.route('/moviesbycountry', methods=['POST'])
@@ -348,19 +336,6 @@ def view_user_watch_list(user_id):
 	else:
 		flash(f'Log in or sign up to view a watch list.')
 		redirect('/')
-
-
-# @app.route("/profile/<user_id>")
-# #view profile of a user
-# 	return render_template(user_profile.html, user_id=user_id)
-
-# @app.route("/profile/<user_id>", methods=['Post'])
-# #updates a user profile
-# 	return redirect ('/profile/<user_id>')
-
-# @app.route("/test1")
-# def testing_function():
-# 	return jsonify({"name": "testing"})
 
 
 if __name__ == "__main__":

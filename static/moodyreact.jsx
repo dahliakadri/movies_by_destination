@@ -20,7 +20,6 @@ class MoodyApp extends React.Component{
   }
 
   myCallbackSignUp = (dataFromSignUp) => {
-        console.log("from child = ", dataFromSignUp)
         this.setState({ loginStatus: dataFromSignUp.loginstatus})
         if (dataFromSignUp.loginstatus== false){
           alert("User email already exists. Sign in or sign up with a new email.")
@@ -32,7 +31,6 @@ class MoodyApp extends React.Component{
                         userEmail: dataFromSignUp.sessioninfo[0].user_email,
                         currentPage: 0 })
         }
-        console.log(this.state.userId)
   }
 
   handleLogout(){
@@ -47,7 +45,6 @@ class MoodyApp extends React.Component{
   }
 
   myCallbackSignIn = (dataFromSignIn) => {
-        console.log("from child = ", dataFromSignIn)
         this.setState({ loginStatus: dataFromSignIn.loginstatus})
         if (dataFromSignIn.loginstatus == false){
           alert("User email or password incorrect, try again or sign up.")
@@ -59,7 +56,6 @@ class MoodyApp extends React.Component{
                         userEmail: dataFromSignIn.sessioninfo[0].user_email,
                         currentPage: 0 })
         }
-        console.log(this.state.userId)
   }
 
   render() {
@@ -407,6 +403,7 @@ class MoviesByCountry extends React.Component{
       }
   }
 
+// TODO: After movies added, render the watchlist
   handleSubmit(event) {
     event.preventDefault()
       const watchListMovies = Object.keys(this.state.checkedMovies)
@@ -418,7 +415,9 @@ class MoviesByCountry extends React.Component{
       },
       body: JSON.stringify(watchDictMovies) // body data type must match "Content-Type" header
     })
-    console.log("movies added")
+      .then(response => { return response.json()
+      }).then((data) => {
+      alert(data.movie_status)})
   }
 
   render() {
