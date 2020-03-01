@@ -39,7 +39,6 @@ def show_movies_by_country_test():
 										"country_code": m.country_code})
 	return jsonify({"movies": movies_by_country_list})
 
-
 #ToDo: after movies added render the watch list instead of the dropdown menu and
 #return list of movies added and not added 
 @app.route("/watchlistreact", methods=['POST'])
@@ -61,8 +60,6 @@ def add_movies_to_watch_list_react():
 				print(movie_id_l, user_id_session, "not added")
 				continue
 	return ({"movie_status": "Movies added!"})
-
-
 
 @app.route('/watchlist/user', methods=['GET'])
 def show_movies_watch_list_by_user():
@@ -94,20 +91,18 @@ def show_movies_watch_list_by_user():
 def update_movies_to_watch_list_react():
 	"""Removes movies selected by the user to be removed from their watch list
 	by deleting it from the saved movie database"""
-
 	data = request.json
+	print(data)
 	if 'current_user' in session:
-		user_id_session = session["user_id"]
+		user_id = session["user_id"]
 		for movie_id in data:
-			saved_movie  = SavedMovie.query.filter(SavedMovie.user_id == user_id_session , SavedMovie.movie_id == movie_id).first()
+			saved_movie  = SavedMovie.query.filter(SavedMovie.user_id == user_id , SavedMovie.movie_id == movie_id).one()
 			db.session.delete(saved_movie)
 			db.session.commit()
 			print("deleted")
-		return ("Todo")
+		return ({"remove_status": False})
 	else:
 		print("no user")
-		return ("Todo")
-
 
 @app.route("/reactsignup", methods=['POST'])
 def handle_react_signup():

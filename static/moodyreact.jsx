@@ -1,3 +1,4 @@
+//TODO: Add react router instead of "pages in state"
 class MoodyApp extends React.Component{
   constructor(props) {
     super(props)
@@ -97,8 +98,6 @@ class Header extends React.Component{
     }
 }
 
-
-
 class Footer extends React.Component{
     render(){
         return (
@@ -106,6 +105,7 @@ class Footer extends React.Component{
     }
 }
 
+//TODO: Link my github/linkedin/photo
 class AboutPage extends React.Component { 
   render(){
         return (
@@ -373,8 +373,9 @@ componentWillUnmount(){
   }
 }
 
-
-
+//Renders movies by country and handles the user addition of movies to their watchlist
+//TODO: Scrape/add movie posters 
+//TODO: After movies added, render the watchlist
 class MoviesByCountry extends React.Component{
     constructor(props) {
         super(props)
@@ -403,7 +404,6 @@ class MoviesByCountry extends React.Component{
       }
   }
 
-// TODO: After movies added, render the watchlist
   handleSubmit(event) {
     event.preventDefault()
       const watchListMovies = Object.keys(this.state.checkedMovies)
@@ -497,6 +497,9 @@ class Movie extends React.Component{
       }
   }
 
+//Renders the users watchlist and allows them to remove movies
+//TODO: Allow users to have a "watched option" that will simply grey out the movie and rate it
+//and move the movie from the watch list to their "watched" list
 class Watchlist extends React.Component{
   constructor(props) {
     super(props)
@@ -518,7 +521,11 @@ class Watchlist extends React.Component{
       body: JSON.stringify(watchUpdateMovies) // body data type must match "Content-Type" header
     })
     // return await response.json(); // parses JSON response into native JavaScript objects
-    this.setState ({remove: false})
+    .then(response => { return response.json()
+    }).then((data) => {
+      this.setState ({remove: data.remove_status,
+                      checkedMovies: {}})
+    })
     }
 
   componentDidMount(props) {
@@ -578,6 +585,8 @@ class Watchlist extends React.Component{
   }
 }
 
+//TODO: Create a Google Map that allows to hover over each country and see the top 
+//3 movies from every country.
 class MoviesbyMap extends React.Component{
   constructor(props) {
     super(props)
@@ -586,7 +595,7 @@ class MoviesbyMap extends React.Component{
 
   render(){
     return(
-      <div>My map</div>)
+      <div>My Map</div>)
   }
 
 }
