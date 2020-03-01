@@ -10,7 +10,8 @@ class MoodyApp extends React.Component{
                             <AboutPage />,
                             <Watchlist  />,
                             <SignUp moodyAppCallback = {this.myCallbackSignUp} />,
-                            <SignIn moodyAppCallback = {this.myCallbackSignIn} />
+                            <SignIn moodyAppCallback = {this.myCallbackSignIn} />,
+                            <MoviesbyMap />
                             ]
                   }
     this.myCallbackSignUp = this.myCallbackSignUp.bind(this)
@@ -76,6 +77,7 @@ class MoodyApp extends React.Component{
           <div>
             <button onClick={() => this.setState({currentPage: 0})}> Home </button>
             <button onClick={() => this.setState({currentPage: 1})}> About </button>
+            <button onClick={() => this.setState({currentPage: 5})}> Movies by Map </button>
             {watchListButton}
           </div>
           <div>
@@ -112,7 +114,9 @@ class AboutPage extends React.Component {
   render(){
         return (
             <div>Moody Movies by Destination lets you search, save,
-            and share movies from your favorite travel destination</div>)
+            and share movies from your favorite travel destination.
+            <p>Moody was created by Dahlia Kadri, a current Software Engineering
+            Student at Hackbright Academy in San Franscico, California.</p></div>)
     }
 
 }
@@ -573,6 +577,19 @@ class Watchlist extends React.Component{
         </div>
         )
   }
+}
+
+class MoviesbyMap extends React.Component{
+  constructor(props) {
+    super(props)
+    this.state = {maps: []}
+  }
+
+  render(){
+    return(
+      <div>My map</div>)
+  }
+
 }
 
 ReactDOM.render(<MoodyApp />, document.getElementById('root'))
