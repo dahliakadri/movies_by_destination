@@ -7,15 +7,11 @@ app = Flask(__name__)
 app.secret_key = "test"
 app.jinja_env.undefined = StrictUndefined
 
-def eagerly_load_countries():
-	"""eagerly load countries that actually have movies"""
-	return None
-
 @app.route('/react')
 def react():
 	return render_template("index.html")
 
-@app.route("/countries.json")
+@app.route("/countries")
 def get_countries_json():
     """Return a JSON response with all countries in DB with movies."""
     countries = Country.query.all()
@@ -25,18 +21,6 @@ def get_countries_json():
     								"country_name": c.country_name})
 
     return jsonify({"countries": countries_list})
-
-@app.route("/countriesreg.json")
-def get_countries_all_json():
-    """Return a JSON response with all countries in DB."""
-    countries = Country.query.all()
-    countries_list = []
-    for c in countries:
-    	countries_list.append({"country_code": c.country_code,
-    								"country_name": c.country_name})
-
-    return jsonify({"countries": countries_list})
-
 
 @app.route('/movies', methods=['GET'])
 def show_movies_by_country_test():

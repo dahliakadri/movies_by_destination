@@ -185,7 +185,7 @@ class SignUp extends React.Component{
   }
 
   componentDidMount() {
-    fetch("/countriesreg.json")
+    fetch("/countries")
             .then(response => response.json())
             .then(response => {
                 const {countries} = response
@@ -322,7 +322,7 @@ class CountrySearch extends React.Component {
   componentDidMount() {
     this.setState({loading : true})
     this.mounted = true
-    fetch("/countries.json")
+    fetch("/countries")
             .then(response => response.json())
             .then(response => {
               if(this.mounted){
