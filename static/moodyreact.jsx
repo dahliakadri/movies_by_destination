@@ -593,7 +593,7 @@ class MoviesbyMap extends React.Component{
 
   render(){
     return(
-      <div>My Map</div>)
+      <div><GoogleMap /></div>)
   }
 
 }
