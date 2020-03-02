@@ -532,7 +532,6 @@ class Watchlist extends React.Component{
     $.get("/watchlist/user", {test: "test"})
       .then(response => {
         const {movies} = response
-        console.log(movies)
         this.setState({ watchmovies: movies})
         })
 
@@ -543,7 +542,6 @@ class Watchlist extends React.Component{
       $.get("/watchlist/user", {test: "test"})
             .then(response => {
                 const {movies} = response
-                console.log(movies)
                 this.setState({ watchmovies: movies})
                 })
       this.setState({remove: true})

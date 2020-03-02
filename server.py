@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = "test"
 app.jinja_env.undefined = StrictUndefined
 
-@app.route('/react')
+@app.route('/moody')
 def react():
 	return render_template("index.html")
 
@@ -179,7 +179,6 @@ def react_logout():
 
 
 #Below here are the jinja template routes#
-	
 @app.route('/')
 def index():
 	"""Homepage renders a list of countries for users to choose"""
@@ -192,7 +191,6 @@ def index():
 		user_id = None
 	return render_template("homepage.html", countries=countries_list, user_id=user_id)
 
-
 @app.route("/signupform")
 def render_signup_form():
 	"""Renders a template for the user to sign up"""
@@ -202,7 +200,6 @@ def render_signup_form():
 		return redirect('/')
 	countries_list = Country.query.all()
 	return render_template("signupform.html", countries=countries_list)
-
 
 @app.route("/signup", methods=['POST'])
 def handle_signup():
@@ -269,7 +266,6 @@ def logout():
 		flash(f"You can't log out if not logged in.")
 	return redirect("/")
 
-
 @app.route('/moviesbycountry', methods=['POST'])
 def show_movies_by_country():
 	"""Show movies for a particular country user requested"""
@@ -282,7 +278,6 @@ def show_movies_by_country():
 		flash(f'Logged in as {user_first_name}.')
 	return render_template("moviesbycountry.html", movies=country.movies, country=country)
 
-
 @app.route("/movie/<movie_id>")
 def show_movie_details(movie_id):
 	"""Shows movie details of a particular movie the user requested"""
@@ -292,7 +287,6 @@ def show_movie_details(movie_id):
 		user_first_name = session['current_user']
 		flash(f'Logged in as {user_first_name}.')
 	return render_template("moviedetails.html", display_movie=movie)
-
 
 @app.route("/watchlist", methods=['POST'])
 def add_movies_to_watch_list():
@@ -316,7 +310,6 @@ def add_movies_to_watch_list():
 	#once all added flashes message, movie added and redirects to main page
 	return redirect('/')
 
-
 @app.route("/watchlist/<user_id>")
 def view_user_watch_list(user_id):
 	"""Views a users watchlist"""
@@ -331,7 +324,6 @@ def view_user_watch_list(user_id):
 	else:
 		flash(f'Log in or sign up to view a watch list.')
 		redirect('/')
-
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
