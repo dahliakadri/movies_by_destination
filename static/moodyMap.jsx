@@ -8,11 +8,15 @@ class GoogleMap extends React.Component {
 
   componentDidMount() {
     const googleMapScript = document.createElement("script")
-    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${config.googleApiKey}&libraries=places`
+    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=&libraries=places`
     window.document.body.appendChild(googleMapScript)
     googleMapScript.addEventListener('load', () => {
-    	this.googleMap = this.createGoogleMap()
-    	this.marker = this.createMarker()
+    	this.moodyMap = this.createGoogleMap()
+    	this.EgyptMarker = this.createMarker()
+      this.EgyptInfo = this.createInfoWindow()
+      this.EgyptMarker.addListener('click', () => {
+        this.EgyptInfo.open(this.moodyMap, this.EgyptMarker)
+      })
     })
   }
 
@@ -26,11 +30,23 @@ class GoogleMap extends React.Component {
       disableDefaultUI: true,
     })
 
-  // createMarker = () =>
-  //   new window.google.maps.Marker({
-  //     position: { lat: 43.642567, lng: -79.387054 },
-  //     map: this.googleMap,
-  //   })
+  createMarker = () =>
+    new window.google.maps.Marker({
+      position: { lat: 26.8206, lng: 30.8025 },
+      map: this.moodyMap,
+      icon: {
+        url: '/static/img/movie_icon_two.png',
+        scaledSize: {
+          width: 30,
+          height: 30
+        }
+      }
+    })
+
+    createInfoWindow = () =>
+    new window.google.maps.InfoWindow({
+      content: '<h1> Egypt</h1>'
+    })
 
   render() {
     return (
