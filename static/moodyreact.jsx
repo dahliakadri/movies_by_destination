@@ -374,7 +374,6 @@ componentWillUnmount(){
 }
 
 //Renders movies by country and handles the user addition of movies to their watchlist
-//TODO: Scrape/add movie posters 
 //TODO: After movies added, render the watchlist
 class MoviesByCountry extends React.Component{
     constructor(props) {
@@ -472,7 +471,7 @@ class Movie extends React.Component{
   render(){
     const movieDetails = this.state.moviedetails ?
       <div className="moviedetails">
-        <li>Poster: <img alt="Poster" src={this.props.movie.movie_poster} title="test"/></li>
+         <img alt="Poster" src={this.props.movie.movie_poster} title="test"/>
         <li>Rating: {this.props.movie.imdb_rating}</li>
         <li>Votes: {this.props.movie.votes}</li>
         <li>Country: {this.props.country}</li>

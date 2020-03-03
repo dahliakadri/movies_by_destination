@@ -12,7 +12,10 @@ class GoogleMap extends React.Component {
     window.document.body.appendChild(googleMapScript)
     googleMapScript.addEventListener('load', () => {
     	this.moodyMap = this.createGoogleMap()
+      //fetch all of the countries
+      //map over each country and feed in the lat anng long into create marker function
     	this.EgyptMarker = this.createMarker()
+      //fetch movies from each country and feed in the top 3 movies from each country 
       this.EgyptInfo = this.createInfoWindow()
       this.EgyptMarker.addListener('click', () => {
         this.EgyptInfo.open(this.moodyMap, this.EgyptMarker)
