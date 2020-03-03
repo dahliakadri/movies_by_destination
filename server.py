@@ -3,6 +3,9 @@
 from jinja2 import StrictUndefined
 from flask import Flask, flash, render_template, redirect, request, session, jsonify, json
 from model import User, Movie, Country, CountryFact, MoodyRating, SavedMovie, Poster, connect_to_db, db
+import requests
+from bs4 import BeautifulSoup
+
 app = Flask(__name__)
 app.secret_key = "test"
 app.jinja_env.undefined = StrictUndefined
@@ -30,13 +33,22 @@ def show_movies_by_country_test():
 	#from country can find all of the movies associated with it from country.movies
 	movies_by_country_list = []
 	movies=country.movies_by_num_rating
+
 	for m in movies:
-		if len(movies_by_country_list) < 100:
+		if len(movies_by_country_list) < 2:
+			scrape_result = requests.get(f"https://www.imdb.com/title/{m.movie_id}/")
+			src = scrape_result.content
+			print(src)
+			soup = BeautifulSoup(src, "html.parser")
+			img_div = soup.find(class_="poster")
+			poster_img = img_div.img.extract()
+			poster_url = poster_img['src']
 			movies_by_country_list.append({"movie_id": m.movie_id,
 										"movie_title": m.title,
 										"imdb_rating": m.imdb_rating,
 										"votes": m.num_votes,
-										"country_code": m.country_code})
+										"country_code": m.country_code,
+										"movie_poster": str(poster_url)})
 	return jsonify({"movies": movies_by_country_list})
 
 #ToDo: after movies added render the watch list instead of the dropdown menu and

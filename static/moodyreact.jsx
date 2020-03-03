@@ -472,6 +472,7 @@ class Movie extends React.Component{
   render(){
     const movieDetails = this.state.moviedetails ?
       <div className="moviedetails">
+        <li>Poster: <img alt="Poster" src={this.props.movie.movie_poster} title="test"/></li>
         <li>Rating: {this.props.movie.imdb_rating}</li>
         <li>Votes: {this.props.movie.votes}</li>
         <li>Country: {this.props.country}</li>
