@@ -14,6 +14,7 @@ app.jinja_env.undefined = StrictUndefined
 def react():
 	return render_template("index.html")
 
+#TODO make a join query to eagerly load the countries with movies
 @app.route("/countries")
 def get_countries_json():
     """Return a JSON response with all countries in DB with movies."""
@@ -35,20 +36,27 @@ def show_movies_by_country_test():
 	movies=country.movies_by_num_rating
 
 	for m in movies:
-		if len(movies_by_country_list) < 2:
-			scrape_result = requests.get(f"https://www.imdb.com/title/{m.movie_id}/")
-			src = scrape_result.content
-			print(src)
-			soup = BeautifulSoup(src, "html.parser")
-			img_div = soup.find(class_="poster")
-			poster_img = img_div.img.extract()
-			poster_url = poster_img['src']
+		if len(movies_by_country_list) < 10:
+			poster = Poster.query.filter(Poster.movie_id== m.movie_id).first()
+			if poster == None:
+				scrape_result = requests.get(f"https://www.imdb.com/title/{m.movie_id}/")
+				src = scrape_result.content
+				print(src)
+				soup = BeautifulSoup(src, "html.parser")
+				img_div = soup.find(class_="poster")
+				poster_img = img_div.img.extract()
+				poster_url = poster_img['src']
+				poster_object = Poster(poster_url=poster_url,
+										movie_id=m.movie_id)
+				db.session.add(poster_object)
+				db.session.commit()
+				poster = Poster.query.filter(Poster.movie_id== m.movie_id).first()
 			movies_by_country_list.append({"movie_id": m.movie_id,
 										"movie_title": m.title,
 										"imdb_rating": m.imdb_rating,
 										"votes": m.num_votes,
 										"country_code": m.country_code,
-										"movie_poster": str(poster_url)})
+										"movie_poster": str(poster.poster_url)})
 	return jsonify({"movies": movies_by_country_list})
 
 #ToDo: after movies added render the watch list instead of the dropdown menu and
