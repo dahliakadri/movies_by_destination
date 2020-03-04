@@ -61,9 +61,9 @@ class Movie(db.Model):
 	year_made = db.Column(db.String(100),
 						nullable=True)
 	imdb_rating = db.Column(db.Float(),
-						nullable=True)
+						nullable=False)
 	num_votes = db.Column(db.Integer,
-						nullable=True)
+						nullable=False)
 	country_code = db.Column(db.String(2),
 						db.ForeignKey('countries.country_code'),
 						nullable=False)
@@ -106,13 +106,17 @@ class Poster(db.Model):
 
 
 class Country(db.Model):
-	#country and country codes by a country code dataset
+	#country, country codes, and geo from a country code dataset
 	__tablename__ = "countries"
 
 	country_code = db.Column(db.String(2),
 						primary_key=True,
 						nullable=False)
 	country_name = db.Column(db.String(300),
+						nullable=False)
+	country_lat = db.Column(db.Float(),
+						nullable=False)
+	country_long = db.Column(db.Float(),
 						nullable=False)
 
 	#relationships

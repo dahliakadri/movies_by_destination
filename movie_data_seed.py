@@ -31,6 +31,30 @@ def make_movie_dict(file):
             # print(str(movie_id) + "= " + str(movie_specs))
     return movie_dict
 
+def add_rating_to_movie_dict(file, movie_dict):
+    """Adds a rating and number of votes to the movie_dict dictionary"""
+    movie_data_file = open(file)
+    movie_ids = movie_dict.keys()
+
+    for line in movie_data_file:
+        line = line.rstrip()
+        items = line.split("\t")
+        movie_id = items[0]
+        avg_rating = items[1]
+        num_votes = items[2]
+
+        if movie_id in movie_ids:
+            movie_dict[movie_id]['avg_rating'] = float(avg_rating)
+            movie_dict[movie_id]['num_votes'] = int(num_votes)
+    
+    #once all of the countries have been added to the dict, check to see if any
+    #movies don't have countries, and remove them from the dictionary
+    for movie_id in list(movie_dict):
+        if movie_dict.get(movie_id, {}).get('avg_rating') == None:
+            del movie_dict[movie_id]
+
+    return movie_dict
+
 def add_country_value_to_movie_dict(file, movie_dict):
     """Based on the original movie title from the movie_by_year dictionary
     this function adds a country origin code to the dictionary""" 
@@ -66,56 +90,37 @@ def add_country_value_to_movie_dict(file, movie_dict):
 
     return movie_dict
 
-def add_rating_to_movie_dict(file, movie_dict):
-    """Adds a rating and number of votes to the movie_dict dictionary"""
-    movie_data_file = open(file)
-    movie_ids = movie_dict.keys()
-
-    for line in movie_data_file:
-        line = line.rstrip()
-        items = line.split("\t")
-        movie_id = items[0]
-        avg_rating = items[1]
-        num_votes = items[2]
-
-        if movie_id in movie_ids:
-            movie_dict[movie_id]['avg_rating'] = float(avg_rating)
-            movie_dict[movie_id]['num_votes'] = int(num_votes)
-    
-    #once all of the countries have been added to the dict, check to see if any
-    #movies don't have countries, and remove them from the dictionary
-    for movie_id in list(movie_dict):
-        if movie_dict.get(movie_id, {}).get('avg_rating') == None:
-            del movie_dict[movie_id]
-
-    return movie_dict
-
 
 def load_countries():
 
     Country.query.delete()
 
-    for row in open("country_data.csv"):
+    for row in open("country_data_geo.csv"):
         row = row.rstrip()
         items = row.split(",")
-        country_name = items[0]
-        country_code = items[1]
+        country_code = items[0]
+        country_code = country_code.replace('"','')
+        country_name = items[1]
+        country_name = country_name.replace('"', '')
+        country_lat = float(items[2])
+        country_long = float(items[3])
 
         country = Country(country_code=country_code,
-                                country_name=country_name)
+                            country_name=country_name,
+                            country_lat=country_lat,
+                            country_long=country_long)
 
         db.session.add(country)
     db.session.commit()
-
     print("countries loaded")
 
-def load_movies(movie_dict_countries_and_ratings):
+def load_movies(movie_dict):
     
     Movie.query.delete()
-    print(len(movie_dict_countries_and_ratings))
+    print(len(movie_dict))
 
     i = 0
-    for key, value in movie_dict_countries_and_ratings.items():
+    for key, value in movie_dict.items():
         movie_object = Movie(movie_id = key,
                                 title=value['title'],
                                 year_made=value['year_made'],
@@ -141,10 +146,10 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     db.create_all()
-    base_movie_dict = make_movie_dict("title.basics.tsv")
-    movie_dict_countries = add_country_value_to_movie_dict("title.akas.tsv", base_movie_dict)
-    movie_dict_countries_and_ratings = add_rating_to_movie_dict("title.ratings.tsv", movie_dict_countries)
     load_countries()
-    load_movies(movie_dict_countries_and_ratings)
+    base_movie_dict = make_movie_dict("title.basics.tsv")
+    movie_dict_ratings = add_rating_to_movie_dict("title.ratings.tsv", base_movie_dict)
+    movie_dict_ratings_countries = add_country_value_to_movie_dict("title.akas.tsv", movie_dict_ratings)
+    load_movies(movie_dict_ratings_countries)
 
 

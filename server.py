@@ -21,8 +21,7 @@ def get_countries_json():
     countries = Country.query.all()
     countries_list = []
     for c in countries:
-    	if c.movies:
-    		countries_list.append({"country_code": c.country_code,
+    	countries_list.append({"country_code": c.country_code,
     								"country_name": c.country_name})
 
     return jsonify({"countries": countries_list})
