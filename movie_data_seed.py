@@ -135,12 +135,6 @@ def load_movies(movie_dict):
     db.session.commit()
     print("All movies loaded")
 
-# movie_dict = make_movie_dict("title.basics.tsv")
-# movie_dict_countries = add_country_value_to_movie_dict("title.akas.tsv", movie_dict)
-# movie_dict_countries_and_ratings= add_rating_to_movie_dict("title.ratings.tsv", movie_dict_countries)
-# for key, value in movie_dict_countries_and_ratings.items():
-#     print(str(key) + " -> " + str(value))
-
 if __name__ == "__main__":
     
     connect_to_db(app)
