@@ -8,7 +8,7 @@ class GoogleMap extends React.Component {
 
   componentDidMount() {
     const googleMapScript = document.createElement("script")
-    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyD-yWUDbXdh4dLAdjQRSEAWJuSNZwODEyI&libraries=places`
+    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=&libraries=places`
     window.document.body.appendChild(googleMapScript)
     googleMapScript.addEventListener('load', () => {
     	this.moodyMap = this.createGoogleMap()
