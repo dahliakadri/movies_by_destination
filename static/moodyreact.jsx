@@ -318,7 +318,7 @@ class CountrySearch extends React.Component {
   componentDidMount() {
     this.setState({loading : true})
     this.mounted = true
-    fetch("/countries")
+    fetch("/countries_with_movies")
             .then(response => response.json())
             .then(response => {
               if(this.mounted){

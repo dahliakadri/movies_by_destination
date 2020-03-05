@@ -2,30 +2,38 @@ class GoogleMap extends React.Component {
 
 	constructor(props) {
 		super(props)
-		this.state = {}
+		this.state = {allCountries: []}
 		this.googleMapRef = React.createRef()
 	}
 
   componentDidMount() {
     const googleMapScript = document.createElement("script")
-    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=&libraries=places`
+    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyD-yWUDbXdh4dLAdjQRSEAWJuSNZwODEyI&libraries=places`
     window.document.body.appendChild(googleMapScript)
     googleMapScript.addEventListener('load', () => {
     	this.moodyMap = this.createGoogleMap()
-      //fetch all of the countries
-      //map over each country and feed in the lat anng long into create marker function
-    	this.EgyptMarker = this.createMarker()
+      fetch("/countries_with_movies")
+            .then(response => response.json())
+            .then(response => {
+              const {countries} = response
+              this.setState({ allCountries: countries})
+              this.state.allCountries.map((item) =>
+                this.createMarker(parseFloat(item.country_lat), parseFloat(item.country_lon)))
+            })
       //fetch movies from each country and feed in the top 3 movies from each country 
-      this.EgyptInfo = this.createInfoWindow()
-      this.EgyptMarker.addListener('click', () => {
-        this.EgyptInfo.open(this.moodyMap, this.EgyptMarker)
-      })
+      // this.state.allCountries.map((item) =>
+      //           this.createInfoWindow(parseFloat(item.country_lat), parseFloat(item.country_lon)))
+      //       })
+      // this.EgyptInfo = this.createInfoWindow()
+      // this.EgyptMarker.addListener('click', () => {
+      //   this.EgyptInfo.open(this.moodyMap, this.EgyptMarker)
+      // })
     })
   }
 
   createGoogleMap = () =>
     new window.google.maps.Map(this.googleMapRef.current, {
-      zoom: 1,
+      zoom: 3,
       center: {
         lat: 26.8206,
         lng: 30.8025,
@@ -33,18 +41,18 @@ class GoogleMap extends React.Component {
       disableDefaultUI: true,
     })
 
-  createMarker = () =>
+   createMarker = (itemLat, itemLon) =>
     new window.google.maps.Marker({
-      position: { lat: 26.8206, lng: 30.8025 },
+      position: { lat: itemLat, lng: itemLon },
       map: this.moodyMap,
       icon: {
         url: '/static/img/movie_icon_two.png',
         scaledSize: {
-          width: 30,
-          height: 30
+          width: 20,
+          height: 20
         }
       }
-    })
+    }) 
 
     createInfoWindow = () =>
     new window.google.maps.InfoWindow({

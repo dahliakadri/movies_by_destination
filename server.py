@@ -14,15 +14,16 @@ app.jinja_env.undefined = StrictUndefined
 def react():
 	return render_template("index.html")
 
-#TODO make a join query to eagerly load the countries with movies
-@app.route("/countries")
-def get_countries_json():
+@app.route("/countries_with_movies")
+def get_countries_with_movies_json():
     """Return a JSON response with all countries in DB with movies."""
-    countries = Country.query.all()
     countries_list = []
-    for c in countries:
+    for movie in Movie.query.distinct(Movie.country_code):
+    	c = Country.query.filter(Country.country_code == movie.country_code).one()
     	countries_list.append({"country_code": c.country_code,
-    								"country_name": c.country_name})
+    								"country_name": c.country_name,
+    								"country_lat": c.country_lat,
+    								"country_lon": c.country_long})
 
     return jsonify({"countries": countries_list})
 
@@ -123,6 +124,19 @@ def update_movies_to_watch_list_react():
 		return ({"remove_status": False})
 	else:
 		print("no user")
+
+@app.route("/countries")
+def get_countries_json():
+    """Return a JSON response with all countries in DB for users to choose their location"""
+    countries = Country.query.all()
+    countries_list = []
+    for c in countries:
+    	countries_list.append({"country_code": c.country_code,
+    								"country_name": c.country_name,
+    								"country_lat": c.country_lat,
+    								"country_lon": c.country_long})
+
+    return jsonify({"countries": countries_list})
 
 @app.route("/reactsignup", methods=['POST'])
 def handle_react_signup():
