@@ -63,7 +63,7 @@ class MoodyApp extends React.Component{
     const logbuttons = this.state.loginStatus ? <button onClick={this.handleLogout}> Logout </button> : <div><button onClick={() => this.setState({currentPage: 3})}> Sign Up </button>
     <button onClick={() => this.setState({currentPage: 4})}> Sign In </button></div>
     const userStatus = this.state.loginStatus ? <div>Welcome, {this.state.userFname}, logged in with {this.state.userEmail}.</div> : <div>Not logged in</div>
-    const watchListButton = this.state.loginStatus ? <button onClick={() => this.setState({currentPage: 2})}> Watchlist </button>: <div></div>
+    const watchListButton = this.state.loginStatus ? <button onClick={() => this.setState({currentPage: 2})}> My Movies List </button>: <div></div>
     return (
         <div>
           <Header />

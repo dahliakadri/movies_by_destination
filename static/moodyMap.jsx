@@ -8,7 +8,7 @@ class GoogleMap extends React.Component {
 
   componentDidMount() {
     const googleMapScript = document.createElement("script")
-    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=&libraries=places`
+    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCf81HOB1Z-64TW7Bc5nraUqgbcLoLJBHQ&libraries=places`
     window.document.body.appendChild(googleMapScript)
     googleMapScript.addEventListener('load', () => {
     	this.moodyMap = this.createGoogleMap()
@@ -17,23 +17,34 @@ class GoogleMap extends React.Component {
             .then(response => {
               const {countries} = response
               this.setState({ allCountries: countries})
-              this.state.allCountries.map((item) =>
-                this.createMarker(parseFloat(item.country_lat), parseFloat(item.country_lon)))
+              const markers = []
+              for (const country of this.state.allCountries){
+                const marker = this.createMarker(parseFloat(country.country_lat), parseFloat(country.country_lon))
+                const infoWindow = this.createInfoWindow(markerInfo)
+                const markerInfo = '<h1>Test</h1>'
+                marker.addListener('click', () => {
+                  $.get("/movies", {country: country.country_name})
+                  .then(response => {
+                    const {movies} = response
+                    const markerInfo = `
+                            <h2>Top Movie from ${country.country_name}</h2>
+                            <h3>${movies[1].movie_title}</h3>
+                              <li>Rating: ${movies[1].imdb_rating}</li>
+                              <li>Votes: ${movies[1].votes}</li>
+                              <img alt="Poster" src=${movies[1].movie_poster} title="test"/>`
+                    const infoWindow = this.createInfoWindow(markerInfo)
+                    infoWindow.open(this.moodyMap, marker)
+                  })
+                })
+                }
+              })
             })
-      //fetch movies from each country and feed in the top 3 movies from each country 
-      // this.state.allCountries.map((item) =>
-      //           this.createInfoWindow(parseFloat(item.country_lat), parseFloat(item.country_lon)))
-      //       })
-      // this.EgyptInfo = this.createInfoWindow()
-      // this.EgyptMarker.addListener('click', () => {
-      //   this.EgyptInfo.open(this.moodyMap, this.EgyptMarker)
-      // })
-    })
   }
+
 
   createGoogleMap = () =>
     new window.google.maps.Map(this.googleMapRef.current, {
-      zoom: 3,
+      zoom: 4,
       center: {
         lat: 26.8206,
         lng: 30.8025,
@@ -41,8 +52,8 @@ class GoogleMap extends React.Component {
       disableDefaultUI: true,
     })
 
-   createMarker = (itemLat, itemLon) =>
-    new window.google.maps.Marker({
+  createMarker = (itemLat, itemLon) => {
+    return new window.google.maps.Marker({
       position: { lat: itemLat, lng: itemLon },
       map: this.moodyMap,
       icon: {
@@ -52,12 +63,14 @@ class GoogleMap extends React.Component {
           height: 20
         }
       }
-    }) 
-
-    createInfoWindow = () =>
-    new window.google.maps.InfoWindow({
-      content: '<h1> Egypt</h1>'
     })
+  }
+
+  createInfoWindow = (markerInfo) => {
+  return new window.google.maps.InfoWindow({
+      content: markerInfo
+    })
+  }
 
   render() {
     return (
@@ -70,3 +83,34 @@ class GoogleMap extends React.Component {
     )
   }
 }
+
+      // TODO: Need to somehow make a variable for each of the markers so I can add an event listener to them. "item.marker =" does not work..
+      // fetch movies from each country and feed in the top 3 movies from each country
+      // where should I fetch the movie data for each country here?
+      // this.state.allCountries.map((item) =>
+      //   need to fetch movies based on the item
+      //   this.item.Info = this.createInfoWindow(pass in the movies)
+      //   this.item.marker.addListener('click', () => {
+      //                 this.item.Info.open(this.moodyMap, this.itemMarker)
+      // }))
+                 
+      //       })
+ 
+ // $.get("/movies", {country: item.country_name})
+ //      .then(response => {
+ //        const {movies} = response
+ //      //test stuff ignore
+      // this.EgyptInfo = this.createInfoWindow()
+      // this.EgyptMarker.addListener('click', () => {
+      //   this.EgyptInfo.open(this.moodyMap, this.EgyptMarker)
+      // })
+
+ // testCreateInfoWindow (country, item.movie_title, item.movie_poster, item.imbd_rating, item.votes, item.movie_title) =>
+ //    new window.google.maps.InfoWindow({
+ //      content: <h1> 'country' </h1>
+ //    })
+
+  // testCreateInfoWindow (country, item.movie_title, item.movie_poster, item.imbd_rating, item.votes, item.movie_title) =>
+  //   new window.google.maps.InfoWindow({
+  //     content: <h1> 'country' </h1>
+  //   })
