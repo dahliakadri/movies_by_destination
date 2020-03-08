@@ -62,10 +62,10 @@ class MoodyApp extends React.Component{
   }
 
   render() {
-    const logbuttons = this.state.loginStatus ? <button onClick={this.handleLogout}> Logout </button> : <div><button onClick={() => this.setState({currentPage: 3})}> Sign Up </button>
-    <button onClick={() => this.setState({currentPage: 4})}> Sign In </button></div>
+    const logbuttons = this.state.loginStatus ? <button  className="btn btn-sm btn-outline-secondary" type="button" onClick={this.handleLogout}> Logout </button> : <div><button  className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 3})}> Sign Up </button>
+    <button  className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 4})}> Sign In </button></div>
     const userStatus = this.state.loginStatus ? <div>Welcome, {this.state.userFname}, logged in with {this.state.userEmail}.</div> : <div>Not logged in</div>
-    const userButtons = this.state.loginStatus ? <div><button onClick={() => this.setState({currentPage: 2})}> My Movies List </button><button onClick={() => this.setState({currentPage: 7})}> My Profile</button></div>: <div></div>
+    const userButtons = this.state.loginStatus ? <div><button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 2})}> My Movies List </button><button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 7})}> My Profile</button></div>: <div></div>
     return (
         <div>
           <nav className="navbar navbar-light bg-light">
@@ -73,16 +73,16 @@ class MoodyApp extends React.Component{
             <img src="/static/img/travelimage.png" width="30" height="30" className="d-inline-block align-top" alt=""/>
             Moody</a>
             <form className="form-inline">
-              <button className="btn btn-outline-success" type="button" onClick={() => this.setState({currentPage: 0})}>Home</button>
-              <button className="btn btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 5})}>Movies by Map</button>
-              <button className="btn btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 1})}>About</button>
-              <button className="btn btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 6})}>Contact Us</button>
+              <button className="btn btn-sm btn-outline-success" type="button" onClick={() => this.setState({currentPage: 0})}>Home</button>
+              <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 5})}>Movies by Map</button>
+              { userButtons }
+              { logbuttons }
+              <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 1})}>About</button>
+              <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 6})}>Contact Us</button>
             </form>
           </nav>
           <div>
-          { userStatus}
-          { logbuttons }
-          { userButtons }
+          { userStatus }
           </div>
           <div>
           {this.state.pages[this.state.currentPage]}
