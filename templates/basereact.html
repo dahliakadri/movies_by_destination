@@ -2,30 +2,37 @@
 <html>
 <head>
     <title>{% block title %}{% endblock %}</title>
-
-    <!-- Loads React dependencies on all pages for this app. -->
-    <link rel="stylesheet" href="/static/css/styles.css">
+      <!-- Loads React dependencies on all pages for this app. -->
     <script 
       crossorigin
       src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
-
     <script 
       crossorigin
       src="https://unpkg.com/react@16/umd/react.development.js"></script>
-
     <script 
       crossorigin
       src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 
+    <!-- jQuery script tag from code.jquery.com -->
     <script
       src="https://code.jquery.com/jquery-3.4.1.js"
       integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
       crossorigin="anonymous"></script>
+
+    <!-- Script tags from getbootstrap.com -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+
 </head>
 <body>
 
-  <!-- Includes the page's content with this block. -->
   {% block body %}
+ 
   {% endblock %}
 
   <!-- Includes any page-specific Javascript using this block. -->

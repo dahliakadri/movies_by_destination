@@ -5,6 +5,7 @@ class GoogleMap extends React.Component {
 		this.state = {allCountries: []}
 		this.googleMapRef = React.createRef()
 	}
+
   componentDidMount() {
     const googleMapScript = document.createElement("script")
     googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=&libraries=places`
@@ -19,27 +20,18 @@ class GoogleMap extends React.Component {
               const markers = []
               for (const country of this.state.allCountries){
                 const marker = this.createMarker(parseFloat(country.country_lat), parseFloat(country.country_lon))
-                const infoWindow = this.createInfoWindow(markerInfo)
                 const markerInfo = '<h1>Test</h1>'
+                const infoWindow = this.createInfoWindow(markerInfo)
                 marker.addListener('click', () => {
-                  $.get("/movies", {country: country.country_name})
-                  .then(response => {
-                    const {movies} = response
-                    const markerInfo = `
-                            <h2>Top Movie from ${country.country_name}</h2>
-                            <h3>${movies[1].movie_title}</h3>
-                              <li>Rating: ${movies[1].imdb_rating}</li>
-                              <li>Votes: ${movies[1].votes}</li>
-                              <img alt="Poster" src=${movies[1].movie_poster} title="test"/>`
+                    const markerInfo = `<h4>Movies from ${country.country_name}</h4>`
                     const infoWindow = this.createInfoWindow(markerInfo)
                     infoWindow.open(this.moodyMap, marker)
+                    this.props.moodyMapCallback({"country": country.country_name})
                   })
-                })
-                }
-              })
+              }
             })
+          })
   }
-
 
   createGoogleMap = () =>
     new window.google.maps.Map(this.googleMapRef.current, {
@@ -82,34 +74,3 @@ class GoogleMap extends React.Component {
     )
   }
 }
-
-      // TODO: Need to somehow make a variable for each of the markers so I can add an event listener to them. "item.marker =" does not work..
-      // fetch movies from each country and feed in the top 3 movies from each country
-      // where should I fetch the movie data for each country here?
-      // this.state.allCountries.map((item) =>
-      //   need to fetch movies based on the item
-      //   this.item.Info = this.createInfoWindow(pass in the movies)
-      //   this.item.marker.addListener('click', () => {
-      //                 this.item.Info.open(this.moodyMap, this.itemMarker)
-      // }))
-                 
-      //       })
- 
- // $.get("/movies", {country: item.country_name})
- //      .then(response => {
- //        const {movies} = response
- //      //test stuff ignore
-      // this.EgyptInfo = this.createInfoWindow()
-      // this.EgyptMarker.addListener('click', () => {
-      //   this.EgyptInfo.open(this.moodyMap, this.EgyptMarker)
-      // })
-
- // testCreateInfoWindow (country, item.movie_title, item.movie_poster, item.imbd_rating, item.votes, item.movie_title) =>
- //    new window.google.maps.InfoWindow({
- //      content: <h1> 'country' </h1>
- //    })
-
-  // testCreateInfoWindow (country, item.movie_title, item.movie_poster, item.imbd_rating, item.votes, item.movie_title) =>
-  //   new window.google.maps.InfoWindow({
-  //     content: <h1> 'country' </h1>
-  //   })

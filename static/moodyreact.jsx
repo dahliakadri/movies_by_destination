@@ -12,7 +12,9 @@ class MoodyApp extends React.Component{
                             <Watchlist  />,
                             <SignUp moodyAppCallback = {this.myCallbackSignUp} />,
                             <SignIn moodyAppCallback = {this.myCallbackSignIn} />,
-                            <MoviesbyMap />
+                            <MoviesbyMap />,
+                            <ContactUs />,
+                             <MyProfile />,
                             ]
                   }
     this.myCallbackSignUp = this.myCallbackSignUp.bind(this)
@@ -63,19 +65,24 @@ class MoodyApp extends React.Component{
     const logbuttons = this.state.loginStatus ? <button onClick={this.handleLogout}> Logout </button> : <div><button onClick={() => this.setState({currentPage: 3})}> Sign Up </button>
     <button onClick={() => this.setState({currentPage: 4})}> Sign In </button></div>
     const userStatus = this.state.loginStatus ? <div>Welcome, {this.state.userFname}, logged in with {this.state.userEmail}.</div> : <div>Not logged in</div>
-    const watchListButton = this.state.loginStatus ? <button onClick={() => this.setState({currentPage: 2})}> My Movies List </button>: <div></div>
+    const userButtons = this.state.loginStatus ? <div><button onClick={() => this.setState({currentPage: 2})}> My Movies List </button><button onClick={() => this.setState({currentPage: 7})}> My Profile</button></div>: <div></div>
     return (
         <div>
-          <Header />
+          <nav className="navbar navbar-light bg-light">
+            <a className="navbar-brand" href="">
+            <img src="/static/img/travelimage.png" width="30" height="30" className="d-inline-block align-top" alt=""/>
+            Moody</a>
+          </nav>
           <div>
           { userStatus}
           { logbuttons }
+          { userButtons }
           </div>
           <div>
             <button onClick={() => this.setState({currentPage: 0})}> Home </button>
             <button onClick={() => this.setState({currentPage: 1})}> About </button>
             <button onClick={() => this.setState({currentPage: 5})}> Movies by Map </button>
-            {watchListButton}
+            <button onClick={() => this.setState({currentPage: 6})}> Contact Us</button>
           </div>
           <div>
           {this.state.pages[this.state.currentPage]}
@@ -85,17 +92,6 @@ class MoodyApp extends React.Component{
         </div>
             )
   }
-}
-
-class Header extends React.Component{
-
-    render() {
-        return(
-        <div>
-            <h2 className="title">Moody Movies by Travel Destinations</h2>
-            <h4 className="slogan">Find the perfect movie from your next travel desitination | Logo </h4>
-        </div>)
-    }
 }
 
 class Footer extends React.Component{
@@ -113,6 +109,24 @@ class AboutPage extends React.Component {
             and share movies from your favorite travel destination.
             <p>Moody was created by Dahlia Kadri, a current Software Engineering
             Student at Hackbright Academy in San Franscico, California.</p></div>)
+    }
+
+}
+
+class ContactUs extends React.Component { 
+  render(){
+        return (
+            <div>Contact Us.
+            <p>Contact Us Here</p></div>)
+    }
+
+}
+
+class MyProfile extends React.Component { 
+  render(){
+        return (
+            <div>User Profile.
+            <p>User Profile</p></div>)
     }
 
 }
@@ -375,6 +389,7 @@ componentWillUnmount(){
 
 //Renders movies by country and handles the user addition of movies to their watchlist
 //TODO: After movies added, render the watchlist
+//TODO: pass in if a user is logged in, if they are logged in show add to watch list button if not then don't show
 class MoviesByCountry extends React.Component{
     constructor(props) {
         super(props)
@@ -446,11 +461,11 @@ class MoviesByCountry extends React.Component{
                 <h3> Movies from {this.props.country}:</h3>
                 <div className="movies">
                 <form className="movies" onSubmit={this.handleSubmit}>
-                Add movies would you like to watch:
+                Check movies you like to add to your list:
                 <br />
                 {movieComponents}
                 <br />
-                <button type="submit">Add to watch list</button> 
+                <button type="submit">Add to my movie list</button> 
                 </form>
                 </div>
             </div>
@@ -583,17 +598,35 @@ class Watchlist extends React.Component{
   }
 }
 
-//TODO: Create a Google Map that allows to hover over each country and see the top 
-//3 movies from every country.
+//TODO: Need to have my map mass back into the country that is clicked. Set the state to country clicked
 class MoviesbyMap extends React.Component{
   constructor(props) {
     super(props)
-    this.state = {maps: []}
+    this.state = {country: null}
+    this.myCallbackMap = this.myCallbackMap.bind(this)
+
+  }
+  myCallbackMap = (dataFromMap) => {
+        this.setState({ country: dataFromMap.country})
   }
 
   render(){
+    let movieForm = <div>Place Holder</div>
+    if (this.state.country === null){
+      movieForm = <div>Select Country On Map{this.state.country}</div>
+    }
+    else{movieForm =<MoviesByCountry country={this.state.country}/>}
     return(
-      <div><GoogleMap /></div>)
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-12 col-md-6">
+            <GoogleMap moodyMapCallback = {this.myCallbackMap}/>
+          </div>
+          <div className="col-12 col-md-6">
+            { movieForm }
+            </div>
+        </div>
+      </div> )
   }
 
 }
