@@ -72,17 +72,17 @@ class MoodyApp extends React.Component{
             <a className="navbar-brand" href="">
             <img src="/static/img/travelimage.png" width="30" height="30" className="d-inline-block align-top" alt=""/>
             Moody</a>
+            <form className="form-inline">
+              <button className="btn btn-outline-success" type="button" onClick={() => this.setState({currentPage: 0})}>Home</button>
+              <button className="btn btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 5})}>Movies by Map</button>
+              <button className="btn btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 1})}>About</button>
+              <button className="btn btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 6})}>Contact Us</button>
+            </form>
           </nav>
           <div>
           { userStatus}
           { logbuttons }
           { userButtons }
-          </div>
-          <div>
-            <button onClick={() => this.setState({currentPage: 0})}> Home </button>
-            <button onClick={() => this.setState({currentPage: 1})}> About </button>
-            <button onClick={() => this.setState({currentPage: 5})}> Movies by Map </button>
-            <button onClick={() => this.setState({currentPage: 6})}> Contact Us</button>
           </div>
           <div>
           {this.state.pages[this.state.currentPage]}
@@ -97,7 +97,7 @@ class MoodyApp extends React.Component{
 class Footer extends React.Component{
     render(){
         return (
-            <div>Moody Since 2020</div>)
+            <div>Moody: Top Movies by Country Est.2020</div>)
     }
 }
 
