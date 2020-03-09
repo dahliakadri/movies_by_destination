@@ -8,6 +8,7 @@ body {
 	margin: 0;
 	background-image: url("/static/img/oriental-tiles.png");
 	background-repeat: repeat;
+	font-family: 'Ubuntu', sans-serif;
 }
 
 
@@ -27,7 +28,7 @@ body {
 }
 
 .navbar-brand {
-color: #D9B310!important;
+color: #cab152!important;
 }
 
 .btn-outline-success {
@@ -66,13 +67,14 @@ color: #D9B310!important;
 }
 
 .loginstatus {
-	background: #d9b310c4;
+	background: #c1b08af0;
 	color: #ffffff;
 	text-align: end;
+	padding: .5rem 1rem;
 }
 
 .footer {
-	background: #d9b310c4;
+	background: #c1b08af0;
 	color: #ffffff;
 	text-align: center;
 	position: fixed;
@@ -84,6 +86,41 @@ color: #D9B310!important;
 .countryform{
 	text-align: center;
 	color: #ffffff;
-	background: #d9b310c4;
+	background: #328cc1bf;
 
+}
+
+.movie-poster{
+	text-align: center;
+	color: #ffffff;
+	background: #c2b088d1;
+	margin: 10px;
+    padding: 20px;
+}
+
+.movie-title{
+	text-align: left;
+}
+
+.list-group-item-secondary {
+    color: #ffffff;
+    background-color: #c1b08af0;
+    font-size: small;
+}
+
+.moody-map{
+	margin: 10px;
+    padding: 0px;
+}
+
+.add-movie-btn{
+	background-color: #0c1238
+}
+
+.map-country-selector{
+	text-align: center;
+	color: #ffffff;
+	background: #c2b088d1;
+	margin: 10px;
+    padding: 20px;
 }

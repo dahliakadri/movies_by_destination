@@ -64,7 +64,7 @@ class MoodyApp extends React.Component{
   render() {
     const logbuttons = this.state.loginStatus ? <button  className="btn btn-sm btn-outline-secondary" type="button" onClick={this.handleLogout}> Logout </button> : <div><button  className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 3})}> Sign Up </button>
     <button  className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 4})}> Sign In </button></div>
-    const userStatus = this.state.loginStatus ? <div className="row loginstatus"><div className="col-5 offset-7"><div>Welcome, {this.state.userFname}, logged in with {this.state.userEmail}. </div></div></div> : <div className="row loginstatus"> <div className="col-5 offset-7"> <div>Login Status: Not logged in</div></div></div>
+    const userStatus = this.state.loginStatus ? <div className="row loginstatus"><div className="col-6 offset-6"><div>Welcome, {this.state.userFname}, logged in with {this.state.userEmail}. </div></div></div> : <div className="row loginstatus"> <div className="col-6 offset-6"> <div>Login Status: Not logged in</div></div></div>
     const userButtons = this.state.loginStatus ? <div><button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 2})}> My Movies List </button><button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 7})}> My Profile</button></div>: <div></div>
     return (
         <div>
@@ -359,27 +359,27 @@ componentWillUnmount(){
       }
 
   render() {
-    const countryLoadStatus = this.state.loading ? "Loading Destinations..." : "Destinations Loaded. Start Search."
+    const countryLoadStatus = this.state.loading ? "Destinations Loading..." : "Destinations Loaded."
     const countryOptions = this.state.allcountries.map((item) =>
         <option key={item.country_code} value={item.country_name}>{item.country_name}</option>)
     
-    const movies = this.state.submitcountry ? <MoviesByCountry country={this.state.submitcountry}/> : <p>Pick a Destination Above</p>
+    const movies = this.state.destination ? <MoviesByCountry country={this.state.destination}/> : <p></p>
 
     return (
       <div>
         <br />
-        <div className="row justify-content-around"><div className="col-6 countryform">
+        <div className="row justify-content-around"><div className="col-10 col-md-6 countryform">
         <br/>
         {countryLoadStatus}
          <form className="country-form" onSubmit={this.handleSubmit}>
-          <select value={this.state.destination}
+          <select className="custom-select" value={this.state.destination}
                   name="destination"
                   onChange={this.handleChange}>
                   <option value="">-- Choose your destination --</option>
                   {countryOptions}
                   </select>
-                  <button>Search</button>
         </form><br/></div></div>
+        <br/>
         { movies }
       </div>
     );
@@ -455,19 +455,15 @@ class MoviesByCountry extends React.Component{
       />
     )
         return(
-            <div>
-            {this.state.userId}
-                <h3> Movies from {this.props.country}:</h3>
-                <div className="movies">
-                <form className="movies" onSubmit={this.handleSubmit}>
-                Check movies you like to add to your list:
-                <br />
+                <form className="movies-form" onSubmit={this.handleSubmit}>
+                <div className="movies form-group row justify-content-center">
                 {movieComponents}
                 <br />
-                <button type="submit">Add to my movie list</button> 
-                </form>
                 </div>
-            </div>
+                 <div class="form-group row justify-content-center">
+                <button className = "btn add-movie-btn btn-outline-success" type="submit">Add to my movie list</button> 
+                </div>
+                </form>
             )
     }
 }
@@ -484,29 +480,31 @@ class Movie extends React.Component{
   }
   render(){
     const movieDetails = this.state.moviedetails ?
-      <div className="moviedetails">
-        <li>Rating: {this.props.movie.imdb_rating}</li>
-        <li>Votes: {this.props.movie.votes}</li>
-        <li>Country: {this.props.country}</li>
-        <br />
-        </div> : <br />
+      <ul classaName= "list-group moviedetails">
+        <li className = "list-group-item list-group-item-secondary">Rating: {this.props.movie.imdb_rating}</li>
+        <li className = "list-group-item list-group-item-secondary">Votes: {this.props.movie.votes}</li>
+        <li className = "list-group-item list-group-item-secondary">{this.props.country}</li>
+        </ul> : <h1></h1>
     return(
-      <div>
-      <div className="movie-link">
-        <input type="checkbox"
+      <div className="movie-poster col-5">
+        <label className="form-check-label">
+          <img alt="Poster" onMouseEnter={this.handleClick} onMouseLeave={this.handleClick} target="_blank" src={this.props.movie.movie_poster} />
+          <br />
+          <div className="form-group row">
+          <div className="movie-title col-10">
+          {this.props.movie.movie_title}
+          </div>
+          <div className="col-2">
+          <input type="checkbox" className="form-check-input"
                 name="movie_keys"
                 checked={!!this.props.checkedMovies[this.props.movie.movie_id]}
                 value={this.props.movie.movie_id}
                 onChange={ (event) => !event.target.checked ? this.props.onUnselected() : this.props.onSelected() }
         />
-        <label>
-          <img alt="Poster" onClick={this.handleClick} target="_blank" src={this.props.movie.movie_poster} />
-          <br />
-          {this.props.movie.movie_title}
+        </div>
+        </div>
           </label>
-          <br />
-      </div>
-      {movieDetails}
+          {movieDetails}
       </div>
         )
       }
@@ -582,18 +580,17 @@ class Watchlist extends React.Component{
         })}
       />)
       return (
-        <div>
-          <h3> Your movies watch list:</h3>
-          <div className="movies">
           <form className="movies" onSubmit={this.handleSubmit}>
-            Check to remove movies from your list and submit at the bottom:
-            <br />
-            {movieWatchComponents}
-            <br />
-             <button type="submit">Remove from watch list</button>
-          </form>
+          <div className="watch-list-title row justify-content-center">
+          <h3> Your movies watch list:</h3>
           </div>
-        </div>
+          <div className="form-group row justify-content-center">
+            {movieWatchComponents}
+            </div>
+            <div className="form-group row justify-content-center">
+             <button className="btn add-movie-btn btn-outline-success" type="submit">Remove from watch list</button>
+             </div>
+             </form>
         )
   }
 }
@@ -613,16 +610,18 @@ class MoviesbyMap extends React.Component{
   render(){
     let movieForm = <div>Place Holder</div>
     if (this.state.country === null){
-      movieForm = <div>Select Country On Map{this.state.country}</div>
+      movieForm = <div className="col-12 col-md-6 map-country-selector justify-content-center">Select Country On Map{this.state.country}</div>
     }
     else{movieForm =<MoviesByCountry country={this.state.country}/>}
     return(
-        <div className="row">
-          <div className="col-12 col-md-6">
+        <div className="row justify-content-center">
+          <div className="moody-map col-12 col-md-5">
             <GoogleMap moodyMapCallback = {this.myCallbackMap}/>
           </div>
           <div className="col-12 col-md-6">
+          <div className="row justify-content-center">
             { movieForm }
+            </div>
             </div>
         </div>)
   }
