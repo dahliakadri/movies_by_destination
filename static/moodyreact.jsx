@@ -359,7 +359,7 @@ componentWillUnmount(){
       }
 
   render() {
-    const countryLoadStatus = this.state.loading ? "Loading Destinations..." : "Destinations Loaded. Find your movies"
+    const countryLoadStatus = this.state.loading ? "Loading Destinations..." : "Destinations Loaded. Start Search."
     const countryOptions = this.state.allcountries.map((item) =>
         <option key={item.country_code} value={item.country_name}>{item.country_name}</option>)
     
@@ -367,19 +367,19 @@ componentWillUnmount(){
 
     return (
       <div>
-        {countryLoadStatus}
-        {this.state.userId}
         <br />
-        Choose your destination:
+        <div className="row justify-content-around"><div className="col-6 countryform">
+        <br/>
+        {countryLoadStatus}
          <form className="country-form" onSubmit={this.handleSubmit}>
           <select value={this.state.destination}
                   name="destination"
                   onChange={this.handleChange}>
-                  <option value="">-- Please Choose a destination --</option>
+                  <option value="">-- Choose your destination --</option>
                   {countryOptions}
                   </select>
                   <button>Search</button>
-        </form>
+        </form><br/></div></div>
         { movies }
       </div>
     );
