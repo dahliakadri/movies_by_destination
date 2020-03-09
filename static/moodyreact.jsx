@@ -205,51 +205,63 @@ class SignUp extends React.Component{
   render() {
     const countryOptions = this.state.allcountries.map((item) => <option key={item.country_code} value={item.country_name}>{item.country_name}</option>)
     return (
-
-      <div>
-        <br />
-        Registration
-        <br />
-        <form onSubmit={this.handleSubmit}>
-        <input type="email"
-                name="email"
-                placeholder="Email"
-                value={this.state.email}
-                onChange={this.handleChange} required />
-                <label>Email</label>
-                <br />
-        <input type="text"
+      <div className="container">
+        <form className="signup" onSubmit={this.handleSubmit}>
+          <div className="form-row">
+            <div className="form-group col-md-6">
+              <label>First Name</label>
+                <input type="text"
+                className="form-control"
+                placeholder="First name"
                 name="first_name"
-                placeholder="First Name"
                 value={this.state.first_name}
                 onChange={this.handleChange} required />
-                <label>First Name</label>
-                <br />
-        <input type="text"
+                </div>
+            <div className="form-group col-md-6">
+              <label>Last Name</label>
+              <input type="text"
+                className="form-control"
+                placeholder="Last Name"
                 name="last_name"
                 placeholder="Last Name"
                 value={this.state.last_name}
                 onChange={this.handleChange} required />
-                <label>Last Name</label>
-                <br />
-        <select value={this.state.country}
+                </div>
+            </div>
+            <div className="form-row">
+            <label>Which country do you most connect with?</label>
+              <select value={this.state.country}
                 name="country"
-                onChange={this.handleChange}>
-              <option value="">-- Please Choose Country --</option>
+                onChange={this.handleChange}
+                className="form-control">
+              <option value="">-- Country--</option>
               {countryOptions}
-          </select>
-          <label>Which country do you most connect with?</label>
-          <br />
-          <input type="password"
+              </select>
+            </div>
+            <div className="form-row">
+              <div className="form-group col-md-6">
+                <label>Email</label>
+                <input type="email"
+                className="form-control"
+                id="inputEmail4"
+                placeholder="Email"
+                name="email"
+                value={this.state.email}
+                onChange={this.handleChange} required />
+                </div>
+              <div className="form-group col-md-6">
+                <label>Password</label>
+                <input type="password"
+                className="form-control"
                 name="password"
                 placeholder="Password"
                 value={this.state.password}
                 onChange={this.handleChange} required />
-                <label>Password</label>
-                <br />
-          <button type="submit">Regiser</button>
+                </div>
+                </div>
+          <button className="btn add-movie-btn btn-outline-success" type="submit">Regiser</button>
         </form>
-      </div>
+        </div>
       )
   }
 }

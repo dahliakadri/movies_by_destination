@@ -23,7 +23,7 @@ class GoogleMap extends React.Component {
                 const markerInfo = '<h1>Test</h1>'
                 const infoWindow = this.createInfoWindow(markerInfo)
                 marker.addListener('click', () => {
-                    const markerInfo = `<h4>Movies from ${country.country_name}</h4>`
+                    const markerInfo = `<h4 id="map-marker-info">Movies from ${country.country_name}</h4>`
                     const infoWindow = this.createInfoWindow(markerInfo)
                     infoWindow.open(this.moodyMap, marker)
                     this.props.moodyMapCallback({"country": country.country_name})
@@ -36,6 +36,8 @@ class GoogleMap extends React.Component {
   createGoogleMap = () =>
     new window.google.maps.Map(this.googleMapRef.current, {
       zoom: 4,
+      zoomControl: true,
+      scaleControl: false,
       center: {
         lat: 26.8206,
         lng: 30.8025,
@@ -141,6 +143,7 @@ class GoogleMap extends React.Component {
   createInfoWindow = (markerInfo) => {
   return new window.google.maps.InfoWindow({
       content: markerInfo,
+      maxWidth: 200
     })
   }
 

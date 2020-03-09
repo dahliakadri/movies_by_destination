@@ -132,3 +132,14 @@ color: #d9b43e!important;
 #google-map{
 	height: 100%;
 }
+
+#map-marker-info{
+	font-size: 15px
+}
+
+.signup{
+	background: #0c1238d6;
+    color: #ffff;
+    padding: 20px;
+    margin: 10px;
+}
