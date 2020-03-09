@@ -68,7 +68,7 @@ class MoodyApp extends React.Component{
     const userButtons = this.state.loginStatus ? <div><button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 2})}> My Movies List </button><button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 7})}> My Profile</button></div>: <div></div>
     return (
         <div>
-          <nav className="navbar navbar-light bg-light">
+          <nav className="navbar sticky-top no-gutters navbar-light bg-light">
             <a className="navbar-brand" href="">
             <img src="/static/img/travelimage.png" width="35" height="30" className="d-inline-block align-top" alt=""/>      Moody</a>
             <form className="form-inline">
@@ -96,7 +96,7 @@ class MoodyApp extends React.Component{
 class Footer extends React.Component{
     render(){
         return (
-            <div className="row footer"> <div className="col-12"> <div>Moody: Top Movies by Country Est.2020</div></div></div>)
+            <div className="row footer"> <div className="col-12"> <div>Moody: Top Movies by Country Est 2020</div></div></div>)
     }
 }
 
@@ -359,14 +359,14 @@ componentWillUnmount(){
       }
 
   render() {
-    const countryLoadStatus = this.state.loading ? "Destinations Loading..." : "Destinations Loaded."
+    const countryLoadStatus = this.state.loading ? "Destinations Loading..." : "Destinations Loaded"
     const countryOptions = this.state.allcountries.map((item) =>
         <option key={item.country_code} value={item.country_name}>{item.country_name}</option>)
     
     const movies = this.state.destination ? <MoviesByCountry country={this.state.destination}/> : <p></p>
 
     return (
-      <div>
+      <div className="container-fluid">
         <br />
         <div className="row justify-content-around"><div className="col-10 col-md-6 countryform">
         <br/>
@@ -460,7 +460,7 @@ class MoviesByCountry extends React.Component{
                 {movieComponents}
                 <br />
                 </div>
-                 <div class="form-group row justify-content-center">
+                 <div className="form-group row justify-content-center">
                 <button className = "btn add-movie-btn btn-outline-success" type="submit">Add to my movie list</button> 
                 </div>
                 </form>
@@ -480,7 +480,7 @@ class Movie extends React.Component{
   }
   render(){
     const movieDetails = this.state.moviedetails ?
-      <ul classaName= "list-group moviedetails">
+      <ul className= "list-group moviedetails">
         <li className = "list-group-item list-group-item-secondary">Rating: {this.props.movie.imdb_rating}</li>
         <li className = "list-group-item list-group-item-secondary">Votes: {this.props.movie.votes}</li>
         <li className = "list-group-item list-group-item-secondary">{this.props.country}</li>
@@ -610,13 +610,13 @@ class MoviesbyMap extends React.Component{
   render(){
     let movieForm = <div>Place Holder</div>
     if (this.state.country === null){
-      movieForm = <div className="col-12 col-md-6 map-country-selector justify-content-center">Select Country On Map{this.state.country}</div>
+      movieForm = <div className="col-12 col-md-6 map-country-selector justify-content-center">Select any movie icon on the map{this.state.country}</div>
     }
     else{movieForm =<MoviesByCountry country={this.state.country}/>}
     return(
         <div className="row justify-content-center">
-          <div className="moody-map col-12 col-md-5">
-            <GoogleMap moodyMapCallback = {this.myCallbackMap}/>
+          <div className="moody-map col-12 col-md-5 justify-content-center">
+            <GoogleMap moodyMapCallback = {this.myCallbackMap} className="justify-content-center"/>
           </div>
           <div className="col-12 col-md-6">
           <div className="row justify-content-center">

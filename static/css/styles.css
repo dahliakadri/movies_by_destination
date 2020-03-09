@@ -28,7 +28,7 @@ body {
 }
 
 .navbar-brand {
-color: #cab152!important;
+color: #d9b43e!important;
 }
 
 .btn-outline-success {
@@ -62,19 +62,19 @@ color: #cab152!important;
 
 .btn-outline-secondary:hover {
     color: #fff;
-    background-color: #D9B310;
+    background-color: #d9b43e;
     border-color: #6c757d;
 }
 
 .loginstatus {
-	background: #c1b08af0;
+	background: #d0aa08a8;
 	color: #ffffff;
 	text-align: end;
 	padding: .5rem 1rem;
 }
 
 .footer {
-	background: #c1b08af0;
+	background: #d0aa08a8;
 	color: #ffffff;
 	text-align: center;
 	position: fixed;
@@ -86,16 +86,20 @@ color: #cab152!important;
 .countryform{
 	text-align: center;
 	color: #ffffff;
-	background: #328cc1bf;
+	background: #0c1238d6;
 
 }
 
 .movie-poster{
 	text-align: center;
 	color: #ffffff;
-	background: #c2b088d1;
-	margin: 10px;
-    padding: 20px;
+	background: #4c516fb8;
+	margin: 20px;
+    padding-top: 20px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    box-shadow: 5px 5px 5px #0c1238;
 }
 
 .movie-title{
@@ -104,12 +108,12 @@ color: #cab152!important;
 
 .list-group-item-secondary {
     color: #ffffff;
-    background-color: #c1b08af0;
+    background-color: #0c1238;
     font-size: small;
 }
 
 .moody-map{
-	margin: 10px;
+	margin: 20px;
     padding: 0px;
 }
 
@@ -120,7 +124,11 @@ color: #cab152!important;
 .map-country-selector{
 	text-align: center;
 	color: #ffffff;
-	background: #c2b088d1;
+	background: #0c1238d6;
 	margin: 10px;
     padding: 20px;
+}
+
+#google-map{
+	height: 100%;
 }
