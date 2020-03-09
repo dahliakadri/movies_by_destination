@@ -64,14 +64,13 @@ class MoodyApp extends React.Component{
   render() {
     const logbuttons = this.state.loginStatus ? <button  className="btn btn-sm btn-outline-secondary" type="button" onClick={this.handleLogout}> Logout </button> : <div><button  className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 3})}> Sign Up </button>
     <button  className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 4})}> Sign In </button></div>
-    const userStatus = this.state.loginStatus ? <div>Welcome, {this.state.userFname}, logged in with {this.state.userEmail}.</div> : <div>Not logged in</div>
+    const userStatus = this.state.loginStatus ? <div className="row loginstatus"><div className="col-5 offset-7"><div>Welcome, {this.state.userFname}, logged in with {this.state.userEmail}. </div></div></div> : <div className="row loginstatus"> <div className="col-5 offset-7"> <div>Login Status: Not logged in</div></div></div>
     const userButtons = this.state.loginStatus ? <div><button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 2})}> My Movies List </button><button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 7})}> My Profile</button></div>: <div></div>
     return (
         <div>
           <nav className="navbar navbar-light bg-light">
             <a className="navbar-brand" href="">
-            <img src="/static/img/travelimage.png" width="30" height="30" className="d-inline-block align-top" alt=""/>
-            Moody</a>
+            <img src="/static/img/travelimage.png" width="35" height="30" className="d-inline-block align-top" alt=""/>      Moody</a>
             <form className="form-inline">
               <button className="btn btn-sm btn-outline-success" type="button" onClick={() => this.setState({currentPage: 0})}>Home</button>
               <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 5})}>Movies by Map</button>
@@ -97,7 +96,7 @@ class MoodyApp extends React.Component{
 class Footer extends React.Component{
     render(){
         return (
-            <div>Moody: Top Movies by Country Est.2020</div>)
+            <div className="row footer"> <div className="col-12"> <div>Moody: Top Movies by Country Est.2020</div></div></div>)
     }
 }
 
@@ -486,7 +485,6 @@ class Movie extends React.Component{
   render(){
     const movieDetails = this.state.moviedetails ?
       <div className="moviedetails">
-         <img alt="Poster" src={this.props.movie.movie_poster} title="test"/>
         <li>Rating: {this.props.movie.imdb_rating}</li>
         <li>Votes: {this.props.movie.votes}</li>
         <li>Country: {this.props.country}</li>
@@ -502,7 +500,9 @@ class Movie extends React.Component{
                 onChange={ (event) => !event.target.checked ? this.props.onUnselected() : this.props.onSelected() }
         />
         <label>
-          <a onClick={this.handleClick} target="_blank">{this.props.movie.movie_title}</a>
+          <img alt="Poster" onClick={this.handleClick} target="_blank" src={this.props.movie.movie_poster} />
+          <br />
+          {this.props.movie.movie_title}
           </label>
           <br />
       </div>
@@ -617,7 +617,6 @@ class MoviesbyMap extends React.Component{
     }
     else{movieForm =<MoviesByCountry country={this.state.country}/>}
     return(
-      <div className="container-fluid">
         <div className="row">
           <div className="col-12 col-md-6">
             <GoogleMap moodyMapCallback = {this.myCallbackMap}/>
@@ -625,8 +624,7 @@ class MoviesbyMap extends React.Component{
           <div className="col-12 col-md-6">
             { movieForm }
             </div>
-        </div>
-      </div> )
+        </div>)
   }
 
 }

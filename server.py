@@ -95,13 +95,15 @@ def show_movies_watch_list_by_user():
 			user_saved_full_movie_data_list.append(Movie.query.filter(Movie.movie_id == movie.movie_id).one())
 		user_movie_list = []
 		for m in user_saved_full_movie_data_list:
-			country_object = m.country 
+			country_object = m.country
+			poster = Poster.query.filter(Poster.movie_id== m.movie_id).first()
 			user_movie_list.append({"movie_id": m.movie_id,
 									"movie_title": m.title,
 									"imdb_rating": m.imdb_rating,
 									"votes": m.num_votes,
 									"country_code": m.country_code,
-									"country_name": country_object.country_name})
+									"country_name": country_object.country_name,
+									"movie_poster": str(poster.poster_url)})
 		print(user_movie_list)
 		return jsonify({"movies": user_movie_list})
 	else:
@@ -370,4 +372,4 @@ if __name__ == "__main__":
     # Use the DebugToolbar
     # DebugToolbarExtension(app)
 
-    app.run(port=5000, host='0.0.0.0')
+    app.run(port=5001, host='0.0.0.0')

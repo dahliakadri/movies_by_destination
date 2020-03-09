@@ -1,6 +1,80 @@
+*{
+border: 0;
+padding: 0;
+margin: 0;
+}
+
 body {
 	margin: 0;
-	background-color: #FAF0E6;
+	background-image: url("/static/img/oriental-tiles.png");
+	background-repeat: repeat;
+
 
 }
 
+
+.navbar
+{  
+	background-color: #131c46e6!important;       
+}
+
+.container-fluid
+{
+	padding: 0;
+}
+
+.btn
+{
+	color: white
+}
+
+.navbar-brand {
+color: #D9B310!important;
+}
+
+.btn-outline-success {
+    border-color: #D9B310;
+}
+
+.btn-outline-success:not(:disabled):not(.disabled).active, .btn-outline-success:not(:disabled):not(.disabled):active, .show>.btn-outline-success.dropdown-toggle {
+    color: #fff;
+    background-color: #1a508894;
+
+    }
+
+.btn-outline-success:not(:disabled):not(.disabled).active:focus, .btn-outline-success:not(:disabled):not(.disabled):active:focus, .show>.btn-outline-success.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(216, 203, 46, 0.5);
+}
+
+.btn-outline-success:not(:disabled):not(.disabled).active, .btn-outline-success:not(:disabled):not(.disabled):active, .show>.btn-outline-success.dropdown-toggle {
+    color: #fff;
+    border-color: #D9B310;
+}
+
+.btn-outline-success.focus, .btn-outline-success:focus {
+    box-shadow: 0 0 0 0.2rem #d8b31385;
+}
+
+.btn-outline-success:hover {
+    color: #fff;
+    background-color: #D9B310;
+    border-color: #D9B310;
+}
+
+.btn-outline-secondary:hover {
+    color: #fff;
+    background-color: #D9B310;
+    border-color: #6c757d;
+}
+
+.loginstatus {
+	background: #d9b310c4;
+	color: #ffffff;
+	text-align: end;
+}
+
+.footer {
+	background: #d9b310c4;
+	color: #ffffff;
+	text-align: center;
+}
