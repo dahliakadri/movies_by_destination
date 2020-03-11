@@ -67,20 +67,10 @@ color: #d9b43e!important;
 }
 
 .loginstatus {
-	background: #d0aa08a8;
+	background: #90939657;
 	color: #ffffff;
 	text-align: end;
 	padding: .5rem 1rem;
-}
-
-.footer {
-	background: #d0aa08a8;
-	color: #ffffff;
-	text-align: center;
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	margin: 0;
 }
 
 .countryform{
@@ -137,9 +127,20 @@ color: #d9b43e!important;
 	font-size: 15px
 }
 
-.signup{
+.signup-or-in{
 	background: #0c1238d6;
     color: #ffff;
     padding: 20px;
     margin: 10px;
 }
+
+.card-body{
+	background: #0c1238d6;
+    color: #ffff;
+    padding: 20px;
+    margin: 10px;
+}
+.carousel { 
+ width:600px; 
+ height:200px; 
+ } 

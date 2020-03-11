@@ -44,7 +44,7 @@ class GoogleMap extends React.Component {
       },
       mapTypeId: 'roadmap',
       disableDefaultUI: true,
-      styles: [
+      style: [
             {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},

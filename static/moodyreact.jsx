@@ -86,28 +86,29 @@ class MoodyApp extends React.Component{
           <div>
           {this.state.pages[this.state.currentPage]}
           </div>
-          <br/>
-          <Footer />
         </div>
             )
   }
-}
-
-class Footer extends React.Component{
-    render(){
-        return (
-            <div className="row footer"> <div className="col-12"> <div>Moody: Top Movies by Country Est 2020</div></div></div>)
-    }
 }
 
 //TODO: Link my github/linkedin/photo
 class AboutPage extends React.Component { 
   render(){
         return (
-            <div>Moody Movies by Destination lets you search, save,
-            and share movies from your favorite travel destination.
-            <p>Moody was created by Dahlia Kadri, a current Software Engineering
-            Student at Hackbright Academy in San Franscico, California.</p></div>)
+          <div className="card mb-3" style={{ 'maxWidth': 540 }}>
+           <div className="row no-gutters justify-content-center">
+            <div className="col-md-4">
+                <img src="/static/img/movie_icon_three.png" className="card-img" alt="Poster"/>
+            </div>
+             <div className="col-md-8">
+              <div className="card-body">
+                <h5 className="card-title">Moody Movies - Movies by Country.</h5>
+                <p className="card-text">Users can search, save, and watch top movies from particular countryies.</p>
+                <p className="card-text"><small className="text-muted">Last updated March 18, 2020</small></p>
+              </div>
+            </div>
+           </div>
+          </div>)
     }
 
 }
@@ -115,8 +116,20 @@ class AboutPage extends React.Component {
 class ContactUs extends React.Component { 
   render(){
         return (
-            <div>Contact Us.
-            <p>Contact Us Here</p></div>)
+          <div className="card mb-3" style={{ 'maxWidth': 540 }}>
+           <div className="row no-gutters justify-content-center">
+            <div className="col-md-4">
+                <img src="/static/img/movie_icon_three.png" className="card-img" alt="Poster"/>
+            </div>
+             <div className="col-md-8">
+              <div className="card-body">
+                <h5 className="card-title">Contact Us.</h5>
+                <p className="card-text">Users can search, save, and watch top movies from particular countryies.</p>
+                <p className="card-text"><small className="text-muted">Last updated March 18, 2020</small></p>
+              </div>
+            </div>
+           </div>
+          </div>)
     }
 
 }
@@ -140,8 +153,8 @@ class HomePage extends React.Component {
   }
     render() {
         return (
-            <div>
-            {this.state.userId}
+                  <div className="container-fluid">
+                <Carousel />
                 <CountrySearch loginStatus={this.state.loginStatus}
                                 userId={this.state.userId} 
                                 userFname={this.state.userFname}
@@ -150,7 +163,41 @@ class HomePage extends React.Component {
     }
 }
 
+class Carousel extends React.Component{
+  constructor(props){
+    super(props)
+  }
 
+  render(){
+    return(
+      <div className="row justify-content-center">
+        <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
+          <div className="carousel-inner">
+            <div className="carousel-item active">
+              <img className="d-block w-10" src="/static/img/cat.png" alt="First slide"/>
+              <img className="d-block w-10" src="/static/img/cat.png" alt="First slide"/>
+              <img className="d-block w-10" src="/static/img/cat.png" alt="First slide"/>
+              </div>
+            <div className="carousel-item">
+              <img className="d-block w-10" src="/static/img/cat.png" alt="Second slide"/>
+                </div>
+            <div className="carousel-item">
+              <img className="d-block w-10" src="/static/img/cat.png" alt="Third slide"/>
+                </div>
+                </div>
+            <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span className="sr-only">Previous</span>
+            </a>
+            <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span className="carousel-control-next-icon" aria-hidden="true"></span>
+              <span className="sr-only">Next</span>
+            </a>
+        </div>
+        </div>
+      )
+  }
+}
 class SignUp extends React.Component{
   constructor(props) {
     super(props)
@@ -206,7 +253,7 @@ class SignUp extends React.Component{
     const countryOptions = this.state.allcountries.map((item) => <option key={item.country_code} value={item.country_name}>{item.country_name}</option>)
     return (
       <div className="container">
-        <form className="signup" onSubmit={this.handleSubmit}>
+        <form className="signup-or-in" onSubmit={this.handleSubmit}>
           <div className="form-row">
             <div className="form-group col-md-6">
               <label>First Name</label>
@@ -303,26 +350,29 @@ class SignIn extends React.Component{
 
   render() {
     return (
-      <div>
-        <br />
-        Sign In
-        <br />
-        <form onSubmit={this.handleSubmit}>
-        <input type="email"
+      <div className="container">
+        <form className="signup-or-in" onSubmit={this.handleSubmit}>
+          <div className="form-row">
+            <div className="form-group col-md-6">
+                <label>Email</label>
+                <input type="email"
+                className="form-control"
                 name="email"
                 placeholder="Email"
                 value={this.state.email}
                 onChange={this.handleChange} required />
-                <label>Email</label>
-                <br />
-          <input type="password"
+              </div>
+              <div className="form-group col-md-6">
+                <label>Password</label>
+                <input type="password"
+                className="form-control"
                 name="password"
                 placeholder="Password"
                 value={this.state.password}
                 onChange={this.handleChange} required />
-                <label>Password</label>
-                <br />
-          <button type="submit">Sign In</button>
+              </div>
+              </div>
+          <button className="btn add-movie-btn btn-outline-success" type="submit">Sign In</button>
         </form>
       </div>
       )
@@ -378,8 +428,7 @@ componentWillUnmount(){
     const movies = this.state.destination ? <MoviesByCountry country={this.state.destination}/> : <p></p>
 
     return (
-      <div className="container-fluid">
-        <br />
+      <div>
         <div className="row justify-content-around"><div className="col-10 col-md-6 countryform">
         <br/>
         {countryLoadStatus}
