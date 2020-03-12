@@ -37,12 +37,11 @@ def show_movies_by_country_test():
 	movies=country.movies_by_num_rating
 
 	for m in movies:
-		if len(movies_by_country_list) < 10:
+		if len(movies_by_country_list) < 7:
 			poster = Poster.query.filter(Poster.movie_id== m.movie_id).first()
 			if poster == None:
 				scrape_result = requests.get(f"https://www.imdb.com/title/{m.movie_id}/")
 				src = scrape_result.content
-				print(src)
 				soup = BeautifulSoup(src, "html.parser")
 				img_div = soup.find(class_="poster")
 				poster_img = img_div.img.extract()
@@ -59,6 +58,37 @@ def show_movies_by_country_test():
 										"country_code": m.country_code,
 										"movie_poster": str(poster.poster_url)})
 	return jsonify({"movies": movies_by_country_list})
+
+
+@app.route('/moviescarousel', methods=['GET'])
+def show_movies_by_country_carousel():
+	"""Show top 6 movies from countries to display on carousel """
+	movies = Movie.query.order_by(Movie.num_votes.desc()).limit	(50).all()
+	top_movies_all_countries_list = []
+
+	for m in movies:
+		if len(top_movies_all_countries_list) < 6:
+			poster = Poster.query.filter(Poster.movie_id== m.movie_id).first()
+			if poster == None:
+				scrape_result = requests.get(f"https://www.imdb.com/title/{m.movie_id}/")
+				src = scrape_result.content
+				soup = BeautifulSoup(src, "html.parser")
+				img_div = soup.find(class_="poster")
+				poster_img = img_div.img.extract()
+				poster_url = poster_img['src']
+				poster_object = Poster(poster_url=poster_url,
+										movie_id=m.movie_id)
+				db.session.add(poster_object)
+				db.session.commit()
+				poster = Poster.query.filter(Poster.movie_id== m.movie_id).first()
+			top_movies_all_countries_list.append({"movie_id": m.movie_id,
+										"movie_title": m.title,
+										"imdb_rating": m.imdb_rating,
+										"votes": m.num_votes,
+										"country_code": m.country_code,
+										"movie_poster": str(poster.poster_url)})
+	print(top_movies_all_countries_list)
+	return jsonify({"movies": top_movies_all_countries_list})
 
 #ToDo: after movies added render the watch list instead of the dropdown menu and
 #return list of movies added and not added 
@@ -372,4 +402,4 @@ if __name__ == "__main__":
     # Use the DebugToolbar
     # DebugToolbarExtension(app)
 
-    app.run(port=5001, host='0.0.0.0')
+    app.run(port=5000, host='0.0.0.0')

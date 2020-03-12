@@ -70,7 +70,7 @@ class MoodyApp extends React.Component{
         <div>
           <nav className="navbar sticky-top no-gutters navbar-light bg-light">
             <a className="navbar-brand" href="">
-            <img src="/static/img/travelimage.png" width="35" height="30" className="d-inline-block align-top" alt=""/>      Moody</a>
+            <img src="/static/img/travelimage.png" width="35" height="30" className="d-inline-block align-top" alt=""/>      Moody Movies by Country</a>
             <form className="form-inline">
               <button className="btn btn-sm btn-outline-success" type="button" onClick={() => this.setState({currentPage: 0})}>Home</button>
               <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 5})}>Movies by Map</button>
@@ -166,35 +166,120 @@ class HomePage extends React.Component {
 class Carousel extends React.Component{
   constructor(props){
     super(props)
+    this.state = {allmovies: []}
+  }
+
+  componentDidMount(){
+     $.get("/moviescarousel", {test: "test"})
+      .then(response => {
+        const {movies} = response
+        this.setState({ allmovies: movies})
+        }).then(response => {
+
+
+    $('#recipeCarousel').carousel({
+      interval: 2000
+    })
+
+    $('.carousel .carousel-item').each(function(){
+      let minPerSlide = 3;
+      let next = $(this).next()
+
+      if (!next.length) {
+        next = $(this).siblings(':first')
+      }
+
+      next.children(':first-child').clone().appendTo($(this))
+
+      for (let i=0; i<minPerSlide ; i++) {
+        next = next.next()
+        if (!next.length) {
+          next = $(this).siblings(':first')
+        }
+        next.children(':first-child').clone().appendTo($(this))
+      }
+    })
+     })
   }
 
   render(){
+    let first_poster = "http://placehold.it/380?text=1"
+    let second_poster = "http://placehold.it/380?text=2"
+    let third_poster = "http://placehold.it/380?text=3"
+    let fourth_poster = "http://placehold.it/380?text=4"
+    let fifth_poster = "http://placehold.it/380?text=5"
+    let sixth_poster = "http://placehold.it/380?text=6"
+    const movie_list = this.state.allmovies
+    console.log(movie_list.length)
+    if(movie_list.length > 5){
+    first_poster = movie_list[0]["movie_poster"],
+    second_poster = movie_list[1]["movie_poster"],
+    third_poster = movie_list[2]["movie_poster"],
+    fourth_poster = movie_list[3]["movie_poster"],
+    fifth_poster = movie_list[4]["movie_poster"],
+    sixth_poster = movie_list[5]["movie_poster"]}
+
     return(
-      <div className="row justify-content-center">
-        <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
-          <div className="carousel-inner">
-            <div className="carousel-item active">
-              <img className="d-block w-10" src="/static/img/cat.png" alt="First slide"/>
-              <img className="d-block w-10" src="/static/img/cat.png" alt="First slide"/>
-              <img className="d-block w-10" src="/static/img/cat.png" alt="First slide"/>
-              </div>
-            <div className="carousel-item">
-              <img className="d-block w-10" src="/static/img/cat.png" alt="Second slide"/>
+      <div className="container text-center my-3">
+{/*    <h2 className="font-weight-light">Bootstrap 4 - Multi Item Carousel</h2>*/}
+    <div className="row mx-auto my-auto">
+        <div id="recipeCarousel" className="carousel slide w-100" data-ride="carousel">
+            <div className="carousel-inner w-100" role="listbox">
+                <div className="carousel-item active">
+                    <div className="col-md-4">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={first_poster}/>
+                        </div>
+                    </div>
                 </div>
-            <div className="carousel-item">
-              <img className="d-block w-10" src="/static/img/cat.png" alt="Third slide"/>
+                <div className="carousel-item">
+                    <div className="col-md-4">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={second_poster}/>
+                        </div>
+                    </div>
                 </div>
+                <div className="carousel-item">
+                    <div className="col-md-4">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={third_poster}/>
+                        </div>
+                    </div>
                 </div>
-            <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span className="sr-only">Previous</span>
+                <div className="carousel-item">
+                    <div className="col-md-4">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={fourth_poster}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="carousel-item">
+                    <div className="col-md-4">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={fifth_poster}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="carousel-item">
+                    <div className="col-md-4">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={sixth_poster}/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a className="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+                <span className="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                <span className="sr-only">Previous</span>
             </a>
-            <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-              <span className="carousel-control-next-icon" aria-hidden="true"></span>
-              <span className="sr-only">Next</span>
+            <a className="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
+                <span className="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                <span className="sr-only">Next</span>
             </a>
         </div>
-        </div>
+    </div>
+{/*    <h5 className="mt-2">Advances one slide at a time</h5>*/}
+</div>
       )
   }
 }
@@ -421,7 +506,7 @@ componentWillUnmount(){
       }
 
   render() {
-    const countryLoadStatus = this.state.loading ? "Destinations Loading..." : "Destinations Loaded"
+    const countryLoadStatus = this.state.loading ? "Movies by Country Loading..." : "Movies by Country Loaded"
     const countryOptions = this.state.allcountries.map((item) =>
         <option key={item.country_code} value={item.country_name}>{item.country_name}</option>)
     
@@ -436,7 +521,7 @@ componentWillUnmount(){
           <select className="custom-select" value={this.state.destination}
                   name="destination"
                   onChange={this.handleChange}>
-                  <option value="">-- Choose your destination --</option>
+                  <option value="">-- Find more top movies by country --</option>
                   {countryOptions}
                   </select>
         </form><br/></div></div>
