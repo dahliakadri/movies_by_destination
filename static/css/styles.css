@@ -161,12 +161,12 @@ color: #d9b43e!important;
     
     .carousel-inner .carousel-item-right.active,
     .carousel-inner .carousel-item-next {
-      transform: translateX(33.333%);
+      transform: translateX(25%);
     }
     
     .carousel-inner .carousel-item-left.active, 
     .carousel-inner .carousel-item-prev {
-      transform: translateX(-33.333%);
+      transform: translateX(-25%);
     }
 }
 

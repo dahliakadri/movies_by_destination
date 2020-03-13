@@ -124,7 +124,7 @@ class ContactUs extends React.Component {
              <div className="col-md-8">
               <div className="card-body">
                 <h5 className="card-title">Contact Us.</h5>
-                <p className="card-text">Users can search, save, and watch top movies from particular countryies.</p>
+                <p className="card-text">Please reach out to dahlikadri@gmail.com</p>
                 <p className="card-text"><small className="text-muted">Last updated March 18, 2020</small></p>
               </div>
             </div>
@@ -210,7 +210,6 @@ class Carousel extends React.Component{
     let fifth_poster = "http://placehold.it/380?text=5"
     let sixth_poster = "http://placehold.it/380?text=6"
     const movie_list = this.state.allmovies
-    console.log(movie_list.length)
     if(movie_list.length > 5){
     first_poster = movie_list[0]["movie_poster"],
     second_poster = movie_list[1]["movie_poster"],
@@ -226,42 +225,42 @@ class Carousel extends React.Component{
         <div id="recipeCarousel" className="carousel slide w-100" data-ride="carousel">
             <div className="carousel-inner w-100" role="listbox">
                 <div className="carousel-item active">
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                         <div className="card card-body">
                             <img className="img-fluid" src={first_poster}/>
                         </div>
                     </div>
                 </div>
                 <div className="carousel-item">
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                         <div className="card card-body">
                             <img className="img-fluid" src={second_poster}/>
                         </div>
                     </div>
                 </div>
                 <div className="carousel-item">
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                         <div className="card card-body">
                             <img className="img-fluid" src={third_poster}/>
                         </div>
                     </div>
                 </div>
                 <div className="carousel-item">
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                         <div className="card card-body">
                             <img className="img-fluid" src={fourth_poster}/>
                         </div>
                     </div>
                 </div>
                 <div className="carousel-item">
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                         <div className="card card-body">
                             <img className="img-fluid" src={fifth_poster}/>
                         </div>
                     </div>
                 </div>
                 <div className="carousel-item">
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                         <div className="card card-body">
                             <img className="img-fluid" src={sixth_poster}/>
                         </div>
@@ -506,7 +505,7 @@ componentWillUnmount(){
       }
 
   render() {
-    const countryLoadStatus = this.state.loading ? "Movies by Country Loading..." : "Movies by Country Loaded"
+    const countryLoadStatus = this.state.loading ? "Movies by Country Loading..." : "Movies by Country"
     const countryOptions = this.state.allcountries.map((item) =>
         <option key={item.country_code} value={item.country_name}>{item.country_name}</option>)
     

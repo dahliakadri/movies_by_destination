@@ -1,5 +1,6 @@
 """Movies By Destination."""
 
+import random
 from jinja2 import StrictUndefined
 from flask import Flask, flash, render_template, redirect, request, session, jsonify, json
 from model import User, Movie, Country, CountryFact, MoodyRating, SavedMovie, Poster, connect_to_db, db
@@ -62,12 +63,11 @@ def show_movies_by_country_test():
 
 @app.route('/moviescarousel', methods=['GET'])
 def show_movies_by_country_carousel():
-	"""Show top 6 movies from countries to display on carousel """
-	movies = Movie.query.order_by(Movie.num_votes.desc()).limit	(50).all()
+	"""Show random top 6 movies from countries to display on carousel """
+	movies_full = Movie.query.order_by(Movie.num_votes.desc()).limit(50).all()
 	top_movies_all_countries_list = []
-
+	movies = movies_full
 	for m in movies:
-		if len(top_movies_all_countries_list) < 6:
 			poster = Poster.query.filter(Poster.movie_id== m.movie_id).first()
 			if poster == None:
 				scrape_result = requests.get(f"https://www.imdb.com/title/{m.movie_id}/")
@@ -87,7 +87,6 @@ def show_movies_by_country_carousel():
 										"votes": m.num_votes,
 										"country_code": m.country_code,
 										"movie_poster": str(poster.poster_url)})
-	print(top_movies_all_countries_list)
 	return jsonify({"movies": top_movies_all_countries_list})
 
 #ToDo: after movies added render the watch list instead of the dropdown menu and
