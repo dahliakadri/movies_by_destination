@@ -175,31 +175,21 @@ class Carousel extends React.Component{
         const {movies} = response
         this.setState({ allmovies: movies})
         }).then(response => {
-
-
-    $('#recipeCarousel').carousel({
-      interval: 2000
-    })
-
-    $('.carousel .carousel-item').each(function(){
-      let minPerSlide = 3;
-      let next = $(this).next()
-
-      if (!next.length) {
-        next = $(this).siblings(':first')
-      }
-
-      next.children(':first-child').clone().appendTo($(this))
-
-      for (let i=0; i<minPerSlide ; i++) {
-        next = next.next()
-        if (!next.length) {
-          next = $(this).siblings(':first')
-        }
-        next.children(':first-child').clone().appendTo($(this))
-      }
-    })
-     })
+          $('#recipeCarousel').carousel({
+            interval: 2000})
+          $('.carousel .carousel-item').each(function(){
+            let minPerSlide = 3
+            let next = $(this).next()
+            if (!next.length) {
+              next = $(this).siblings(':first')}
+            next.children(':first-child').clone().appendTo($(this))
+            for (let i=0; i < minPerSlide ; i++) {
+              next = next.next()
+              if (!next.length) {
+                next = $(this).siblings(':first')}
+                next.children(':first-child').clone().appendTo($(this))}
+              })
+        })
   }
 
   render(){
@@ -220,8 +210,7 @@ class Carousel extends React.Component{
 
     return(
       <div className="container text-center my-3">
-{/*    <h2 className="font-weight-light">Bootstrap 4 - Multi Item Carousel</h2>*/}
-    <div className="row mx-auto my-auto">
+        <div className="row mx-auto my-auto">
         <div id="recipeCarousel" className="carousel slide w-100" data-ride="carousel">
             <div className="carousel-inner w-100" role="listbox">
                 <div className="carousel-item active">
@@ -274,11 +263,10 @@ class Carousel extends React.Component{
             <a className="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
                 <span className="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
                 <span className="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-{/*    <h5 className="mt-2">Advances one slide at a time</h5>*/}
-</div>
+              </a>
+            </div>
+         </div>
+      </div>
       )
   }
 }
