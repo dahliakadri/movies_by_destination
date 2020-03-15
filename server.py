@@ -1,5 +1,5 @@
 """Movies By Destination."""
-import random
+from random import sample
 from jinja2 import StrictUndefined
 from flask import Flask, flash, render_template, redirect, request, session, jsonify, json
 from model import User, Movie, Country, CountryFact, MoodyRating, SavedMovie, Poster, connect_to_db, db
@@ -37,7 +37,7 @@ def show_movies_by_country_test():
 	movies=country.movies_by_num_rating
 
 	for m in movies:
-		if len(movies_by_country_list) < 7:
+		if len(movies_by_country_list) < 12:
 			poster = Poster.query.filter(Poster.movie_id== m.movie_id).first()
 			if poster == None:
 				scrape_result = requests.get(f"https://www.imdb.com/title/{m.movie_id}/")
@@ -45,7 +45,7 @@ def show_movies_by_country_test():
 				soup = BeautifulSoup(src, "html.parser")
 				img_div = soup.find(class_="poster")
 				if img_div == None:
-					poster_url = "/static/img/default_poster.jpg"
+					poster_url = "https://m.media-amazon.com/images/G/01/imdb/images/nopicture/180x268/film-173410679._CB468515592_.png"
 					poster_object = Poster(poster_url=poster_url,
 											movie_id=m.movie_id)
 					db.session.add(poster_object)
@@ -60,7 +60,9 @@ def show_movies_by_country_test():
 					db.session.commit()
 					poster = Poster.query.filter(Poster.movie_id== m.movie_id).first()
 			elif poster.poster_url == "https://cdn2.vectorstock.com/i/1000x1000/53/36/vintage-cinema-poster-vector-20815336.jpg":
-				poster.poster_url = "/static/img/default_poster.jpg"
+				poster.poster_url = "https://m.media-amazon.com/images/G/01/imdb/images/nopicture/180x268/film-173410679._CB468515592_.png"
+			elif poster.poster_url == "/static/img/default_poster.jpg":
+				poster.poster_url = "https://m.media-amazon.com/images/G/01/imdb/images/nopicture/180x268/film-173410679._CB468515592_.png"
 			movies_by_country_list.append({"movie_id": m.movie_id,
 											"movie_title": m.title,
 											"imdb_rating": m.imdb_rating,
@@ -75,7 +77,8 @@ def show_movies_by_country_carousel():
 	"""Show random top 6 movies from countries to display on carousel """
 	movies_full = Movie.query.order_by(Movie.num_votes.desc()).limit(50).all()
 	top_movies_all_countries_list = []
-	movies = movies_full
+	movies = []
+	movies = sample(movies_full, 15)
 	for m in movies:
 			poster = Poster.query.filter(Poster.movie_id== m.movie_id).first()
 			if poster == None:
@@ -251,7 +254,6 @@ def react_logout():
 
 
 
-
 #Below here are the jinja template routes#
 # @app.route('/')
 # def index():
@@ -402,7 +404,7 @@ def react_logout():
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension
-    app.debug = False
+    app.debug = True
     # make sure templates, etc. are not cached in debug mode
     app.jinja_env.auto_reload = app.debug
 

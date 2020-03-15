@@ -70,7 +70,7 @@ class MoodyApp extends React.Component{
         <div>
           <nav className="navbar sticky-top no-gutters navbar-light bg-light">
             <a className="navbar-brand" href="">
-            <img src="/static/img/travelimage.png" width="35" height="30" className="d-inline-block align-top" alt=""/>      Moody Movies by Country</a>
+            <img src="/static/img/travelimage.png" width="35" height="30" className="d-inline-block align-top" alt=""/>      Moody Movies by Destination</a>
             <form className="form-inline">
               <button className="btn btn-sm btn-outline-success" type="button" onClick={() => this.setState({currentPage: 0})}>Home</button>
               <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 5})}>Movies by Map</button>
@@ -102,8 +102,8 @@ class AboutPage extends React.Component {
             </div>
              <div className="col-md-8">
               <div className="card-body">
-                <h5 className="card-title">Moody Movies - Movies by Country.</h5>
-                <p className="card-text">Users can search, save, and watch top movies from particular countryies.</p>
+                <h5 className="card-title">Moody Movies - Movies by Destination</h5>
+                <p className="card-text">Users can search, save, and watch top movies by country.</p>
                 <p className="card-text"><small className="text-muted">Last updated March 18, 2020</small></p>
               </div>
             </div>
@@ -123,7 +123,7 @@ class ContactUs extends React.Component {
             </div>
              <div className="col-md-8">
               <div className="card-body">
-                <h5 className="card-title">Contact Us.</h5>
+                <h5 className="card-title">Contact Us</h5>
                 <p className="card-text">Please reach out to dahlikadri@gmail.com</p>
                 <p className="card-text"><small className="text-muted">Last updated March 18, 2020</small></p>
               </div>
@@ -193,20 +193,41 @@ class Carousel extends React.Component{
   }
 
   render(){
-    let first_poster = "http://placehold.it/380?text=1"
-    let second_poster = "http://placehold.it/380?text=2"
-    let third_poster = "http://placehold.it/380?text=3"
-    let fourth_poster = "http://placehold.it/380?text=4"
-    let fifth_poster = "http://placehold.it/380?text=5"
-    let sixth_poster = "http://placehold.it/380?text=6"
+    let poster1 = "http://placehold.it/380?text=1"
+    let poster2 = "http://placehold.it/380?text=2"
+    let poster3 = "http://placehold.it/380?text=3"
+    let poster4 = "http://placehold.it/380?text=4"
+    let poster5 = "http://placehold.it/380?text=5"
+    let poster6 = "http://placehold.it/380?text=6"
+    let poster7 = "http://placehold.it/380?text=7"
+    let poster8 = "http://placehold.it/380?text=8"
+    let poster9 = "http://placehold.it/380?text=9"
+    let poster10 = "http://placehold.it/380?text=10"
+    let poster11 = "http://placehold.it/380?text=11"
+    let poster12 = "http://placehold.it/380?text=12"
+    let poster13 = "http://placehold.it/380?text=13"
+    let poster14 = "http://placehold.it/380?text=14"
+    let poster15 = "http://placehold.it/380?text=15"
+    
     const movie_list = this.state.allmovies
-    if(movie_list.length > 5){
-    first_poster = movie_list[0]["movie_poster"],
-    second_poster = movie_list[1]["movie_poster"],
-    third_poster = movie_list[2]["movie_poster"],
-    fourth_poster = movie_list[3]["movie_poster"],
-    fifth_poster = movie_list[4]["movie_poster"],
-    sixth_poster = movie_list[5]["movie_poster"]}
+
+    if(movie_list.length > 14){
+    poster1 = movie_list[0]["movie_poster"],
+    poster2 = movie_list[1]["movie_poster"],
+    poster3 = movie_list[2]["movie_poster"],
+    poster4 = movie_list[3]["movie_poster"],
+    poster5 = movie_list[4]["movie_poster"],
+    poster6 = movie_list[5]["movie_poster"],
+    poster7 = movie_list[6]["movie_poster"],
+    poster8 = movie_list[7]["movie_poster"],
+    poster9 = movie_list[8]["movie_poster"],
+    poster10 = movie_list[9]["movie_poster"],
+    poster11 = movie_list[10]["movie_poster"],
+    poster12 = movie_list[11]["movie_poster"],
+    poster13 = movie_list[12]["movie_poster"],
+    poster14 = movie_list[13]["movie_poster"],
+    poster15 = movie_list[14]["movie_poster"]
+  }
 
     return(
       <div className="container text-center my-3">
@@ -214,44 +235,107 @@ class Carousel extends React.Component{
         <div id="recipeCarousel" className="carousel slide w-100" data-ride="carousel">
             <div className="carousel-inner w-100" role="listbox">
                 <div className="carousel-item active">
-                    <div className="col-md-3">
+                    <div className="col-6 col-md-3">
                         <div className="card card-body">
-                            <img className="img-fluid" src={first_poster}/>
+                            <img className="img-fluid" src={poster1}/>
                         </div>
                     </div>
                 </div>
                 <div className="carousel-item">
-                    <div className="col-md-3">
+                    <div className="col-6 col-md-3">
                         <div className="card card-body">
-                            <img className="img-fluid" src={second_poster}/>
+                            <img className="img-fluid" src={poster2}/>
                         </div>
                     </div>
                 </div>
                 <div className="carousel-item">
-                    <div className="col-md-3">
+                    <div className="col-6 col-md-3">
                         <div className="card card-body">
-                            <img className="img-fluid" src={third_poster}/>
+                            <img className="img-fluid" src={poster3}/>
                         </div>
                     </div>
                 </div>
                 <div className="carousel-item">
-                    <div className="col-md-3">
+                    <div className="col-6 col-md-3">
                         <div className="card card-body">
-                            <img className="img-fluid" src={fourth_poster}/>
+                            <img className="img-fluid" src={poster4}/>
                         </div>
                     </div>
                 </div>
                 <div className="carousel-item">
-                    <div className="col-md-3">
+                    <div className="col-6 col-md-3">
                         <div className="card card-body">
-                            <img className="img-fluid" src={fifth_poster}/>
+                            <img className="img-fluid" src={poster5}/>
                         </div>
                     </div>
                 </div>
                 <div className="carousel-item">
-                    <div className="col-md-3">
+                    <div className="col-6 col-md-3">
                         <div className="card card-body">
-                            <img className="img-fluid" src={sixth_poster}/>
+                            <img className="img-fluid" src={poster6}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="carousel-item">
+                    <div className="col-6 col-md-3">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={poster7}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="carousel-item">
+                    <div className="col-6 col-md-3">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={poster8}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="carousel-item">
+                    <div className="col-6 col-md-3">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={poster9}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="carousel-item">
+                    <div className="col-6 col-md-3">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={poster10}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="carousel-item">
+                    <div className="col-6 col-md-3">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={poster11}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="carousel-item">
+                    <div className="col-6 col-md-3">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={poster12}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="carousel-item">
+                    <div className="col-6 col-md-3">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={poster13}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="carousel-item">
+                    <div className="col-6 col-md-3">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={poster14}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="carousel-item">
+                    <div className="col-6 col-md-3">
+                        <div className="card card-body">
+                            <img className="img-fluid" src={poster15}/>
                         </div>
                     </div>
                 </div>
