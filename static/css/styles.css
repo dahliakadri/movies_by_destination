@@ -148,6 +148,10 @@ color: #d9b43e!important;
     .carousel-inner .carousel-item > div:first-child {
         display: block;
     }
+
+    .carousel-inner > .carousel-item > div {
+        margin: 0 auto;
+    }
 }
 
 .carousel-inner .carousel-item.active,
