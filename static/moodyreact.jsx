@@ -67,11 +67,10 @@ class MoodyApp extends React.Component{
     const userStatus = this.state.loginStatus ? <div className="row loginstatus"><div className="col-6 offset-6"><div>Welcome, {this.state.userFname}, logged in with {this.state.userEmail}. </div></div></div> : <div className="row loginstatus"> <div className="col-6 offset-6"> <div>Login Status: Not logged in</div></div></div>
     const userButtons = this.state.loginStatus ? <div><button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 2})}> My Movies List </button><button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 7})}> My Profile</button></div>: <div></div>
     return (
-        <div>
-          <nav className="navbar sticky-top no-gutters navbar-light bg-light">
-            <a className="navbar-brand" href="">
-            <img src="/static/img/travelimage.png" width="60" height="50" className="d-inline-block align-middle" alt=""/>      Moody Movies by Destination</a>
-            <form className="form-inline">
+        <div className="pos-f-t">
+          <div className="collapse" id="navbarToggleExternalContent">
+          <div className="bg-dark p-4">
+              <form className="form-inline justify-content-end">
               <button className="btn btn-sm btn-outline-success" type="button" onClick={() => this.setState({currentPage: 0})}>Home</button>
               <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 5})}>Movies by Map</button>
               { userButtons }
@@ -79,6 +78,13 @@ class MoodyApp extends React.Component{
               <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 1})}>About</button>
               <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 6})}>Contact Us</button>
             </form>
+            </div></div>
+          <nav className="navbar sticky-top no-gutters navbar-light bg-light">
+            <a className="navbar-brand" href="">
+            <img src="/static/img/travelimage.png" width="60" height="50" className="d-inline-block align-middle" alt=""/>      Moody Movies by Destination</a>
+            <button className="navbar-toggler navbar navbar-dark btn-toggle" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon navbar-dark"></span>
+            </button>
           </nav>
           <div>
           { userStatus }
@@ -703,7 +709,7 @@ class Movie extends React.Component{
         <li className = "list-group-item list-group-item-secondary">{this.props.country}</li>
         </ul> : <h1></h1>
     return(
-      <div className="movie-poster col-5">
+      <div className="movie-poster col-6 col-md-2">
         <label className="form-check-label">
           <img alt="Poster" onMouseEnter={this.handleClick} onMouseLeave={this.handleClick} target="_blank" src={this.props.movie.movie_poster} />
           <br />
@@ -827,15 +833,15 @@ class MoviesbyMap extends React.Component{
   render(){
     let movieForm = <div>Place Holder</div>
     if (this.state.country === null){
-      movieForm = <div className="col-12 col-md-6 map-country-selector justify-content-center">Select any movie icon on the map{this.state.country}</div>
+      movieForm = <div className="col-12 col-md-6 map-country-selector justify-content-center">Select a movie ticket icon on the map{this.state.country}</div>
     }
     else{movieForm =<MoviesByCountry country={this.state.country}/>}
     return(
         <div className="row justify-content-center">
-          <div className="moody-map col-12 col-md-5 justify-content-center">
+          <div className="moody-map col-12 justify-content-center">
             <GoogleMap moodyMapCallback = {this.myCallbackMap} className="justify-content-center"/>
           </div>
-          <div className="col-12 col-md-6">
+          <div className="col-12">
           <div className="row justify-content-center">
             { movieForm }
             </div>
