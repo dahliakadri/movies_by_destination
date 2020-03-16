@@ -6,15 +6,16 @@ margin: 0;
 
 body {
 	margin: 0;
-	background-image: url("/static/img/oriental-tiles.png");
-	background-repeat: repeat;
+	background: url(/static/img/oriental-tiles.jpg) no-repeat center center fixed;
+    background-size: cover;
 	font-family: 'Ubuntu', sans-serif;
 }
 
 
 .navbar
 {  
-	background-color: #131c46e6!important;       
+	background-color: #000000!important;
+    margin-right: -15px;     
 }
 
 .container-fluid
@@ -28,26 +29,27 @@ body {
 }
 
 .navbar-brand {
-color: #d9b43e!important;
+color: #ff0000d9!important;
+padding-left: 15px; 
 }
 
 .btn-outline-success {
-    border-color: #D9B310;
+    border-color: #bd000782;
 }
 
 .btn-outline-success:not(:disabled):not(.disabled).active, .btn-outline-success:not(:disabled):not(.disabled):active, .show>.btn-outline-success.dropdown-toggle {
     color: #fff;
-    background-color: #1a508894;
+    background-color: #bd000782;
 
     }
 
 .btn-outline-success:not(:disabled):not(.disabled).active:focus, .btn-outline-success:not(:disabled):not(.disabled):active:focus, .show>.btn-outline-success.dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.2rem rgba(216, 203, 46, 0.5);
+    box-shadow: 0 0 0 0.2rem #bd000782;
 }
 
 .btn-outline-success:not(:disabled):not(.disabled).active, .btn-outline-success:not(:disabled):not(.disabled):active, .show>.btn-outline-success.dropdown-toggle {
     color: #fff;
-    border-color: #D9B310;
+    border-color: #efe5e612;
 }
 
 .btn-outline-success.focus, .btn-outline-success:focus {
@@ -56,18 +58,22 @@ color: #d9b43e!important;
 
 .btn-outline-success:hover {
     color: #fff;
-    background-color: #D9B310;
-    border-color: #D9B310;
+    background-color: #bd000782;
+    border-color: #bd000782;
+}
+
+.btn-outline-secondary {
+    border-color: #bd00074f;
 }
 
 .btn-outline-secondary:hover {
     color: #fff;
-    background-color: #d9b43e;
-    border-color: #6c757d;
+    background-color: #bd000782;
+    border-color: #bd00074f;
 }
 
 .loginstatus {
-	background: #90939657;
+	background: #00000082;
 	color: #ffffff;
 	text-align: end;
 	padding: .5rem 1rem;
@@ -76,20 +82,20 @@ color: #d9b43e!important;
 .countryform{
 	text-align: center;
 	color: #ffffff;
-	background: #0c1238d6;
+	background: #060606c9;
 
 }
 
 .movie-poster{
 	text-align: center;
 	color: #ffffff;
-	background: #4c516fb8;
+	background: #0000009c;
 	margin: 20px;
     padding-top: 20px;
     padding-right: 5px;
     padding-bottom: 5px;
     padding-left: 5px;
-    box-shadow: 5px 5px 5px #0c1238;
+    box-shadow: 5px 5px 5px #50080fc4;
 }
 
 .movie-title{
@@ -98,7 +104,7 @@ color: #d9b43e!important;
 
 .list-group-item-secondary {
     color: #ffffff;
-    background-color: #0c1238;
+    background-color: #38090a42;
     font-size: small;
 }
 
@@ -108,13 +114,13 @@ color: #d9b43e!important;
 }
 
 .add-movie-btn{
-	background-color: #0c1238
+	background-color: #00000026
 }
 
 .map-country-selector{
 	text-align: center;
 	color: #ffffff;
-	background: #0c1238d6;
+	background: #bd21302e;
 	margin: 10px;
     padding: 20px;
 }
@@ -128,14 +134,14 @@ color: #d9b43e!important;
 }
 
 .signup-or-in{
-	background: #0c1238d6;
+	background: #000000b8;
     color: #ffff;
     padding: 20px;
     margin: 10px;
 }
 
 .card-body{
-	background: #0c1238d6;
+	background: #000000b8;
     color: #ffff;
     padding: 20px;
     margin: 10px;
