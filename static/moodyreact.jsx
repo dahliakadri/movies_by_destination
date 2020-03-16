@@ -61,6 +61,19 @@ class MoodyApp extends React.Component{
         }
   }
 
+  componentDidMount() {
+    fetch("/loginstatus")
+            .then(response => response.json())
+            .then(response => {
+              if (response.loginstatus == true){
+                this.setState({ loginStatus: response.loginstatus,
+                                userId: response.sessioninfo[0].user_id,
+                                userFname: response.sessioninfo[0].current_user,
+                                userEmail: response.sessioninfo[0].user_email,})
+            }
+            })
+  }
+
   render() {
     const logbuttons = this.state.loginStatus ? <button  className="btn btn-sm btn-outline-secondary" type="button" onClick={this.handleLogout}> Logout </button> : <div><button  className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 3})}> Sign Up </button>
     <button  className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 4})}> Sign In </button></div>

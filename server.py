@@ -111,17 +111,16 @@ def add_movies_to_watch_list_react():
 		user_id_session = session['user_id']
 		for movie_id_l in data['movieIds']:
 			movie = SavedMovie.query.filter(SavedMovie.user_id == user_id_session , SavedMovie.movie_id == movie_id_l).first()
-			print(movie)
 			if movie == None:
 				saved_movie_object = SavedMovie(movie_id = movie_id_l,
 											user_id = user_id_session,)
 				db.session.add(saved_movie_object)
 				db.session.commit()
-				print(movie_id_l, user_id_session, "added")
 			else: 
-				print(movie_id_l, user_id_session, "not added")
 				continue
-	return ({"movie_status": "Movies added!"})
+		return ({"movie_status": "Movies added!"})
+	else:
+		return({"movie_status": "Login or Signup to add a movie."})
 
 @app.route('/watchlist/user', methods=['GET'])
 def show_movies_watch_list_by_user():
@@ -130,7 +129,6 @@ def show_movies_watch_list_by_user():
 		user_id_session = session["user_id"]
 		user = User.query.filter(User.user_id == user_id_session).one()
 		saved_movies = user.watch_list
-		print(saved_movies)
 		user_saved_full_movie_data_list = []
 		for movie in saved_movies:
 			user_saved_full_movie_data_list.append(Movie.query.filter(Movie.movie_id == movie.movie_id).one())
@@ -145,10 +143,8 @@ def show_movies_watch_list_by_user():
 									"country_code": m.country_code,
 									"country_name": country_object.country_name,
 									"movie_poster": str(poster.poster_url)})
-		print(user_movie_list)
 		return jsonify({"movies": user_movie_list})
 	else:
-		print("no user in session")
 		return jsonify({"movies": []})
 
 @app.route("/watchlist/update", methods=['POST'])
@@ -156,17 +152,13 @@ def update_movies_to_watch_list_react():
 	"""Removes movies selected by the user to be removed from their watch list
 	by deleting it from the saved movie database"""
 	data = request.json
-	print(data)
 	if 'current_user' in session:
 		user_id = session["user_id"]
 		for movie_id in data:
 			saved_movie  = SavedMovie.query.filter(SavedMovie.user_id == user_id , SavedMovie.movie_id == movie_id).one()
 			db.session.delete(saved_movie)
 			db.session.commit()
-			print("deleted")
 		return ({"remove_status": False})
-	else:
-		print("no user")
 
 @app.route("/countries")
 def get_countries_json():
@@ -189,7 +181,6 @@ def handle_react_signup():
 
 	if User.query.filter(User.email == email).count() > 0:
 		flash(f'Account with {email} already exits, use a new email')
-		print("user not added")
 		return jsonify({"loginstatus": False})
 	else:
 		password = data['password']
@@ -206,9 +197,7 @@ def handle_react_signup():
 						country_code=country_code)
 		db.session.add(user_object)
 		db.session.commit()
-		print("user added")
 		user = User.query.filter(User.email == email).one()
-		print(user)
 		session['current_user'] = user.fname
 		session['user_id'] = user.user_id
 		session['user_email'] = user.email
@@ -222,7 +211,6 @@ def handle_react_signup():
 def react_login():
 	"""Handles the login of a user"""
 	data = request.json
-	print("this data is,", data)
 	email = data['email']
 	password = data['password']
 	if User.query.filter(User.email == email).count() < 1:
@@ -252,7 +240,19 @@ def react_logout():
 		session.pop('user_email', None)
 		return ({"loginstatus": False})
 
-
+@app.route("/loginstatus")
+def check_login_status():
+	if 'user_email' in session:
+		userfname = session['current_user']
+		useruser_id = session['user_id']
+		useremail = session['user_email']
+		user_info = []
+		user_info.append({"current_user": userfname,
+							"user_id": useruser_id, 
+							"user_email":useremail})
+		return jsonify({"sessioninfo": user_info, "loginstatus": True})
+	else:
+		return jsonify({"loginstatus": False})
 
 #Below here are the jinja template routes#
 # @app.route('/')
