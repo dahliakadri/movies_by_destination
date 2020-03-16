@@ -28,6 +28,15 @@ body {
 	color: white
 }
 
+
+.btn-toggle {
+    margin: 10px;
+}
+
+.bg-dark {
+    background-color: #000000!important;
+}
+
 .navbar-brand {
 color: #ff0000d9!important;
 padding-left: 15px; 
@@ -84,6 +93,17 @@ padding-left: 15px;
 	color: #ffffff;
 	background: #060606c9;
 
+}
+
+.custom-select{
+    background-color: #bd000754!important;
+    color: #ffffff!important;
+}
+
+.custom-select:focus {
+    border-color: #bd000754;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(99, 93, 93, 0.25);
 }
 
 .movie-poster{
