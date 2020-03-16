@@ -1,0 +1,206 @@
+*{
+border: 0;
+padding: 0;
+margin: 0;
+}
+
+body {
+	margin: 0;
+	background: url(/static/img/oriental-tiles.jpg) no-repeat center center fixed;
+    background-size: cover;
+	font-family: 'Ubuntu', sans-serif;
+}
+
+
+.navbar
+{  
+	background-color: #000000!important;
+    margin-right: -15px;     
+}
+
+.container-fluid
+{
+	padding: 0;
+}
+
+.btn
+{
+	color: white
+}
+
+
+.btn-toggle {
+    margin: 10px;
+}
+
+.bg-dark {
+    background-color: #000000!important;
+}
+
+.navbar-brand {
+color: #ff0000d9!important;
+padding-left: 15px; 
+}
+
+.btn-outline-success {
+    border-color: #bd000782;
+}
+
+.btn-outline-success:not(:disabled):not(.disabled).active, .btn-outline-success:not(:disabled):not(.disabled):active, .show>.btn-outline-success.dropdown-toggle {
+    color: #fff;
+    background-color: #bd000782;
+
+    }
+
+.btn-outline-success:not(:disabled):not(.disabled).active:focus, .btn-outline-success:not(:disabled):not(.disabled):active:focus, .show>.btn-outline-success.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem #bd000782;
+}
+
+.btn-outline-success:not(:disabled):not(.disabled).active, .btn-outline-success:not(:disabled):not(.disabled):active, .show>.btn-outline-success.dropdown-toggle {
+    color: #fff;
+    border-color: #efe5e612;
+}
+
+.btn-outline-success.focus, .btn-outline-success:focus {
+    box-shadow: 0 0 0 0.2rem #d8b31385;
+}
+
+.btn-outline-success:hover {
+    color: #fff;
+    background-color: #bd000782;
+    border-color: #bd000782;
+}
+
+.btn-outline-secondary {
+    border-color: #bd00074f;
+}
+
+.btn-outline-secondary:hover {
+    color: #fff;
+    background-color: #bd000782;
+    border-color: #bd00074f;
+}
+
+.loginstatus {
+	background: #00000082;
+	color: #ffffff;
+	text-align: end;
+	padding: .5rem 1rem;
+}
+
+.countryform{
+	text-align: center;
+	color: #ffffff;
+	background: #060606c9;
+
+}
+
+.custom-select{
+    background-color: #bd000754!important;
+    color: #ffffff!important;
+}
+
+.custom-select:focus {
+    border-color: #bd000754;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(99, 93, 93, 0.25);
+}
+
+.movie-poster{
+	text-align: center;
+	color: #ffffff;
+	background: #0000009c;
+	margin: 20px;
+    padding-top: 20px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    box-shadow: 5px 5px 5px #50080fc4;
+}
+
+.movie-title{
+	text-align: left;
+}
+
+.list-group-item-secondary {
+    color: #ffffff;
+    background-color: #38090a42;
+    font-size: small;
+}
+
+.moody-map{
+	margin: 20px;
+    padding: 0px;
+}
+
+.add-movie-btn{
+	background-color: #00000026
+}
+
+.map-country-selector{
+	text-align: center;
+	color: #ffffff;
+	background: #bd21302e;
+	margin: 10px;
+    padding: 20px;
+}
+
+#google-map{
+	height: 100%;
+}
+
+#map-marker-info{
+	font-size: 15px
+}
+
+.signup-or-in{
+	background: #000000b8;
+    color: #ffff;
+    padding: 20px;
+    margin: 10px;
+}
+
+.card-body{
+	background: #000000b8;
+    color: #ffff;
+    padding: 20px;
+    margin: 10px;
+}
+
+@media (max-width: 768px) {
+    .carousel-inner .carousel-item > div {
+        display: none;
+    }
+    .carousel-inner .carousel-item > div:first-child {
+        display: block;
+    }
+
+    .carousel-inner > .carousel-item > div {
+        margin: 0 auto;
+    }
+}
+
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+    display: flex;
+}
+
+/* display 3 */
+@media (min-width: 768px) {
+    
+    .carousel-inner .carousel-item-right.active,
+    .carousel-inner .carousel-item-next {
+      transform: translateX(25%);
+    }
+    
+    .carousel-inner .carousel-item-left.active, 
+    .carousel-inner .carousel-item-prev {
+      transform: translateX(-25%);
+    }
+}
+
+.carousel-inner .carousel-item-right,
+.carousel-inner .carousel-item-left{ 
+  transform: translateX(0);
+}
