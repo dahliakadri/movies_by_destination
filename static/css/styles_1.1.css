@@ -140,7 +140,7 @@ padding-left: 15px;
 .map-country-selector{
 	text-align: center;
 	color: #ffffff;
-	background: #bd21302e;
+	background: #c92e2a57;
 	margin: 10px;
     padding: 20px;
 }
@@ -160,6 +160,9 @@ padding-left: 15px;
     margin: 10px;
 }
 
+.card{
+    background-color: #46070cad
+}
 .card-body{
 	background: #000000b8;
     color: #ffff;

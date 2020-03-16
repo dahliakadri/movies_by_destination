@@ -246,10 +246,12 @@ def check_login_status():
 		userfname = session['current_user']
 		useruser_id = session['user_id']
 		useremail = session['user_email']
+		user = User.query.filter(User.email == useremail).one()
 		user_info = []
 		user_info.append({"current_user": userfname,
 							"user_id": useruser_id, 
-							"user_email":useremail})
+							"user_email":useremail,
+							"user_created": user.time_created})
 		return jsonify({"sessioninfo": user_info, "loginstatus": True})
 	else:
 		return jsonify({"loginstatus": False})

@@ -114,7 +114,7 @@ class MoodyApp extends React.Component{
 class AboutPage extends React.Component { 
   render(){
         return (
-          <div className="card mb-3" style={{ 'maxWidth': 540 }}>
+          <div className="card mb-3">
            <div className="row no-gutters justify-content-center">
             <div className="col-md-4">
                 <img src="/static/img/movie_icon_three.png" className="card-img" alt="Poster"/>
@@ -135,7 +135,7 @@ class AboutPage extends React.Component {
 class ContactUs extends React.Component { 
   render(){
         return (
-          <div className="card mb-3" style={{ 'maxWidth': 540 }}>
+          <div className="card mb-3">
            <div className="row no-gutters justify-content-center">
             <div className="col-md-4">
                 <img src="/static/img/movie_icon_three.png" className="card-img" alt="Poster"/>
@@ -143,7 +143,7 @@ class ContactUs extends React.Component {
              <div className="col-md-8">
               <div className="card-body">
                 <h5 className="card-title">Contact Us</h5>
-                <p className="card-text">Please reach out to dahlikadri@gmail.com</p>
+                <p className="card-text">Please reach out to dahliakadri@gmail.com</p>
                 <p className="card-text"><small className="text-muted">Last updated March 18, 2020</small></p>
               </div>
             </div>
@@ -153,11 +153,50 @@ class ContactUs extends React.Component {
 
 }
 
-class MyProfile extends React.Component { 
+class MyProfile extends React.Component {
+
+constructor(props) {
+    super(props)
+    this.state = { loginStatus: false,
+                    userId: null,
+                    userFname: null,
+                    userEmail: null,
+                    userTimeStamp: null
+                  }
+}
+
+componentDidMount() {
+    fetch("/loginstatus")
+            .then(response => response.json())
+            .then(response => {
+              if (response.loginstatus == true){
+                this.setState({ loginStatus: response.loginstatus,
+                                userId: response.sessioninfo[0].user_id,
+                                userFname: response.sessioninfo[0].current_user,
+                                userEmail: response.sessioninfo[0].user_email,
+                                userTimeStamp: response.sessioninfo[0].user_created})
+            }
+            })
+  }
+
   render(){
         return (
-            <div>User Profile.
-            <p>User Profile</p></div>)
+             <div className="card mb-3">
+           <div className="row no-gutters justify-content-center">
+            <div className="col-md-4">
+                <img src="/static/img/movie_icon_three.png" className="card-img" alt="Poster"/>
+            </div>
+             <div className="col-md-8">
+              <div className="card-body">
+                <h5 className="card-title">My Profile</h5>
+                <p className="card-text">Name: {this.state.userFname}</p>
+                <p className="card-text">My Email: {this.state.userEmail}</p>
+                <p className="card-text">Account Created: {this.state.userTimeStamp}</p>
+                <p className="card-text"><small className="text-muted">Last updated March 18, 2020</small></p>
+              </div>
+            </div>
+           </div>
+          </div>)
     }
 
 }
@@ -481,7 +520,7 @@ class SignUp extends React.Component{
                 onChange={this.handleChange} required />
                 </div>
                 </div>
-          <button className="btn add-movie-btn btn-outline-success" type="submit">Regiser</button>
+          <button className="btn add-movie-btn btn-outline-success" type="submit">Register</button>
         </form>
         </div>
       )
@@ -817,14 +856,14 @@ class Watchlist extends React.Component{
       />)
       return (
           <form className="movies" onSubmit={this.handleSubmit}>
-          <div className="watch-list-title row justify-content-center">
-          <h3> Your movies watch list:</h3>
+          <div className="watch-list-title map-country-selector row justify-content-center">
+          <h3> Movie favorites</h3>
           </div>
           <div className="form-group row justify-content-center">
             {movieWatchComponents}
             </div>
             <div className="form-group row justify-content-center">
-             <button className="btn add-movie-btn btn-outline-success" type="submit">Remove from watch list</button>
+             <button className="btn add-movie-btn btn-outline-success" type="submit">Remove from favorites</button>
              </div>
              </form>
         )
