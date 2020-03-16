@@ -70,7 +70,7 @@ class MoodyApp extends React.Component{
         <div>
           <nav className="navbar sticky-top no-gutters navbar-light bg-light">
             <a className="navbar-brand" href="">
-            <img src="/static/img/travelimage.png" width="35" height="30" className="d-inline-block align-top" alt=""/>      Moody Movies by Destination</a>
+            <img src="/static/img/travelimage.png" width="60" height="50" className="d-inline-block align-middle" alt=""/>      Moody Movies by Destination</a>
             <form className="form-inline">
               <button className="btn btn-sm btn-outline-success" type="button" onClick={() => this.setState({currentPage: 0})}>Home</button>
               <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 5})}>Movies by Map</button>
