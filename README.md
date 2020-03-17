@@ -1,14 +1,13 @@
 # Moody - Movies by Destination
 >Moody is a full stack web application that enables users to search and save top rated movies by country.
-```
-```
+
 ## Contents
 
- - [Technologies](technologies)
- - [Installation](installation)
- - [Features](features)
- - [Features for V2.0](FeaturesforV2.0)
- - [About the Developer](AbouttheDeveloper)
+ - [Technologies](#technologies)
+ - [Installation](#installation)
+ - [Features](#features)
+ - [Features for V2.0](#FeaturesforV2.0)
+ - [About the Developer](#AbouttheDeveloper)
 ```
 ```
 
