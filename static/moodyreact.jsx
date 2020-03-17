@@ -44,6 +44,8 @@ class MoodyApp extends React.Component{
     .then((data) => {
     this.setState({currentPage: 0,
                   loginStatus: data.loginstatus})
+  }).then(() =>{
+    alert("Confirm Logout")
   })
   }
 
@@ -77,7 +79,7 @@ class MoodyApp extends React.Component{
   render() {
     const logbuttons = this.state.loginStatus ? <button  className="btn btn-sm btn-outline-secondary" type="button" onClick={this.handleLogout}> Logout </button> : <div><button  className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 3})}> Sign Up </button>
     <button  className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 4})}> Sign In </button></div>
-    const userStatus = this.state.loginStatus ? <div className="row loginstatus"><div className="col-6 offset-6"><div>Welcome, {this.state.userFname}, logged in with {this.state.userEmail}. </div></div></div> : <div className="row loginstatus"> <div className="col-6 offset-6"> <div>Login Status: Not logged in</div></div></div>
+    const userStatus = this.state.loginStatus ? <div className="row loginstatus"><div className="col-6 offset-6"><div>Welcome, {this.state.userFname}! </div></div></div> : <div className="row loginstatus"> <div className="col-6 offset-6"> <div>Not logged in</div></div></div>
     const userButtons = this.state.loginStatus ? <div><button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 2})}> My Movies List </button><button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.setState({currentPage: 7})}> My Profile</button></div>: <div></div>
     return (
         <div className="pos-f-t">
@@ -122,7 +124,7 @@ class AboutPage extends React.Component {
              <div className="col-md-8">
               <div className="card-body">
                 <h5 className="card-title">Moody Movies - Movies by Destination</h5>
-                <p className="card-text">Users can search, save, and watch top movies by country.</p>
+                <p className="card-text">Moody users can search and save top rated movies from particular countries. This application utilizes data from IMDB data sets of over 10 million lines of data. The data was parsed with a python algorithm to seed 180,000 movies into a postgres database. The app is fully built in React on the front-end. React allows reuse of multiple components across the app, including movie ratings, posters, and details.  A visually interactive Google map enables users to search and save movies through a Google Map API integration. Future iterations of this project will include movies about particular countries, built by a text analysis tool, specifically Google’s Natural Language Machine Learning API to pattern match through movie summaries.</p>
                 <p className="card-text"><small className="text-muted">Last updated March 18, 2020</small></p>
               </div>
             </div>
@@ -143,7 +145,7 @@ class ContactUs extends React.Component {
              <div className="col-md-8">
               <div className="card-body">
                 <h5 className="card-title">Contact Us</h5>
-                <p className="card-text">Please reach out to dahliakadri@gmail.com</p>
+                <p className="card-text">Please check back soon for contact information.</p>
                 <p className="card-text"><small className="text-muted">Last updated March 18, 2020</small></p>
               </div>
             </div>
@@ -883,21 +885,19 @@ class MoviesbyMap extends React.Component{
   }
 
   render(){
-    let movieForm = <div>Place Holder</div>
+    let movieForm = <div className="col-12 watch-list-title map-country-selector justify-content-center"><h3>Select a movie ticket icon on the map</h3></div>
+    let moviesByCountry = <div></div>
     if (this.state.country === null){
-      movieForm = <div className="col-12 col-md-6 map-country-selector justify-content-center">Select a movie ticket icon on the map{this.state.country}</div>
+      moviesByCountry = <div></div>
     }
-    else{movieForm =<MoviesByCountry country={this.state.country}/>}
+    else{moviesByCountry = <MoviesByCountry country={this.state.country}/>}
     return(
         <div className="row justify-content-center">
+            { movieForm }
           <div className="moody-map col-12 justify-content-center">
             <GoogleMap moodyMapCallback = {this.myCallbackMap} className="justify-content-center"/>
-          </div>
-          <div className="col-12">
-          <div className="row justify-content-center">
-            { movieForm }
             </div>
-            </div>
+            {moviesByCountry}
         </div>)
   }
 
