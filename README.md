@@ -17,8 +17,6 @@ Moody is a full stack web application that enables users to search and save top 
 |--|--|--|
 |Python, Flask, Flask-SQLAlchemy, PostgreSQL, BeautifulSoup  | JavaScript, React, jQuery, AJAX, Jinja, jQuery,HTML5, CSS3, Twitter Bootstrap | APIs: IMDB Datasets, Google Maps |
 
-APIs: IMDB Datasets, Google Maps
-
 ### Installation
 #### Prerequisites
 You must have the following installed to run Moody Movies
@@ -61,7 +59,7 @@ $ createdb moody
 
 Run seed.py in the terminal which will run model.py, create the database tables and see the database with IMDB datasets:
    ```
-$ python3 seed.py
+$ python3 movie_data_seed.py
 ```
 
 Run the app from the command line.
