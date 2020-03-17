@@ -1,5 +1,5 @@
 # Moody - Movies by Destination
->Moody is a full stack web application that enables users to search and save top rated movies by country.
+Moody is a full stack web application that enables users to search and save top rated movies by country.
 
 ## Contents
 
@@ -13,11 +13,11 @@
 
 ### Technologies
 
-| Backend | Frontend  |
-|--|--|
-|Python, Flask, Flask-SQLAlchemy, PostgreSQL, BeautifulSoup  | JavaScript, React, jQuery, AJAX, Jinja, jQuery,HTML5, CSS3, Twitter Bootstrap |
+| Backend | Frontend  | APIs  |
+|--|--|--|
+|Python, Flask, Flask-SQLAlchemy, PostgreSQL, BeautifulSoup  | JavaScript, React, jQuery, AJAX, Jinja, jQuery,HTML5, CSS3, Twitter Bootstrap | APIs: IMDB Datasets, Google Maps |
 
-APIs: IMDB DataSets, Google Maps
+APIs: IMDB Datasets, Google Maps
 
 ### Installation
 #### Prerequisites
@@ -30,11 +30,10 @@ Download IMDB Movie Data Sets:
 > This application utilizes data from IMDB data sets of over 10 million
 > lines of data. The data was parsed with a python algorithm to seed
 > 180,000 movies into a PostgreSQL database.
-
- - [Explanation of Data Sets](https://www.imdb.com/interfaces/)
- - [**title.akas.tsv.gz**](https://datasets.imdbws.com/title.akas.tsv.gz%5C)
- - [**title.basics.tsv.gz**](https://datasets.imdbws.com/title.basics.tsv.gz)
- - [**title.ratings.tsv.gz**](https://datasets.imdbws.com/title.ratings.tsv.gz)
+- [Explanation of Data Sets](https://www.imdb.com/interfaces/)
+- [**title.akas.tsv.gz**](https://datasets.imdbws.com/title.akas.tsv.gz%5C)
+- [**title.basics.tsv.gz**](https://datasets.imdbws.com/title.basics.tsv.gz)
+- [**title.ratings.tsv.gz**](https://datasets.imdbws.com/title.ratings.tsv.gz)
 
  Clone or fork repository:
 
