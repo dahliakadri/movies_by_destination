@@ -13,7 +13,7 @@ Moody is a full stack web application that enables users to search and save top 
 
 ### Technologies
 
-| Backend | Frontend   |  
+| Backend | Frontend   |
 | ------------- |:-------------:|
 | Python 3.x    | Javascript 6 |
 | PostgreSQL 10.1  | React 16.2    |  
@@ -25,11 +25,10 @@ Moody is a full stack web application that enables users to search and save top 
 | SQLAlchemy 1.3.10  | Babel 6.26  |
 | |  |
 
-|APIs|
+|APIs| |
 |--|--|
 | IMDB Datasets | 
 GoogleMaps |
-| Google Maps |
 
 ### Installation
 #### Prerequisites
