@@ -15,7 +15,6 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
  - [Features for V2.0](#featuresforv2.0)
  - [About the Developer](#aboutthedeveloper)
 
----
 
 ### Technologies
 
@@ -34,7 +33,7 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 |--|
 | IMDB Datasets | 
 | Google Maps Javascript |
-
+---
 
 ### Installation
 #### Prerequisites
@@ -87,6 +86,7 @@ Run the app from the command line
 $ python server.py
 ```
 
+---
 
 ### Features
 Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
@@ -112,7 +112,7 @@ Registered users can save movies to their favorites list by clicking on as many 
 Registered users can also remove movies from their favorites by clicking one or mutliple movies in their current favorites list and deleting.
 
 #### Logout
-
+---
 
 
 ### <a name="featuresforv2.0"></a> Features for V2.0
@@ -121,7 +121,7 @@ Future iterations of this project will include:
  - Ratings by users
  - Sharing movie recommendations
  - Where to watch particular movies
-
+---
 
 
 ### <a name="aboutthedeveloper"></a> About the Developer
