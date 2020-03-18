@@ -97,10 +97,10 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 
 #### User Profile
 
-![Profile](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovieprofile.png "User Profile")
+![Profile](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovieprofile.png =500x)
 
 
-<img src="https://github.com/dahliakadri/movies_by_destination/raw/master/static/img/moodymovieprofile.png" alt="Profile" title="User Profile" style="max-width:600px;">
+<img src="https://github.com/dahliakadri/movies_by_destination/raw/master/static/img/moodymovieprofile.png" alt="Profile" width="400">
 
 #### Search Movies by Country
 
