@@ -29,10 +29,10 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 | SQLAlchemy 1.3.10  | Babel 6.26  |
 | |  |
 
-|APIs| |
-|--|--|
+|APIs|
+|--|
 | IMDB Datasets | 
-Google Maps Javascript |
+| Google Maps Javascript |
 
 ### Installation
 #### Prerequisites
