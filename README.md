@@ -1,5 +1,7 @@
 # Moody - Movies by Destination
 Moody is a full stack web application that enables users to search and save top rated movies by country.
+Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
+![Moody Movies](https://i.imgur.com/22oOUEL.gif)
 
 ## Contents
 
@@ -28,7 +30,7 @@ Moody is a full stack web application that enables users to search and save top 
 |APIs| |
 |--|--|
 | IMDB Datasets | 
-GoogleMaps |
+Google Maps Javascript |
 
 ### Installation
 #### Prerequisites
@@ -83,9 +85,14 @@ $ python server.py
 
 
 ### Features
+Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 
 ### Features for V2.0
-Future iterations of this project will include movies about particular countries, built by a text analysis tool, specifically Google’s Natural Language Machine Learning API to pattern match through movie summaries.
+Future iterations of this project will include:
+ - Movies about particular countries, built by a text analysis tool, specifically Google’s Natural Language Machine Learning API to pattern match through movie summaries
+ - Ratings by users
+ - Sharing movie recommendations
+ - Where to watch particular movies
 
 ### About the Developer
 Moody Movies creator Dahlia Kadri is a Technical Program Manager and Executive Assistant in security engineering at Box turned software engineer. This is her first fullstack project. She can be found on [LinkedIn](https://www.linkedin.com/in/dahliakadri/) and on [Github](https://github.com/dahliakadri).
