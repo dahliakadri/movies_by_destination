@@ -10,7 +10,7 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
  - [Technologies](#technologies)
  - [Installation](#installation)
  - [Features](#features)
- - [Features for V2.0](#FeaturesforV2.0)
+ - [Features for V2.0](#featuresforv2.0)
  - [About the Developer](#aboutthedeveloper)
 
 ### Technologies
@@ -86,12 +86,12 @@ $ python server.py
 ### Features
 Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 
-### Features for V2.0
+### <a name="featuresforv2.0"></a> Features for V2.0
 Future iterations of this project will include:
  - Movies about particular countries, built by a text analysis tool, specifically Google’s Natural Language Machine Learning API to pattern match through movie summaries
  - Ratings by users
  - Sharing movie recommendations
  - Where to watch particular movies
 
-### About the Developer
+### <a name="aboutthedeveloper"></a> About the Developer
 Moody Movies creator Dahlia Kadri is a Technical Program Manager and Executive Assistant in security engineering at Box turned software engineer. This is her first fullstack project. She can be found on [LinkedIn](https://www.linkedin.com/in/dahliakadri/) and on [Github](https://github.com/dahliakadri).
