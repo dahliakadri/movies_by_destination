@@ -103,21 +103,29 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 
 A drop down menue of all countries with movies appear on the homepage. Users can click on any country and view a list of top movies. Users can view movie details by hovering over each movie.
 
+![Movies by Country](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymoviebycountry.gif "Movies by Country")
+
 #### Search Movies by Map
 
 Utilizing the Google Maps API, users can move around the map and browse countries that have movies, indicated by a golden ticket. Users can click on the ticket and view a list of top movies. Users can view movie details by hovering over each movie.
 
+![Movies by Map](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymoviebymap.gif "Movies by Map")
+
 #### Add Movies to Favorites
 
-![Add Movies](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovieaddmovie.gif "Add Movies to Favorites")
-
 Registered users can save movies to their favorites list by clicking on as many movies as they want from a particular search and adding them. This can also be done by utilizing the Google Maps feature.
+
+![Add Movies](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovieaddmovie.gif "Add Movies to Favorites")
 
 #### Removie Movies from Favorites
 
 Registered users can also remove movies from their favorites by clicking one or mutliple movies in their current favorites list and deleting.
 
+![Remove Movies](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovieremovemovie.gif "Remove Movies to Favorites")
+
 #### Logout
+
+![Logout](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovielogout.gif "Moody Logout")
 ---
 
 
