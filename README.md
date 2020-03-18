@@ -93,9 +93,11 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 
 #### Login/Sign Up
 
-![Homepage](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovielogin.gif "Homepage")
+![Login/SignUp](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovielogin.gif "Login / Sign Up")
 
 #### User Profile
+
+![Profile](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovieprofile.gif "User Profile")
 
 #### Search Movies by Country
 
