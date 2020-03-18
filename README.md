@@ -13,9 +13,21 @@ Moody is a full stack web application that enables users to search and save top 
 
 ### Technologies
 
-| Backend | Frontend  | APIs  |
-| ------------- |:-------------:| ------------- |
-|Python | Flask | Flask-SQLAlchemy | PostgreSQL | BeautifulSoup  | JavaScript, React, jQuery, AJAX, Jinja, jQuery,HTML5, CSS3, Twitter Bootstrap | APIs: IMDB Datasets, Google Maps |
+| Backend | Frontend   |  
+| ------------- |:-------------:|
+| Python 3.x    | Javascript 6 |
+| PostgreSQL 10.1  | React 16.2    |  
+| Flask 1.1.1 | HTML5  |  
+| Flask-SQLAlchemy 2.4.1| CSS3 | 
+| Jinja2 2.10.3 | Twitter Bootsrap|
+| Soup Sieve 2.0| AJAX |
+| Beautiful Soup 4 | jQuery 3.4.1 |
+| SQLAlchemy 1.3.10  | Babel 6.26  |
+| |  |
+
+| APIs  |
+| ------------- |
+|IMDB Datasets | Google Maps |
 
 ### Installation
 #### Prerequisites
