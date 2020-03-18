@@ -3,8 +3,6 @@ Moody is a full stack web application that enables users to search and save top 
 
 Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 
-<img src="/static/img/moodymovie.gif?raw=true">
-
 
 ![Homepage](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovie.gif "Homepage")
 
