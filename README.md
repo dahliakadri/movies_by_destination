@@ -1,8 +1,8 @@
 # Moody - Movies by Destination
 Moody is a full stack web application that enables users to search and save top rated movies by country.
 Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
-- ![Moody Movies](https://i.imgur.com/22oOUEL.gif)
-+ <img src="/static/img/moodymovie.gif?raw=true" width="200px">
+-![Moody Movies](https://i.imgur.com/22oOUEL.gif)
++<img src="/static/img/moodymovie.gif?raw=true" width="200px">
 
 ## Contents
 
