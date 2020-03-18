@@ -97,7 +97,7 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 
 #### User Profile
 
-![Profile](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovieprofile.gif "User Profile")
+![Profile](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovieprofile.png "User Profile")
 
 #### Search Movies by Country
 
@@ -108,6 +108,8 @@ A drop down menue of all countries with movies appear on the homepage. Users can
 Utilizing the Google Maps API, users can move around the map and browse countries that have movies, indicated by a golden ticket. Users can click on the ticket and view a list of top movies. Users can view movie details by hovering over each movie.
 
 #### Add Movies to Favorites
+
+![Add Movies](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovieaddmovie.gif "Add Movies to Favorites")
 
 Registered users can save movies to their favorites list by clicking on as many movies as they want from a particular search and adding them. This can also be done by utilizing the Google Maps feature.
 
