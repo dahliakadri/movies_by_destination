@@ -5,7 +5,7 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 
 Moody Movies has a custom web interface that allows users to search for top movies from countries. Utilizing IMDB datasets, Moody's PostgreSQL database holds 180,000 movies with country origin, ratings, and votes. Users also search for movies by country in an interactive Google map. Users can add and remove movies from their favorites list.
 
-This project was made at Hackbright Academy in San Francisco over eight weeks beginning February 2020.
+This project was made at Hackbright Academy in San Francisco over eight weeks beginning January 2020.
 
 
 ![Homepage](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovie.gif "Homepage")
@@ -50,6 +50,7 @@ Download IMDB Movie Data Sets:
 > This application utilizes data from IMDB data sets of over 10 million
 > lines of data. The data was parsed with a python algorithm to seed
 > 180,000 movies into a PostgreSQL database.
+
 [Explanation of IMDB Datasets](https://www.imdb.com/interfaces/)
 - [**title.akas.tsv.gz**](https://datasets.imdbws.com/title.akas.tsv.gz%5C)
 - [**title.basics.tsv.gz**](https://datasets.imdbws.com/title.basics.tsv.gz)
