@@ -73,12 +73,12 @@ Create database 'moody':
 $ createdb moody
 ```
 
-Run seed.py in the terminal which will run model.py, create the database tables and see the database with IMDB datasets:
+Run seed.py in the terminal which will run model.py, create the database tables and seed the database with IMDB datasets:
    ```
 $ python3 movie_data_seed.py
 ```
 
-Run the app from the command line.
+Run the app from the command line
 
 ```
 $ python server.py
@@ -87,6 +87,29 @@ $ python server.py
 
 ### Features
 Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
+
+#### Login/Sign Up
+
+#### User Profile
+
+#### Search Movies by Country
+
+A drop down menue of all countries with movies appear on the homepage. Users can click on any country and view a list of top movies. Users can view movie details by hovering over each movie.
+
+#### Search Movies by Map
+
+Utilizing the Google Maps API, users can move around the map and browse countries that have movies, indicated by a golden ticket. Users can click on the ticket and view a list of top movies. Users can view movie details by hovering over each movie.
+
+#### Add Movies to Favorites
+
+Registered users can save movies to their favorites list by clicking on as many movies as they want from a particular search and adding them. This can also be done by utilizing the Google Maps feature.
+
+#### Removie Movies from Favorites
+
+Registered users can also remove movies from their favorites by clicking one or mutliple movies in their current favorites list and deleting.
+
+#### Logout
+
 
 ### <a name="featuresforv2.0"></a> Features for V2.0
 Future iterations of this project will include:
