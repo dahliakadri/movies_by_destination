@@ -49,7 +49,7 @@ You must have the following installed to run Moody Movies
 Download IMDB Movie Datasets:
 > This application utilizes data from IMDB data sets of over 10 million
 > lines of data. The data was parsed with a python algorithm to seed
-> 180,000 movies into a PostgreSQL database. Download the files below
+> 180,000 movies into a PostgreSQL database. Download the three files below
 > and save to the main folder of the repo.
 
 [Explanation of IMDB Datasets](https://www.imdb.com/interfaces/)
