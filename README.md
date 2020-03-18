@@ -24,7 +24,7 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 | PostgreSQL 10.1  | React 16.2    |  
 | Flask 1.1.1 | HTML5  |  
 | Flask-SQLAlchemy 2.4.1| CSS3 | 
-| Jinja2 2.10.3 | Twitter Bootsrap|
+| Jinja2 2.10.3 | Twitter Bootstrap|
 | Soup Sieve 2.0| AJAX |
 | Beautiful Soup 4 | jQuery 3.4.1 |
 | SQLAlchemy 1.3.10  | Babel 6.26  |
@@ -46,7 +46,7 @@ Download IMDB Movie Data Sets:
 > This application utilizes data from IMDB data sets of over 10 million
 > lines of data. The data was parsed with a python algorithm to seed
 > 180,000 movies into a PostgreSQL database.
-- [Explanation of IMDB Data sets](https://www.imdb.com/interfaces/)
+[Explanation of IMDB Datasets](https://www.imdb.com/interfaces/)
 - [**title.akas.tsv.gz**](https://datasets.imdbws.com/title.akas.tsv.gz%5C)
 - [**title.basics.tsv.gz**](https://datasets.imdbws.com/title.basics.tsv.gz)
 - [**title.ratings.tsv.gz**](https://datasets.imdbws.com/title.ratings.tsv.gz)
@@ -117,7 +117,7 @@ Registered users can save movies to their favorites list by clicking on as many 
 
 ![Add Movies](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovieaddmovie.gif "Add Movies to Favorites")
 
-#### Removie Movies from Favorites
+#### Remove Movies from Favorites
 
 Registered users can also remove movies from their favorites by clicking one or mutliple movies in their current favorites list and deleting.
 
@@ -126,8 +126,8 @@ Registered users can also remove movies from their favorites by clicking one or 
 #### Logout
 
 ![Logout](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovielogout.gif "Moody Logout")
----
 
+---
 
 ### <a name="featuresforv2.0"></a> Features for V2.0
 Future iterations of this project will include:
