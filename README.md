@@ -5,7 +5,8 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 
 <img src="/static/img/moodymovie.gif?raw=true" width="700px">
 
-![Homepage](https://raw.githubusercontent.com/dahliakdri/movies_by_destination/master/static/img/moodymovie.gif)
+![Homepage](https://raw.githubusercontent.com/dahliakdri/movies_by_destination/static/img/moodymovie.gif)
+
 
 ## Contents
 
