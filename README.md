@@ -25,9 +25,9 @@ Moody is a full stack web application that enables users to search and save top 
 | SQLAlchemy 1.3.10  | Babel 6.26  |
 | |  |
 
-| APIs  |
-| ------------- |
-|IMDB Datasets | Google Maps |
+| APIs |
+| ------------- |:-------------:|
+| IMDB Datasets | Google Maps |
 
 ### Installation
 #### Prerequisites
