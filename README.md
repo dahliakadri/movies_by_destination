@@ -11,9 +11,7 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
  - [Installation](#installation)
  - [Features](#features)
  - [Features for V2.0](#FeaturesforV2.0)
- - [About the Developer](#AbouttheDeveloper)
-```
-```
+ - [About the Developer](#aboutthedeveloper)
 
 ### Technologies
 
@@ -27,7 +25,6 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 | Soup Sieve 2.0| AJAX |
 | Beautiful Soup 4 | jQuery 3.4.1 |
 | SQLAlchemy 1.3.10  | Babel 6.26  |
-| |  |
 
 |APIs|
 |--|
