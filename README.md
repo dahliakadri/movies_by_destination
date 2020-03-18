@@ -132,9 +132,9 @@ Registered users can also remove movies from their favorites by clicking one or 
 ### <a name="featuresforv2.0"></a> Features for V2.0
 Future iterations of this project will include:
  - Movies about particular countries, built by a text analysis tool, specifically Google’s Natural Language Machine Learning API to pattern match through movie summaries
- - Ratings by users
- - Sharing movie recommendations
- - Where to watch particular movies
+ - Ratings and reviews by users
+ - Share movie recommendations
+ - Where to watch particular movies on streaming apps
 ---
 
 
