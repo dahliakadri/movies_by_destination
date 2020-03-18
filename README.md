@@ -99,6 +99,9 @@ Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 
 ![Profile](https://github.com/dahliakadri/movies_by_destination/blob/master/static/img/moodymovieprofile.png "User Profile")
 
+
+<img src="https://github.com/dahliakadri/movies_by_destination/raw/master/static/img/moodymovieprofile.png" alt="Profile" title="User Profile" style="max-width:600px;">
+
 #### Search Movies by Country
 
 A drop down menue of all countries with movies appear on the homepage. Users can click on any country and view a list of top movies. Users can view movie details by hovering over each movie.
