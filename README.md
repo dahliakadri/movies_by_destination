@@ -42,9 +42,9 @@ This project was made at Hackbright Academy in San Francisco over eight weeks be
 ### Installation
 #### Prerequisites
 You must have the following installed to run Moody Movies
- - PostgreSQL
- - Python 3.x
- - API key for Google Maps JavaScript
+ - [PostgreSQL](https://www.postgresql.org/)
+ - [Python 3.x](https://www.python.org/downloads/)
+ - [API key for Google Maps JavaScript](https://developers.google.com/maps/documentation/javascript/tutorial)
  #### Run Moody Movies on your local computer
 Download IMDB Movie Datasets:
 > This application utilizes data from IMDB data sets of over 10 million
