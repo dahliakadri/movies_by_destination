@@ -46,14 +46,14 @@ You must have the following installed to run Moody Movies
  - [Python 3.x](https://www.python.org/downloads/)
  - [API key for Google Maps JavaScript](https://developers.google.com/maps/documentation/javascript/tutorial)
  #### Run Moody Movies on your local computer
-Download IMDB Movie Datasets:
-> This application utilizes data from IMDB data sets of over 10 million
+Download IMDb Movie Datasets:
+> This application utilizes data from IMDb datasets of over 10 million
 > lines of data. The data was parsed with a python algorithm to seed
 > 180,000 movies into a PostgreSQL database. Download the three files below
 > and save to the main folder of the repo. Remove the first line of each dataset
 >before running the seed script.
 
-[Explanation of IMDB Datasets](https://www.imdb.com/interfaces/)
+[Explanation of IMDb Datasets](https://www.imdb.com/interfaces/)
 - [**title.akas.tsv.gz**](https://datasets.imdbws.com/title.akas.tsv.gz%5C)
 - [**title.basics.tsv.gz**](https://datasets.imdbws.com/title.basics.tsv.gz)
 - [**title.ratings.tsv.gz**](https://datasets.imdbws.com/title.ratings.tsv.gz)
