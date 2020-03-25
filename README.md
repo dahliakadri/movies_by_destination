@@ -35,8 +35,8 @@ This project was made at Hackbright Academy in San Francisco over eight weeks be
 
 |APIs|
 |--|
-| IMDB Datasets | 
-| Google Maps Javascript |
+| [IMDb Datasets](https://www.imdb.com/interfaces/) | 
+| [Google Maps Javascript](https://developers.google.com/maps/documentation/javascript/tutorial) |
 ---
 
 ### Installation
