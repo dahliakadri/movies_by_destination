@@ -3,7 +3,7 @@ Moody is a full stack web application that enables users to search and save top 
 
 Access the live webapp: [Moody Movies](http://moodymovies.sadraii.com)
 
-Moody Movies has a custom web interface that allows users to search for top movies from countries. Utilizing IMDB datasets, Moody's PostgreSQL database holds 180,000 movies with country origin, ratings, and votes. Users also search for movies by country in an interactive Google map. Users can add and remove movies from their favorites list.
+Moody Movies has a custom React web interface that allows users to search for top movies from countries. Utilizing IMDB datasets, Moody's PostgreSQL database holds 180,000 movies with country origin, ratings, and votes. Users also search for movies by country in an interactive Google map. Users can add and remove movies from their favorites list.
 
 This project was made at Hackbright Academy in San Francisco over ten weeks January - March 2020.
 
