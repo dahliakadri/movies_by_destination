@@ -141,7 +141,8 @@ Future iterations of this project will include:
  - Movies about particular countries, built by a text analysis tool, specifically Google’s Natural Language Machine Learning API to pattern match through movie summaries
  - Ratings and reviews by users
  - Share movie recommendations
- - Where to watch particular movies on streaming apps
+ - Linked resources for where to watch particular movies on streaming apps
+ - Carosel with clickable movies
 ---
 
 
